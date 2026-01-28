@@ -1,0 +1,20 @@
+@import '@/styles/mixins';
+
+.GridOverlay {
+  @include grid-thirds;
+  @include gpu;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.GridOverlay__container {
+  position: relative;
+}
+
+.GridOverlay__lineMiddle {
+  top: 50% !important;
+}

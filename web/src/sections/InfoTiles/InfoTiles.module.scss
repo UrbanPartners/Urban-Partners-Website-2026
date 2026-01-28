@@ -1,0 +1,144 @@
+.InfoTiles {
+  position: relative;
+}
+
+.inner {
+  position: relative;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  .isMobile & {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.item {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--grey-5);
+  transition: background-color #{$transition-short};
+
+  &.isNotInFirstRow {
+    margin-top: -1px;
+  }
+
+  .InfoTiles.isMobile & {
+    margin-top: -1px;
+  }
+
+  &.isOpen {
+    background-color: var(--grey-3);
+  }
+}
+
+.itemInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .hasMultipleRows & {
+    padding-bottom: px(90);
+  }
+
+  .isInLastRow & {
+    padding-bottom: 0;
+  }
+}
+
+.titleContainer {
+  @include reset-button;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: var(--page-gutter-2x) var(--page-gutter) 0 var(--page-gutter);
+  cursor: auto;
+
+  @include bp(tablet) {
+    min-height: px(120);
+    padding: var(--page-gutter) var(--page-gutter) 0 var(--page-gutter);
+  }
+
+  @include bp(desktop) {
+    min-height: px(160);
+  }
+
+  .item.isMobile & {
+    padding-bottom: px(51);
+    min-height: initial;
+    cursor: pointer;
+  }
+}
+
+.plusMinusAnimation {
+  position: absolute !important;
+  top: var(--page-gutter-2x);
+  right: var(--page-gutter);
+
+  @include bp(tablet) {
+    top: var(--page-gutter);
+  }
+}
+
+.title {
+  @include font-h10;
+}
+
+.titleSubheader {
+  @include font-h10;
+  color: var(--dark-green-30);
+}
+
+.bottomContent {
+  padding: 0 var(--page-gutter);
+
+  .InfoTiles.isMobile & {
+    padding-bottom: var(--page-gutter-2x);
+  }
+
+  .InfoTiles:not(.isMobile)[data-info-tiles-taller-content='true'] & {
+    flex: 1;
+    min-height: px(200);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--page-gutter);
+
+    @include bp(desktop) {
+      min-height: px(256);
+    }
+  }
+}
+
+.description {
+  @include font-body-4;
+  width: 100%;
+
+  @include bp(tablet) {
+    max-width: px(280);
+  }
+}
+
+.bottomLinks {
+  display: flex;
+  flex-direction: column;
+  gap: px(8);
+  margin-top: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    margin-top: px(15);
+  }
+}
+
+.bottomLink {
+  color: var(--dark-green-70);
+  transition: color $transition-short;
+
+  @include hover {
+    color: var(--dark-green);
+  }
+}

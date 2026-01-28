@@ -1,0 +1,15 @@
+/* stylelint-disable-next-line block-no-empty */
+.Wipe {
+  @include position-100(fixed);
+  @include z-index(wipe);
+  pointer-events: none;
+}
+
+.wipeBg {
+  @include position-100(absolute);
+  background-color: var(--green-dark);
+  clip-path: polygon(0% var(--left-y), 100% var(--right-y), 100% 100%, 0% 100%);
+
+  --left-y: 100%;
+  --right-y: 100%;
+}

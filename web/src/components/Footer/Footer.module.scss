@@ -1,0 +1,11 @@
+.Footer {
+  background-color: var(--green-dark);
+  display: block;
+}
+
+.cmsDebug {
+  position: absolute;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+}

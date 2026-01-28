@@ -1,0 +1,6 @@
+@import '@/styles/mixins';
+
+.colorBar {
+  @include position-100(absolute);
+  transform-origin: left center;
+}

@@ -1,0 +1,7 @@
+.FadeIn {
+  opacity: 0;
+
+  &.initialVisible {
+    opacity: 1;
+  }
+}

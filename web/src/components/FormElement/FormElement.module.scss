@@ -1,0 +1,270 @@
+@mixin form-default-theme {
+  outline-width: 1px;
+  outline-style: solid;
+  color: var(--green-dark);
+}
+
+@mixin form-white-theme {
+  outline-color: var(--line-color-faded);
+  background-color: var(--grey-5);
+  transition: outline-color $transition-short;
+
+  &:focus {
+    outline-color: var(--dark-green-60);
+  }
+}
+
+.container {
+  position: relative;
+
+  --element-height: #{px(60)};
+  --element-base-padding: #{px(16)};
+  --select-element-padding: #{px(32)};
+  --checkbox-size: #{px(24)};
+
+  @include bp(tablet) {
+    --element-height: #{px(97)};
+  }
+
+  &:has(*:focus) {
+    z-index: 2;
+  }
+}
+
+.labelContainer {
+  display: block;
+  margin-bottom: px(6);
+
+  .container[data-form-element='select'] & {
+    position: absolute;
+    top: var(--element-base-padding);
+    left: var(--element-base-padding);
+    z-index: 2;
+    pointer-events: none;
+
+    @include bp(tablet, true) {
+      top: px(12);
+    }
+  }
+}
+
+.label,
+.radioLabel {
+  @include font-body-5;
+  color: var(--green-dark);
+  display: inline-block;
+  cursor: pointer;
+
+  .isCheckbox & {
+    padding-left: px(32);
+    margin-bottom: 0;
+  }
+}
+
+.required {
+  display: inline-block;
+  margin-left: px(4);
+  color: red;
+}
+
+.elementWrapper {
+  .container:not(.isCheckbox) & {
+    position: relative;
+  }
+}
+
+.input,
+.select,
+.textarea {
+  @include reset-button;
+  @include font-body-5;
+  @include form-default-theme;
+  cursor: initial;
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+  border-radius: 0;
+
+  .isRounded & {
+    border-radius: px(100);
+  }
+
+  &::placeholder,
+  &[data-select-value=''] {
+    color: var(--dark-green-60);
+
+    .container[data-form-element='input'] & {
+      @include font-h10;
+    }
+  }
+
+  .container[data-form-element='input'] & {
+    @include font-h10;
+    padding-left: var(--page-gutter);
+  }
+
+  .hasButton[data-form-button-side='left'] & {
+    padding-left: calc(var(--element-height) + px(2));
+  }
+
+  .hasButton[data-form-button-side='right'] & {
+    padding-right: calc(var(--element-height) + px(20));
+  }
+
+  [data-form-theme='white'] & {
+    @include form-white-theme;
+  }
+
+  .isInvalid & {
+    outline-color: red;
+  }
+}
+
+.input,
+.select {
+  height: var(--element-height);
+  padding: 0 var(--element-base-padding);
+}
+
+.select {
+  padding-right: var(--select-element-padding);
+  padding-top: px(20);
+
+  @include bp(tablet, true) {
+    padding-top: px(22);
+    padding-right: px(40);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.checkbox {
+  @include flex-center;
+  @include form-default-theme;
+  @include form-white-theme;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+
+  .isFocused & {
+    outline-color: rgba($black, 0.8);
+  }
+}
+
+.checkbox__icon {
+  width: 100%;
+}
+
+.textarea {
+  min-height: px(120);
+  padding: var(--element-base-padding);
+}
+
+.input[type='checkbox'] {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  opacity: 0.001;
+  top: 0;
+  left: 0;
+}
+
+.selectContainer {
+  position: relative;
+  display: block;
+}
+
+.selectBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--green-dark);
+  opacity: 0;
+  transition: opacity $transition-short;
+
+  .select:not([data-select-value='']) ~ & {
+    opacity: 1;
+  }
+}
+
+.selectIcon {
+  position: absolute;
+  right: calc(var(--element-base-padding) * 1.2);
+  top: calc(var(--element-base-padding) * 1.4);
+  pointer-events: none;
+  width: px(15);
+}
+
+.button {
+  @include reset-button;
+  @include flex-center;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: var(--element-height);
+  width: var(--element-height);
+  color: var(--green-dark);
+  @include form-white-theme;
+
+  [data-form-button-side='left'] & {
+    right: auto;
+    left: 0;
+  }
+}
+
+.button__icon {
+  width: px(24);
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: px(12);
+}
+
+.radio {
+  display: flex;
+  cursor: pointer;
+}
+
+.radioInput {
+  @include reset-button;
+  margin: 0;
+}
+
+.radioCircle {
+  @include flex-center;
+  position: relative;
+  min-width: var(--checkbox-size);
+  min-height: var(--checkbox-size);
+  max-width: var(--checkbox-size);
+  max-height: var(--checkbox-size);
+  border-radius: 50%;
+  border: 1px solid var(--green-dark);
+  margin-right: px(5);
+}
+
+.radioCircleInner {
+  @include position-100(absolute);
+  transform: scale(0.7);
+  background-color: var(--navy-light);
+  display: none;
+  border-radius: 50%;
+
+  .isActive & {
+    display: block;
+  }
+}
+
+.error {
+  @include font-body-5;
+  margin-top: px(4);
+  color: red;
+}

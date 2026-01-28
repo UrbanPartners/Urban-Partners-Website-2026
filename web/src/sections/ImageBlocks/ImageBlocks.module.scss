@@ -1,0 +1,78 @@
+/* stylelint-disable-next-line block-no-empty */
+.ImageBlocks {
+}
+
+.inner {
+  @include grid-50-50;
+  padding: 0 var(--page-gutter);
+
+  .flippedPosition & {
+    @include off-grid-flipped;
+  }
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.left {
+  .flippedPosition & {
+    order: 2;
+    padding-left: var(--page-gutter);
+  }
+}
+
+.right {
+  padding-left: var(--page-gutter);
+
+  .flippedPosition & {
+    padding-left: 0;
+    order: 1;
+  }
+}
+
+.rightImageContainer {
+  display: block;
+}
+
+.textContainer {
+  padding: var(--page-gutter-2x) var(--page-gutter) 0 var(--page-gutter);
+
+  @include bp(tablet) {
+    @include off-grid;
+    padding: var(--page-gutter) 0 0 0;
+  }
+}
+
+.title {
+  @include font-body-5;
+  white-space: pre-line;
+  margin-bottom: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    margin-bottom: 0;
+  }
+}
+
+.description {
+  @include font-body-8;
+  @include rich-text-base-styling;
+  color: var(--dark-green-70);
+  width: 100%;
+  max-width: px(450);
+
+  @include bp(tablet) {
+    max-width: px(257);
+  }
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--aspect-ratio);
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: cover;
+}

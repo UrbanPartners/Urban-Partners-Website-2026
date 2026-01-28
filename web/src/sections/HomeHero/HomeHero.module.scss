@@ -1,0 +1,190 @@
+/* stylelint-disable-next-line block-no-empty */
+.HomeHero {
+  --description-bottom-padding-mobile: calc(var(--page-gutter) * 2);
+}
+
+.inner {
+  width: 100%;
+  height: 100svh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.mediaMaskReveal {
+  @include position-100(absolute);
+  z-index: 1;
+}
+
+.mediaContainer {
+  @include position-100(absolute);
+  transform: scale(1.2) translateY(8%);
+  opacity: 0;
+}
+
+.media {
+  @include position-100(absolute);
+
+  img {
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  &.imageLoaded {
+    img {
+      opacity: 1;
+    }
+  }
+}
+
+.backgroundOverlayContainer {
+  @include position-100(absolute);
+  z-index: 2;
+  opacity: 0;
+}
+
+.backgroundOverlay {
+  @include position-100(absolute);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 100%) 0%, rgba(0, 0, 0, 80%) 100%);
+}
+
+.titleContent {
+  position: relative;
+  z-index: 3;
+  padding: var(--nav-height) var(--page-gutter) 0;
+  height: 50svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.lineAnimationArrowContainer {
+  @include reset-button;
+  @include flex-center;
+  width: px(50);
+  height: px(50);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 4;
+
+  @include bp(tablet) {
+    width: px(80);
+    height: px(80);
+  }
+
+  @include bp(xl) {
+    width: px(96);
+    height: px(96);
+  }
+}
+
+.downArrowColorBar {
+  z-index: 1;
+  background-color: var(--grey-5);
+}
+
+.lineAnimationArrowIcon {
+  width: px(18);
+  color: var(--grey-5);
+  opacity: 0;
+  z-index: 2;
+  position: relative;
+  transition: color var(--transition-short);
+
+  @include bp(tablet) {
+    width: px(26);
+  }
+
+  .isHoveringDownArrow & {
+    color: var(--green-dark);
+  }
+}
+
+.titleMobile {
+  display: block;
+  padding-bottom: px(8);
+
+  @include bp(tablet) {
+    display: none;
+  }
+}
+
+.titleDesktop {
+  display: none;
+
+  @include bp(tablet) {
+    display: block;
+  }
+}
+
+.title__text {
+  @include font-h2;
+  color: var(--grey-5);
+  white-space: pre-line;
+  display: block;
+  font-size: px(60);
+  line-height: 94%;
+
+  @include bp(tablet) {
+    font-size: px(100);
+  }
+
+  @include bp(xl) {
+    font-size: px(120);
+  }
+}
+
+.descriptionContent {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+  width: calc(100svw - calc(var(--page-gutter) * 2));
+  padding: var(--page-gutter) px(50) var(--description-bottom-padding-mobile) var(--page-gutter);
+
+  @include bp(tablet) {
+    width: 50svw;
+    padding: var(--page-gutter) px(100) var(--page-gutter) var(--page-gutter);
+  }
+}
+
+.colorBar {
+  background-color: var(--grey-5);
+}
+
+.descriptionTitleContent {
+  position: relative;
+  z-index: 1;
+  max-width: px(520);
+  margin-bottom: px(40);
+  min-height: px(100);
+
+  @include bp(tablet) {
+    min-height: px(120);
+  }
+
+  @include bp(desktop) {
+    min-height: px(180);
+  }
+
+  @include bp-height(700, true) {
+    min-height: 0;
+    margin-bottom: px(20);
+  }
+}
+
+.descriptionTitleSplitText {
+  @include rich-text-base-styling;
+  @include font-h10;
+}
+
+.descriptionTextContent {
+  position: relative;
+  z-index: 1;
+  @include font-body-7;
+  color: var(--dark-green-70);
+  max-width: px(320);
+}

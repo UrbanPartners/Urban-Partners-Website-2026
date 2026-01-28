@@ -1,0 +1,15 @@
+/* stylelint-disable-next-line block-no-empty */
+.FooterLanguageSwitcher {
+}
+
+.link {
+  @include font-body-4;
+  padding: px(2) px(15);
+  border-radius: px(100);
+  border: 1px solid transparent;
+  color: var(--white);
+
+  &.isActive {
+    border-color: var(--white);
+  }
+}

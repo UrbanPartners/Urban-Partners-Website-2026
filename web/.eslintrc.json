@@ -1,0 +1,20 @@
+{
+  "extends": ["next", "next/core-web-vitals", "plugin:react/jsx-runtime", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "indent": "off",
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-trailing-spaces": "error",
+    "eol-last": ["error", "always"],
+    "react/jsx-closing-bracket-location": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "all", "argsIgnorePattern": "^_" }],
+    "semi": ["error", "never"],
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "@typescript-eslint/no-empty-function": "off"
+  }
+}

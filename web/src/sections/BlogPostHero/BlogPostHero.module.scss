@@ -1,0 +1,110 @@
+/* stylelint-disable-next-line block-no-empty */
+.BlogPostHero {
+}
+
+.inner {
+  padding: 0 var(--page-gutter);
+}
+
+.date {
+  @include font-body-5;
+
+  @include bp(tablet, true) {
+    display: none !important;
+  }
+}
+
+.titleContainer {
+  min-height: px(300);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  @include bp(tablet) {
+    justify-content: flex-end;
+    min-height: px(320);
+  }
+}
+
+.title {
+  @include font-h4;
+
+  .isLargeTitleStyling & {
+    @include font-h2;
+  }
+}
+
+.bottom {
+  position: relative;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, var(--mobile-grid-gutter)) minmax(0, 1fr);
+
+  --mobile-grid-gutter: var(--line-size-tiny);
+
+  @include bp(tablet) {
+    @include off-grid-flipped;
+    margin-top: px(132);
+  }
+
+  @include bp(tablet, true) {
+    @include break-through-page-gutter;
+  }
+}
+
+.leftSide {
+  padding-top: var(--page-gutter);
+}
+
+.caseStudyText,
+.author {
+  @include font-body-5;
+  color: var(--dark-green-60);
+  margin-bottom: px(50);
+
+  @include bp(tablet) {
+    margin-bottom: 0;
+  }
+}
+
+.rightSide {
+  padding-top: var(--page-gutter-2x);
+  padding-left: var(--page-gutter-2x);
+  position: relative;
+
+  @include bp(tablet) {
+    padding-top: var(--page-gutter);
+    padding-left: var(--page-gutter);
+  }
+}
+
+.summary {
+  position: relative;
+  max-width: px(450);
+
+  @include bp(tablet) {
+    max-width: none;
+  }
+}
+
+.summaryText {
+  @include font-h10;
+}
+
+.downArrowAnimation {
+  position: absolute;
+  bottom: 0;
+  right: calc(
+    100% + var(--page-gutter-2x) + var(--mobile-grid-gutter) - var(--page-gutter) - var(--down-arrow-animation-width)
+  );
+}
+
+.readingTime {
+  @include font-body-5;
+  margin-top: px(66);
+
+  @include bp(tablet) {
+    margin-top: px(140);
+  }
+}

@@ -1,0 +1,45 @@
+.TextSwapper {
+  display: inline-flex;
+  width: max-content;
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  display: grid;
+  grid-template-areas: 'a';
+  position: relative;
+  overflow: hidden;
+
+  [data-show-initially='false'] & {
+    transform: translateY(110%);
+  }
+}
+
+.labelHidden,
+.label {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.1;
+  grid-area: a;
+}
+
+.labelHidden {
+  opacity: 0;
+  visibility: none;
+}
+
+.label {
+  transition: color $transition-short;
+  transform: translateY(120%);
+  opacity: 0;
+
+  .isCleanup & {
+    opacity: 1 !important;
+  }
+
+  &[data-label-index='0'] {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

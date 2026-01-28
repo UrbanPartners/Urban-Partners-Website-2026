@@ -1,0 +1,77 @@
+.TextTiles {
+  position: relative;
+}
+
+.inner {
+  position: relative;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+
+  @include bp(mobile) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  [data-items-per-row='3'] & {
+    @include bp(laptop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  [data-items-per-row='4'] & {
+    @include bp(laptop) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--page-gutter);
+  min-height: px(300);
+
+  @include bp(laptop) {
+    min-height: px(350);
+  }
+
+  @include bp(desktop) {
+    min-height: px(510);
+  }
+
+  &:nth-child(even) {
+    .lineAnimationRight {
+      @include bp(laptop, true) {
+        display: none;
+      }
+    }
+  }
+
+  &:last-child {
+    .lineAnimationRight {
+      display: none;
+    }
+  }
+}
+
+.lineAnimationRight {
+  @include bp(mobile, true) {
+    display: none;
+  }
+}
+
+.title {
+  @include font-h10;
+}
+
+.description {
+  @include font-body-4;
+}
+
+.descriptionInner {
+  opacity: 0.7;
+}

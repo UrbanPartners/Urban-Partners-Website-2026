@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Authenticate</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="/auth/styles.css"
+    />
+  </head>
+  <body>
+    <div
+      id="authenticateContainer"
+      class="container"
+    >
+      <form
+        id="form"
+        class="form"
+      >
+        <h1 class="title">Enter password</h1>
+        <input
+          id="input"
+          class="input"
+          type="text"
+          placeholder="Password"
+          autocomplete="off"
+        />
+        <button
+          type="submit"
+          class="button"
+          id="button"
+          data-text="submit"
+        >
+          Submit
+        </button>
+        <p
+          id="success"
+          class="success"
+          data-text="success"
+        >
+          Success!
+        </p>
+        <p
+          id="errorMessage"
+          class="errorMessage"
+          data-text="error"
+        >
+          Incorrect password.
+        </p>
+      </form>
+    </div>
+
+    <script>
+      window.isLoading = false
+      const form = document.getElementById('form')
+
+      form.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const input = document.getElementById('input')
+        const pass = input.value
+
+        if (window.isLoading || !pass) return
+
+        const form = document.getElementById('form')
+        const errorMessage = document.getElementById('errorMessage')
+
+        window.isLoading = true
+        document.body.classList.add('loading')
+        document.body.classList.remove('error')
+
+        fetch('/api/auth', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ pass }),
+        })
+          .then(response => {
+            if (response.status === 200) {
+              document.body.classList.add('submit-success')
+
+              fetch('/api/enable-draft', {
+                method: 'GET',
+              }).then(response => {
+                location.reload()
+              })
+            } else {
+              document.body.classList.add('error')
+            }
+          })
+          .catch(err => {
+            document.body.classList.add('error')
+          })
+          .finally(() => {
+            window.isLoading = false
+            document.body.classList.remove('loading')
+          })
+      })
+    </script>
+  </body>
+</html>

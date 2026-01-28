@@ -1,0 +1,41 @@
+.PreviewButton {
+  @include font-body-4;
+  @include flex-center;
+  @include z-index(preview-button);
+  background-color: var(--black);
+  color: var(--white);
+  height: px(30);
+  padding: 0 px(12);
+  position: fixed;
+  bottom: px(20);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: px(30);
+  overflow: hidden;
+  gap: px(10);
+}
+
+.text {
+  @include flex-center;
+  white-space: nowrap;
+}
+
+.dot {
+  @include box(px(10));
+  display: inline-block;
+  border-radius: 50%;
+  background-color: red;
+  margin-left: px(4);
+
+  .isPreview & {
+    background-color: green;
+  }
+}
+
+.enableDisableButton,
+.closeButton {
+  @include reset-button;
+  @include font-body-4;
+  border-radius: px(10);
+  padding: 0 px(5);
+}

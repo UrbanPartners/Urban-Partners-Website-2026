@@ -1,0 +1,170 @@
+/*
+
+Carousel
+
+*/
+
+.ExpandingCarousel {
+  position: relative;
+}
+
+.contentList {
+  position: relative;
+  overflow: hidden;
+  transform: none !important;
+}
+
+.contentListInner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: min-content;
+}
+
+.calculations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0;
+  display: grid;
+  grid-template-columns: #{px(280)} 1fr;
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+/*
+
+Card
+
+*/
+
+.Card {
+  width: var(--card-width-big);
+
+  --card-button-size: #{px(62)};
+  --card-text-content-max-width: 100%;
+
+  @include bp(tablet) {
+    --card-text-content-max-width: calc(var(--card-width-small) - calc(var(--card-button-size) * 1.5));
+  }
+}
+
+.card__inner {
+  position: relative;
+  display: block;
+  padding-left: var(--page-gutter);
+  width: 100%;
+  cursor: grab !important;
+}
+
+.card__innerContent {
+  display: block;
+}
+
+.card__topContent {
+  position: relative;
+  height: px(120);
+  padding-top: var(--page-gutter);
+
+  @include bp(tablet) {
+    height: px(190);
+  }
+}
+
+.card__number {
+  @include font-h9;
+}
+
+.card__imageContainer {
+  height: px(240);
+  position: relative;
+
+  @include bp(tablet) {
+    height: 36svw;
+  }
+}
+
+.card__imageContainerInner {
+  @include position-100(absolute);
+  top: auto;
+  bottom: 0;
+}
+
+.card__imageMaskReveal {
+  @include position-100(absolute);
+}
+
+.card__image {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+.card__textContent {
+  margin-top: var(--page-gutter);
+  position: relative;
+
+  @include bp(tablet) {
+    padding-top: px(10);
+  }
+}
+
+.card__titleContainer {
+  min-height: px(65);
+
+  @include bp(tablet) {
+    min-height: px(80);
+  }
+}
+
+.card__title {
+  display: block;
+  @include font-body-2;
+  text-wrap: balance;
+  max-width: var(--card-text-content-max-width);
+  @include clamp-lines(2);
+}
+
+.card__description {
+  @include font-body-7;
+  color: rgba($green-dark, 0.7);
+  max-width: var(--card-text-content-max-width);
+  @include clamp-lines(3);
+}
+
+.card__arrowButtonContainer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: var(--card-button-size);
+  height: var(--card-button-size);
+
+  @include bp(tablet, true) {
+    display: none;
+  }
+}
+
+.card__arrowButton {
+  @include position-100(absolute);
+  border-left: 1px solid var(--line-color-faded);
+  transition: border-color var(--transition-short);
+
+  svg {
+    width: 30%;
+  }
+
+  .isHovered & {
+    border-color: transparent;
+  }
+}
+
+.card__arrowButtonHiddenIcon {
+  color: var(--grey-5);
+}
+
+.card__colorBar {
+  background-color: var(--green-dark);
+}

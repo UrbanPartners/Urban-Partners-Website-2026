@@ -1,0 +1,7 @@
+.stickyTop {
+  transition: transform var(--nav-transition-time);
+
+  &.active {
+    transform: translateY(var(--nav-height));
+  }
+}

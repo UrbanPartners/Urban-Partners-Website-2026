@@ -1,0 +1,43 @@
+.BigMedia {
+  padding: 0 var(--page-gutter);
+  display: flex;
+
+  &[data-big-media-size='3/4'][data-big-media-position='right'] {
+    justify-content: flex-end;
+  }
+
+  &[data-big-media-size='3/4'][data-big-media-position='left'] {
+    justify-content: flex-start;
+  }
+}
+
+.innerContainer {
+  background-color: var(--green-pale);
+  position: relative;
+  height: var(--big-media-default-height);
+
+  [data-big-media-size='full'] & {
+    width: 100%;
+  }
+
+  [data-big-media-size='3/4'] & {
+    width: 75%;
+  }
+
+  [data-big-media-height='tall'] & {
+    height: var(--big-media-tall-height);
+  }
+
+  [data-big-media-height='customAspectRatio'] & {
+    aspect-ratio: var(--big-media-aspect-ratio);
+    height: auto;
+  }
+}
+
+.inner {
+  @include position-100(absolute);
+}
+
+.media {
+  @include position-100(absolute);
+}

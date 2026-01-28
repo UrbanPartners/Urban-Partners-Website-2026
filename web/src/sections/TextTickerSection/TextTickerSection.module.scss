@@ -1,0 +1,65 @@
+.TextTickerSection {
+  position: relative;
+  overflow: hidden;
+}
+
+.titleContainer {
+  padding: 0 var(--page-gutter);
+  margin-bottom: var(--page-gutter);
+}
+
+.title {
+  @include font-body-7;
+  color: var(--green-dark-70);
+}
+
+.tickerRows {
+  border-bottom: 1px solid var(--line-color-faded);
+}
+
+.tickerRow {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--line-color-faded);
+
+  &:nth-child(even) {
+    display: flex;
+    justify-content: flex-end;
+
+    .tickerRowInner {
+      justify-content: flex-end;
+    }
+
+    .tickerRowGroup {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.tickerRowInner {
+  @include gpu;
+  display: flex;
+  width: min-content;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tickerRowGroup {
+  display: flex;
+  gap: 1px;
+  width: min-content;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tickerItem {
+  display: block;
+  padding: calc(var(--page-gutter) * 0.5) var(--page-gutter);
+  outline: 1px solid var(--line-color-faded);
+}
+
+.tickerItemText {
+  @include font-h3;
+  display: block;
+  white-space: nowrap;
+}

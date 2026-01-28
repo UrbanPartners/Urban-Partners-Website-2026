@@ -1,0 +1,10 @@
+In the following prompt:
+Schema File = [SCHEMA FILE]
+
+Add the following fields to Schema File:
+-image1: imageAsset, required
+-image2: imageAsset, required
+-title
+-description (use getRichTextFields - see implementation on the richTextSection.ts schema file. only add link and strong)
+
+Populate its corresponing fragment, type and tsx file with the new data. Follow examples from other sections in web/src/sections. The TSX file can just have these fields added to the props with a console log, logging everything but dont change anything about the return value

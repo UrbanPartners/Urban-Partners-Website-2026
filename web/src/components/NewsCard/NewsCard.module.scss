@@ -1,0 +1,68 @@
+@import '@/styles/mixins';
+
+.NewsCard {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include bp(tablet) {
+    height: px(600);
+  }
+
+  @include bp(desktop) {
+    height: px(768);
+  }
+}
+
+.top {
+  padding: var(--page-gutter);
+  margin-bottom: px(88);
+
+  @include bp(tablet) {
+    margin-bottom: 0;
+  }
+}
+
+.publishedDate {
+  @include font-h9;
+}
+
+.bottom {
+  display: block;
+}
+
+.titleAndImageContainer {
+  padding: 0 var(--page-gutter);
+  margin-bottom: px(60);
+
+  @include bp(tablet) {
+    margin-bottom: px(80);
+  }
+}
+
+.imageContainer {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  position: relative;
+  width: 80%;
+  margin-bottom: var(--page-gutter);
+  max-width: px(450);
+
+  @include bp(tablet) {
+    aspect-ratio: 480/320;
+    max-width: none;
+    width: 50%;
+  }
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+.title {
+  @include font-body-2;
+  @include clamp-lines(2);
+  max-width: px(350);
+}

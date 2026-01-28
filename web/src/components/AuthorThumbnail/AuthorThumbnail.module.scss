@@ -1,0 +1,31 @@
+.AuthorThumbnail {
+  padding-top: var(--page-gutter);
+}
+
+.authorImageContainer {
+  @include box(px(65));
+  border-radius: px(100);
+  overflow: hidden;
+  background-color: var(--grey-5);
+  position: relative;
+}
+
+.authorImage {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+.authorName {
+  @include font-body-8;
+  margin-top: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    margin-top: px(33);
+  }
+}
+
+.authorDesignation {
+  @include font-body-8;
+  color: var(--green-midtone);
+  margin-top: px(5);
+}

@@ -1,0 +1,388 @@
+@use 'sass:list';
+@use 'sass:map';
+@import 'vars';
+
+// ================================================
+// GPU fix
+// ================================================
+@mixin gpu {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  .safari & {
+    perspective: none; // otherwise text and icons become blurry
+  }
+}
+
+// ================================================
+// Same height/width box
+// ================================================
+@mixin box($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// ================================================
+// REM calc
+// ================================================
+@function px($px) {
+  @return $px * 0.1rem;
+}
+
+// ================================================
+// Top left positioning
+// ================================================
+@mixin position-0 {
+  top: 0;
+  left: 0;
+}
+
+// ================================================
+// Full width/height positioning
+// ================================================
+@mixin position-100($pos: relative) {
+  position: $pos;
+  @include position-0;
+  @include box(100%);
+}
+
+// ================================================
+// Center things horizontally in flexbox
+// ================================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ================================================
+// Center things vertically in flexbox
+// ================================================
+@mixin flex-center-vert {
+  display: flex;
+  align-items: center;
+}
+
+// ================================================
+// Center something with abs/fixed positioning
+// ================================================
+@mixin transform-center {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+// ================================================
+// Z-Index for main components
+// ================================================
+@mixin z-index($id) {
+  z-index: list.index($elements, $id) + 1000;
+}
+
+// ================================================
+// Media queries
+// ================================================
+@mixin bp($size, $is-max-width: false) {
+  @if $is-max-width {
+    @media (max-width: #{map.get($layout, $size)}px) {
+      @content;
+    }
+  } @else {
+    @media (min-width: #{map.get($layout, $size)}px) {
+      @content;
+    }
+  }
+}
+
+@mixin bp-custom($query, $is-max-width: false) {
+  @if $is-max-width {
+    @media (max-width: #{$query}) {
+      @content;
+    }
+  } @else {
+    @media (min-width: #{$query}) {
+      @content;
+    }
+  }
+}
+
+@mixin bp-height($px, $is-max-width: false) {
+  @if $is-max-width {
+    @media (max-height: #{$px}px) {
+      @content;
+    }
+  } @else {
+    @media (min-height: #{$px}px) {
+      @content;
+    }
+  }
+}
+
+// ================================================
+// Hover
+// ================================================
+@mixin hover {
+  @media (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// ================================================
+// Reset ul
+// ================================================
+@mixin reset-ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+// ================================================
+// Reset button
+// ================================================
+@mixin reset-button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+  text-align: inherit;
+  letter-spacing: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  appearance: none;
+  color: currentColor;
+}
+
+// ================================================
+// Hide scrollbar
+// ================================================
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+// ================================================
+// Reduced motion
+// ================================================
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// ================================================
+// Clamp lines
+// ================================================
+
+@mixin clamp-lines($lines: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+
+// ================================================
+// Language Targeting
+// ================================================
+@mixin lang($lang) {
+  @if $lang {
+    html[lang='#{$lang}'] & {
+      @content;
+    }
+  }
+}
+
+// ================================================
+// Grid
+// ================================================
+
+@mixin off-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+}
+
+@mixin off-grid-flipped {
+  display: grid;
+  grid-template-columns: minmax(0, 0.6fr) minmax(0, 0.4fr);
+}
+
+@mixin grid-50-50 {
+  display: grid;
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 0.5fr);
+}
+
+@mixin grid-thirds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 0.333333fr));
+}
+
+@mixin item-list-grid-1-4 {
+  display: grid;
+  grid-template-columns: minmax(0, 0.25fr) minmax(0, 0.75fr);
+}
+
+@mixin item-list-grid-50-50 {
+  @include grid-50-50;
+}
+
+// ================================================
+// Image
+// ================================================
+
+@mixin fit-image {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+// ================================================
+// Rich Text
+// ================================================
+
+@mixin rich-text-regular-types {
+  [data-p],
+  [data-ul],
+  [data-ol],
+  [data-blockquote],
+  [data-split-text] {
+    @content;
+
+    &:empty {
+      display: none;
+
+      & + [data-p],
+      & + [data-ul],
+      & + [data-ol],
+      & + [data-blockquote] {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@mixin rich-text-heading-types {
+  [data-h1],
+  [data-h2],
+  [data-h3],
+  [data-h4],
+  [data-h5],
+  [data-h6],
+  [data-split-text] {
+    @content;
+
+    &:empty {
+      display: none;
+
+      & + [data-h1],
+      & + [data-h2],
+      & + [data-h3],
+      & + [data-h4],
+      & + [data-h5],
+      & + [data-h6] {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@mixin rich-text-base-styling {
+  [data-small] {
+    font-size: 0.6em;
+  }
+
+  @include rich-text-regular-types {
+    margin: 1em 0;
+
+    [data-link] {
+      text-decoration: underline;
+      transition: opacity var(--transition-short);
+      color: var(--green-dark);
+
+      @include hover {
+        opacity: 0.7;
+      }
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  @include rich-text-heading-types {
+    margin: 1.4em 0 0.9em;
+
+    &:empty {
+      display: none;
+    }
+
+    [data-link] {
+      text-decoration: underline;
+      transition: opacity var(--transition-short);
+
+      @include hover {
+        opacity: 0.7;
+      }
+    }
+
+    // strong {
+    //   font-weight: inherit;
+    // }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ================================================
+// Break through gutter
+// ================================================
+
+@mixin break-through-page-gutter {
+  width: calc(100% + var(--page-gutter) * 2);
+  margin-left: calc(var(--page-gutter) * -1);
+}
+
+// ================================================
+// News Grid Settings
+// ================================================
+
+@mixin news-grid-settings {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--line-color-faded);
+
+  & > * {
+    outline: 1px solid var(--line-color-faded);
+  }
+
+  @include bp(tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

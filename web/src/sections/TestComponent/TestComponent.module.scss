@@ -1,0 +1,7 @@
+.TestComponent {
+  padding: 0 var(--page-gutter);
+}
+
+.title {
+  @include font-h5;
+}

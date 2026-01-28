@@ -1,0 +1,112 @@
+.titleContainer {
+  padding: 0 var(--page-gutter);
+  margin-bottom: var(--page-gutter);
+  padding-bottom: var(--page-gutter);
+  min-height: px(220);
+
+  @include bp(tablet) {
+    min-height: px(300);
+  }
+
+  @include bp(desktop) {
+    min-height: px(419);
+  }
+}
+
+.title {
+  @include font-h2;
+  letter-spacing: -0.03em; // fix for split text word getting cut off
+}
+
+.middleContent {
+  padding: 0 var(--page-gutter);
+  position: relative;
+  margin-bottom: var(--page-gutter);
+  display: grid;
+  grid-template-columns: minmax(0, var(--line-size-tiny)) minmax(0, 1fr);
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.middleContentInner {
+  position: relative;
+  padding-top: px(22);
+  padding-left: var(--page-gutter);
+
+  @include bp(tablet) {
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: 0.45fr 0.55fr;
+  }
+}
+
+.subtitle {
+  @include font-body-4;
+  color: var(--dark-green-50);
+  margin-bottom: px(54);
+
+  @include bp(tablet) {
+    margin-bottom: 0;
+    padding-left: var(--page-gutter);
+  }
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-h10;
+}
+
+.arrowContent {
+  margin: 0;
+  padding: 0 var(--page-gutter);
+  transform: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  @include bp(tablet) {
+    position: relative;
+    transform: translateY(-50%);
+    margin: var(--page-gutter) 0;
+  }
+}
+
+.mediaContainer {
+  padding: 0 var(--page-gutter);
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: px(40);
+
+  @include bp(tablet) {
+    margin-top: 0;
+  }
+}
+
+.mediaContainerInner {
+  height: var(--big-media-default-height);
+  overflow: hidden;
+  width: 100%;
+
+  [data-media-size='full'] & {
+    width: 100%;
+  }
+
+  [data-media-size='3/4'] & {
+    @include bp(tablet) {
+      width: 75%;
+    }
+  }
+
+  [data-media-height='tall'] & {
+    height: var(--big-media-tall-height);
+  }
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

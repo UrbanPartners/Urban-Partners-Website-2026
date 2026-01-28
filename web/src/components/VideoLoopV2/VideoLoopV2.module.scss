@@ -1,0 +1,19 @@
+.videoLoopV2 {
+  @include position-100(absolute);
+}
+
+.videoPlayer {
+  @include position-100(absolute);
+  opacity: 0;
+  transition: opacity var(--video-show-duration, 0.3s) ease-in-out;
+
+  &.visuallyShowVideo {
+    opacity: 1;
+  }
+
+  :global(video),
+  & > div {
+    @include position-100(absolute);
+    object-fit: cover;
+  }
+}

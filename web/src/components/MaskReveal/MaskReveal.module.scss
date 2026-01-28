@@ -1,0 +1,93 @@
+/* stylelint-disable-next-line block-no-empty */
+.MaskReveal {
+  @include gpu;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+
+  &.hasSubtleBg {
+    background-color: var(--loading-image-bg);
+  }
+
+  &.isOpen {
+    pointer-events: all;
+  }
+
+  &[data-mask-type='default'] {
+    &.FROM_BOTTOM {
+      clip-path: polygon(0% var(--left-y), 100% var(--right-y), 100% 100%, 0% 100%);
+
+      --left-y: 100%;
+      --right-y: 100%;
+    }
+
+    &.FROM_TOP {
+      clip-path: polygon(0% 0%, 100% 0%, 100% var(--left-y), 0% var(--right-y));
+
+      --left-y: 0%;
+      --right-y: 0%;
+    }
+
+    &.showInitially {
+      &.FROM_TOP {
+        --left-y: 100%;
+        --right-y: 100%;
+      }
+
+      &.FROM_BOTTOM {
+        --left-y: 0%;
+        --right-y: 0%;
+      }
+    }
+  }
+
+  &[data-mask-type='twoColumns'] {
+    &.FROM_BOTTOM {
+      clip-path: polygon(
+        0% var(--left-y-1),
+        50% var(--left-y-2),
+        50% var(--right-y-1),
+        100% var(--right-y-2),
+        100% 100%,
+        0% 100%
+      );
+
+      --left-y-1: 100%;
+      --left-y-2: 100%;
+      --right-y-1: 100%;
+      --right-y-2: 100%;
+    }
+
+    &.FROM_TOP {
+      clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% var(--right-y-2),
+        50% var(--right-y-1),
+        50% var(--left-y-2),
+        0% var(--left-y-1)
+      );
+
+      --left-y-1: 0%;
+      --left-y-2: 0%;
+      --right-y-1: 0%;
+      --right-y-2: 0%;
+    }
+
+    &.showInitially {
+      &.FROM_TOP {
+        --left-y-1: 100%;
+        --left-y-2: 100%;
+        --right-y-1: 100%;
+        --right-y-2: 100%;
+      }
+
+      &.FROM_BOTTOM {
+        --left-y-1: 0%;
+        --left-y-2: 0%;
+        --right-y-1: 0%;
+        --right-y-2: 0%;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+.cmsDebug {
+  background-color: var(--green-dark);
+  color: var(--white);
+  padding: var(--page-gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  &[data-index='0'] {
+    padding-top: calc(var(--nav-height) + var(--page-gutter));
+  }
+
+  * {
+    @include font-body-6;
+  }
+}
+
+.cmsDebug__title {
+  @include font-h10;
+}

@@ -1,0 +1,93 @@
+.line {
+  background-color: var(--line-color, var(--line-color-faded));
+  display: block;
+  position: absolute;
+
+  // Position classes
+  &.positionLeft {
+    left: 0;
+    top: 0;
+  }
+
+  &.positionRight {
+    right: 0;
+    top: 0;
+  }
+
+  &.positionTop {
+    top: 0;
+    left: 0;
+  }
+
+  &.positionBottom {
+    bottom: 0;
+    left: 0;
+  }
+
+  // Dimension classes
+  &.dimensionHorizontal {
+    height: 1px;
+
+    &[data-line-size='full'] {
+      width: 100%;
+    }
+
+    &[data-line-size='tiny'] {
+      width: var(--line-size-tiny);
+    }
+
+    &[data-line-size='small'] {
+      width: var(--line-size-small);
+    }
+  }
+
+  &.dimensionVertical {
+    width: 1px;
+
+    &[data-line-size='full'] {
+      height: 100%;
+    }
+
+    &[data-line-size='tiny'] {
+      height: px(64);
+    }
+
+    &[data-line-size='small'] {
+      height: px(110);
+    }
+  }
+
+  // Transform origin classes
+  &.originLeft {
+    transform-origin: left;
+  }
+
+  &.originRight {
+    transform-origin: right;
+  }
+
+  &.originTop {
+    transform-origin: top;
+  }
+
+  &.originBottom {
+    transform-origin: bottom;
+  }
+
+  // Initial scale classes
+  &.scaleHorizontalZero {
+    transform: scaleX(0);
+  }
+
+  &.scaleHorizontalFull {
+    transform: scaleX(1);
+  }
+
+  &.scaleVerticalZero {
+    transform: scaleY(0);
+  }
+
+  &.scaleVerticalFull {
+    transform: scaleY(1);
+  }
+}

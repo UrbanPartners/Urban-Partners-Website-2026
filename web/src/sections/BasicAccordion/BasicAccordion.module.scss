@@ -1,0 +1,108 @@
+/*
+
+BasicAccordion
+
+*/
+
+.BasicAccordion {
+  position: relative;
+}
+
+.inner {
+  padding: 0 var(--page-gutter);
+
+  @include bp(tablet) {
+    padding: 0;
+    @include off-grid;
+  }
+}
+
+.leftSide {
+  position: relative;
+}
+
+.rightSide {
+  position: relative;
+}
+
+.title {
+  @include font-body-7;
+  color: var(--dark-green-70);
+  margin-bottom: px(65);
+
+  @include bp(tablet) {
+    margin-bottom: px(90);
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+
+AccordionItem
+
+*/
+
+.AccordionItem {
+  position: relative;
+}
+
+.trigger {
+  @include reset-button;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: px(25) 0;
+  cursor: pointer;
+  text-align: left;
+
+  @include bp(tablet) {
+    padding: px(35) 0;
+  }
+}
+
+.itemTitle {
+  @include font-body-6;
+  color: var(--green-dark);
+}
+
+.plusMinusAnimation {
+  @include bp(tablet) {
+    margin-right: var(--page-gutter) !important;
+
+    --size: #{px(18)} !important;
+  }
+
+  @include bp(tablet, true) {
+    --size: #{px(15)} !important;
+  }
+}
+
+.contentContainer {
+  height: 0;
+  overflow: hidden;
+  will-change: height;
+}
+
+.contentInner {
+  padding: px(20) 0 px(40);
+  max-width: px(418);
+
+  @include bp(tablet) {
+    padding: px(30) 0 px(100);
+  }
+
+  @include bp(desktop) {
+    padding: px(48) 0 px(153);
+  }
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-body-7;
+  color: var(--dark-green-70);
+}

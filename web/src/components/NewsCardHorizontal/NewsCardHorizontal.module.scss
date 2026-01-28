@@ -1,0 +1,40 @@
+.NewsCardHorizontal {
+  height: px(150);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include bp(tablet) {
+    height: px(192);
+  }
+}
+
+.top {
+  display: grid;
+  justify-content: space-between;
+  align-items: flex-start;
+  grid-template-columns: 1fr #{px(100)};
+  gap: var(--page-gutter);
+  padding: var(--page-gutter);
+
+  @include bp(tablet) {
+    grid-template-columns: 1fr #{px(150)};
+  }
+}
+
+.title {
+  @include font-body-2;
+  @include clamp-lines(2);
+}
+
+.publishedDate {
+  @include font-body-2;
+  white-space: nowrap;
+  color: var(--dark-green-50);
+  text-align: right;
+}
+
+.bottom {
+  width: 100%;
+  margin-top: auto;
+}

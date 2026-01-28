@@ -1,0 +1,96 @@
+@mixin intro-grid {
+  display: grid;
+  grid-template-columns: var(--line-size-tiny) minmax(0, 1fr);
+
+  @include bp(tablet) {
+    grid-template-columns: 0.333333fr 0.666666fr;
+  }
+}
+
+.IntroSection {
+  // position: sticky;
+  // top: 0;
+  // left: 0;
+  width: 100%;
+  height: 100svh;
+}
+
+.intro {
+  position: relative;
+}
+
+.intro__top {
+  @include intro-grid;
+  min-height: 50svh;
+
+  @include bp(tablet) {
+    min-height: 60svh;
+  }
+}
+
+.intro__top__right {
+  padding: var(--page-gutter-2x);
+  padding-top: calc(var(--nav-height) + var(--page-gutter));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+  }
+}
+
+.intro__text {
+  @include font-h2;
+  letter-spacing: -0.06em; // fix for split text word getting cut off
+
+  [data-split-text-type='char'] {
+    padding-right: 0.05em; // fix for stuff getting cut off
+  }
+}
+
+.intro__bottom {
+  @include intro-grid;
+  position: relative;
+}
+
+.intro__descriptionAndSubtitle {
+  // padding-left: px(128);
+  position: relative;
+  min-height: 50svh;
+  padding-bottom: var(--page-gutter);
+
+  @include bp(tablet) {
+    @include off-grid;
+    padding-left: px(128);
+    min-height: 40svh;
+  }
+}
+
+.intro__subtitle {
+  @include font-body-4;
+  line-height: 0.8;
+  position: relative;
+  padding: var(--page-gutter-2x);
+  height: fit-content;
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+  }
+}
+
+.intro__description {
+  @include font-h10;
+  padding: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+  }
+}
+
+.intro__bottom__downArrow {
+  position: absolute;
+  bottom: var(--page-gutter);
+  left: var(--page-gutter);
+}

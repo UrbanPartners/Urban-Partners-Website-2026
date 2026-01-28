@@ -1,0 +1,43 @@
+/* stylelint-disable-next-line block-no-empty */
+.SectionContainer {
+  margin: var(--section-spacing) 0;
+  min-height: px(50); // hack for fixing page-to-page issues with sections indicating they're in view
+  margin-top: var(--top-mobile);
+  margin-bottom: var(--bottom-mobile);
+  position: relative;
+  z-index: var(--z-index);
+
+  @include bp(tablet) {
+    margin-top: var(--top-desktop);
+    margin-bottom: var(--bottom-desktop);
+  }
+
+  &:first-child {
+    margin-top: 0;
+    padding-top: calc(var(--nav-height) + var(--page-gutter-2x));
+
+    @include bp(tablet) {
+      padding-top: calc(var(--nav-height) + #{px(48)});
+    }
+  }
+
+  &.isLastSection {
+    margin-bottom: 0;
+  }
+
+  &[data-component='footer'] {
+    margin-top: 0;
+    margin-bottom: 0;
+    min-height: 0;
+  }
+
+  &.moveDown1Pixel {
+    margin-bottom: -1px;
+  }
+}
+
+.SectionContainer[data-component='homeHero'],
+.SectionContainer[data-component='ourStoryScroller'],
+.SectionContainer[data-component='fourOhFour'] {
+  padding-top: 0;
+}

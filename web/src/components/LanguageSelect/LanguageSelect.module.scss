@@ -1,0 +1,44 @@
+.LanguageSelect {
+  position: relative;
+  display: inline-block;
+  color: var(--fg-color);
+  height: 100%;
+
+  --padding: #{px(40)};
+}
+
+.textSwapper {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  @include font-body-8;
+  text-transform: uppercase;
+  transition: color var(--transition-short);
+}
+
+.select {
+  @include reset-button;
+  height: 100%;
+  padding: 0 var(--padding);
+  opacity: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.icon {
+  position: absolute;
+  right: var(--padding);
+  top: 50%;
+  transform: translate(calc(var(--padding) * 0.5), -50%);
+  pointer-events: none;
+  color: var(--fg-color);
+  width: px(10);
+  transition:
+    color var(--transition-short),
+    fill var(--transition-short);
+}

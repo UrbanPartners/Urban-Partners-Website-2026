@@ -1,0 +1,248 @@
+/* ========================
+Section
+======================== */
+
+.TimelineSection {
+  position: relative;
+
+  --timeline-item-height: #{px(600)};
+
+  @include bp(desktop) {
+    --timeline-item-height: #{px(768)};
+  }
+}
+
+.gridOverlay {
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  @include bp(tablet, true) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+.inner {
+  margin-top: -100svh;
+  padding-top: 250svh;
+  padding-bottom: 150svh;
+}
+
+.itemsContainer {
+  @include grid-50-50;
+
+  &::after {
+    @include bp(tablet, true) {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background-color: var(--line-color-faded);
+      position: absolute;
+      top: 0;
+      right: 50%;
+    }
+  }
+
+  @include bp(tablet) {
+    @include grid-thirds;
+  }
+}
+
+.itemsContainer__spacer {
+  @include bp(tablet, true) {
+    display: none;
+  }
+}
+
+.itemsContainer__right {
+  padding-top: calc(var(--timeline-item-height) * 0.5);
+}
+
+/* ========================
+Timeline Year
+======================== */
+
+.TimelineYear {
+  @include flex-center;
+  height: 100svh;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  left: 0;
+  margin-top: -100svh;
+  pointer-events: none;
+  width: 50%;
+  justify-content: flex-start;
+  padding-top: calc(var(--nav-height) + var(--page-gutter-2x));
+
+  @include bp(tablet) {
+    padding-top: 0;
+    justify-content: center;
+    left: 33.333333%;
+    width: 33.33333%;
+  }
+
+  @include bp(laptop) {
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.timelineYear__year {
+  @include font-h1;
+  line-height: 0.8;
+  display: flex;
+  flex-direction: column;
+
+  @include bp(laptop) {
+    @include flex-center;
+    flex-direction: row;
+    width: fit-content;
+  }
+
+  @include bp(desktop, true) {
+    font-size: 13.5vw;
+  }
+
+  @include bp(laptop, true) {
+    font-size: 26vw;
+  }
+
+  @include bp(tablet, true) {
+    font-size: 40.5vw;
+  }
+}
+
+.timelineYear__yearPrefix {
+  display: block;
+}
+
+.timelineYear__yearSuffixesList {
+  display: grid;
+  grid-template-areas: 'a';
+}
+
+.timelineYear__yearSuffix {
+  grid-area: a;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.timelineYear__yearSuffixChar {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+.timelineYear__subtitleContainer {
+  display: flex;
+  align-items: flex-start;
+  margin-top: px(20);
+  padding: var(--page-gutter);
+  align-self: self-start;
+  width: 100%;
+
+  @include bp(tablet) {
+    padding: 0;
+    max-width: 33.33333%;
+  }
+
+  @include bp(laptop) {
+    max-width: px(240);
+  }
+
+  @include bp(desktop) {
+    margin-top: px(34);
+  }
+}
+
+.timelineYear__subtitle {
+  @include font-body-4;
+}
+
+/* ========================
+Timeline Year
+======================== */
+
+.TimelineYearItem {
+  padding: var(--page-gutter) var(--page-gutter) px(50) var(--page-gutter);
+  border-top: 1px solid var(--line-color-faded);
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+    height: var(--timeline-item-height);
+  }
+
+  &[data-timeline-item-image-layout='portrait'] {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.timelineYearItem__yearSuffixDebug {
+  padding: var(--page-gutter);
+  background-color: var(--green-dark);
+  color: var(--white);
+  text-align: center;
+  @include font-body-4;
+}
+
+.timelineYearItem__inner {
+  width: 100%;
+
+  [data-timeline-item-image-layout='portrait'] & {
+    max-width: 100%;
+
+    @include bp(tablet) {
+      max-width: 70%;
+    }
+
+    @include bp(desktop) {
+      max-width: 50%;
+    }
+  }
+}
+
+.timelineYearItem__imageContainer {
+  position: relative;
+  margin-bottom: px(19);
+
+  [data-timeline-item-image-layout='portrait'] & {
+    aspect-ratio: 165 / 210;
+
+    @include bp(tablet) {
+      aspect-ratio: 319 / 352;
+    }
+  }
+
+  [data-timeline-item-image-layout='landscape'] & {
+    aspect-ratio: 165 / 210;
+
+    @include bp(tablet) {
+      aspect-ratio: 576 / 352;
+    }
+  }
+}
+
+.timelineYearItem__image {
+  @include fit-image;
+}
+
+.timelineYearItem__title {
+  @include font-body-4;
+}
+
+.timelineYearItem__description {
+  @include font-body-7;
+  max-width: px(278);
+  width: 100%;
+  color: var(--dark-green-70);
+  margin-top: calc(var(--page-gutter) * 0.5);
+
+  @include bp(desktop) {
+    margin-top: var(--page-gutter);
+  }
+}

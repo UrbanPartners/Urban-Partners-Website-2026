@@ -1,0 +1,18 @@
+/* stylelint-disable-next-line block-no-empty */
+.MobileInProgress {
+  @include position-100(fixed);
+  @include z-index(mobile-in-progress);
+  @include flex-center;
+  height: 100svh;
+  width: 100svw;
+  background-color: $black;
+
+  @include bp(tablet) {
+    display: none;
+  }
+}
+
+.inner {
+  @include font-body-3;
+  color: $white;
+}

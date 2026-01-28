@@ -1,0 +1,23 @@
+.Media {
+  display: block;
+
+  &.cover {
+    @include position-100(absolute);
+  }
+}
+
+.image {
+  display: block;
+}
+
+.video {
+  display: block;
+}
+
+.image,
+.video {
+  .cover & {
+    @include position-100(absolute);
+    object-fit: cover;
+  }
+}

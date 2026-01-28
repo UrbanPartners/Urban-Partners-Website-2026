@@ -1,0 +1,417 @@
+// @use 'sass:color';
+
+.Menu {
+  color: var(--fg-color);
+
+  --legal-text-color: #{rgba($grey-5, 0.5)};
+  --border-color: var(--menu-border-color);
+  --fg-color: var(--grey-5);
+  --content-columns-mobile: minmax(0, var(--line-size-tiny)) minmax(0, 1fr);
+  --secondary-link-gap: #{px(5)};
+  --secondary-link-button-gap: #{px(10)};
+  --secondary-link-button-size: #{px(33)};
+}
+
+/*
+
+Main Content
+
+*/
+
+.inner {
+  padding: px(32) var(--page-gutter);
+}
+
+.topContent {
+  @include bp(navigation) {
+    @include off-grid-flipped;
+  }
+}
+
+.logoWrapperDiv {
+  opacity: 0;
+}
+
+.logoWrapper {
+  display: block;
+}
+
+.logo {
+  width: px(32);
+  color: var(--fg-color);
+
+  @include bp(navigation) {
+    width: px(150);
+  }
+}
+
+.primaryLinks {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--page-gutter);
+
+  @include bp(navigation) {
+    margin-top: 0;
+    margin-top: px(45);
+  }
+}
+
+.primaryLinks__li {
+  display: block;
+}
+
+.middleContent {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: var(--content-columns-mobile);
+  margin-top: px(30);
+
+  @include bp(navigation) {
+    margin-top: 0;
+    display: flex;
+  }
+
+  // hack for grid without adding html
+  @include bp(navigation, true) {
+    &::before {
+      content: '';
+      display: block;
+    }
+  }
+}
+
+.sideLinksContainer {
+  margin-bottom: -1px;
+  position: relative;
+  padding-top: var(--page-gutter-2x);
+  padding-left: var(--page-gutter-2x);
+
+  @include bp(navigation) {
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-left: 0;
+  }
+}
+
+.sideLinks {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--secondary-link-gap);
+
+  @include bp(navigation) {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.bottomContent {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--content-columns-mobile);
+  margin-top: px(60);
+
+  @include bp(navigation) {
+    @include off-grid-flipped;
+    margin-top: 0;
+  }
+}
+
+.bottomContent__lineAnimationAcross,
+.middleContent__lineAnimationAcross,
+.bottomContent__lineAnimationDown,
+.legalContent__lineAnimationAcross,
+.bottomContent__lineAnimationAcross__bottom {
+  --line-color: var(--border-color);
+}
+
+.bottomContent__lineAnimationDown,
+.middleContent__lineAnimationDown {
+  --line-color: var(--border-color);
+
+  @include bp(navigation) {
+    left: calc(var(--page-gutter) * -1) !important;
+  }
+}
+
+.secondaryLinks {
+  padding-top: var(--page-gutter-2x);
+  padding-left: var(--page-gutter-2x);
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  position: relative;
+  gap: var(--secondary-link-gap);
+
+  @include bp(navigation) {
+    padding-top: var(--page-gutter);
+    padding-left: 0;
+  }
+}
+
+.secondaryLinks__li {
+  display: block;
+}
+
+.legalContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0;
+  margin-top: px(28);
+  position: relative;
+
+  @include bp(navigation, true) {
+    @include break-through-page-gutter;
+    padding: 0 var(--page-gutter);
+  }
+
+  @include bp(navigation) {
+    padding-top: px(28);
+    margin-top: px(51);
+  }
+}
+
+.legalLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  opacity: 0;
+  padding-left: calc(
+    var(--page-gutter-2x) + var(--line-size-tiny) + var(--secondary-link-button-gap) + var(--secondary-link-button-size)
+  );
+  margin-top: var(--page-gutter-2x);
+
+  @include bp(navigation) {
+    margin-top: 0;
+    padding-left: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: row;
+  }
+}
+
+.legalLinks__li {
+  display: inline-flex;
+
+  @include bp(navigation) {
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+  }
+
+  &:not(:last-child) {
+    @include bp(navigation) {
+      &::after {
+        content: '-';
+        display: inline-flex;
+        margin: 0 px(10);
+        color: var(--legal-text-color);
+      }
+    }
+  }
+}
+
+.legalText {
+  @include font-body-8;
+  color: var(--legal-text-color);
+  opacity: 0;
+  white-space: pre-line;
+  width: 100%;
+
+  @include bp(navigation) {
+    width: auto;
+    white-space: initial;
+  }
+}
+
+/*
+
+Primary Links
+
+*/
+
+.primaryLinkWrapper {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.primaryLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: px(5) 0;
+}
+
+.primaryLink__label {
+  @include font-h8;
+  opacity: 0.2;
+  transition: opacity var(--transition-short);
+  transform: translateY(110%);
+  display: block;
+
+  .active &,
+  .noneHovered & {
+    opacity: 1;
+  }
+
+  [data-active-link='true'] & {
+    opacity: 0.2 !important;
+  }
+}
+
+.primaryLink__arrow {
+  width: px(38);
+  overflow: visible !important;
+}
+
+/*
+
+Secondary Links
+
+*/
+
+.secondaryLinkWrapper {
+  display: block;
+}
+
+.secondaryLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--secondary-link-button-gap);
+  transition: opacity var(--transition-short);
+
+  &[data-active-link='true'] {
+    opacity: 0.2;
+  }
+}
+
+.secondaryLink__arrow {
+  height: var(--secondary-link-button-size);
+  width: var(--secondary-link-button-size);
+  background-color: var(--fg-color) !important;
+  border-radius: 50%;
+  opacity: 0;
+
+  svg {
+    width: 40%;
+    color: var(--green-dark);
+  }
+}
+
+.secondaryLink__label {
+  @include font-body-3;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.secondaryLink__labelText {
+  display: block;
+  transform: translateY(110%);
+}
+
+/*
+
+Side Links
+
+*/
+
+.sideLinkWrapper {
+  display: block;
+}
+
+.sideLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: px(27) var(--page-gutter);
+  width: px(235);
+  position: relative;
+  transition: border-color var(--transition-short);
+
+  .sideLinks__li:first-child & {
+    padding-left: 0;
+  }
+}
+
+.sideLink__rightLine {
+  transition: background-color var(--transition-short);
+
+  --line-color: var(--border-color);
+}
+
+.sideLink__rightLineHover,
+.sideLink__bottomLineHover {
+  z-index: 3;
+
+  --line-color: var(--grey-5);
+}
+
+.sideLink__label {
+  @include font-body-5;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+
+  [data-active-link='true'] & {
+    opacity: 0.2;
+  }
+}
+
+.sideLink__labelText {
+  display: block;
+  transform: translateY(110%);
+}
+
+.sideLink__arrow {
+  width: px(18);
+  opacity: 0;
+
+  [data-active-link='true'] & {
+    opacity: 0.2 !important ;
+  }
+}
+
+/*
+
+Legal Links
+
+*/
+
+.legalLinkWrapper {
+  display: block;
+}
+
+.legalLink {
+  @include font-body-8;
+  color: var(--legal-text-color);
+  transition: color var(--transition-short);
+
+  @include hover {
+    color: var(--fg-color);
+  }
+
+  &[data-active-link='true'] {
+    opacity: 0.5;
+  }
+}
+
+.legalLink__label {
+  display: block;
+}
+
+.languageSelect {
+  border-left: 1px solid var(--border-color);
+  height: px(58) !important;
+}

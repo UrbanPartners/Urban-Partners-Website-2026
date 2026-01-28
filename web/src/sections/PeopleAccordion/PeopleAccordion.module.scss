@@ -1,0 +1,113 @@
+.PeopleAccordion {
+  position: relative;
+  overflow: hidden;
+}
+
+.item {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--grey-5);
+  transition: background-color #{$transition-short};
+  cursor: pointer;
+
+  &.isOpen {
+    cursor: default;
+  }
+
+  &.isHovering,
+  &.isOpen {
+    background-color: var(--grey-3);
+  }
+}
+
+.inner {
+  position: relative;
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.leftSide {
+  width: 100%;
+}
+
+.titleContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.titleButton {
+  @include reset-button;
+  display: flex;
+  padding: var(--page-gutter) var(--page-gutter) var(--page-gutter);
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+
+  .noDescription & {
+    height: 100%;
+  }
+}
+
+.title {
+  @include font-h10;
+  user-select: none;
+
+  @include bp(tablet, true) {
+    @include clamp-lines(1);
+  }
+}
+
+.descriptionContainer {
+  opacity: 0.7;
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-body-4;
+  margin-bottom: var(--page-gutter);
+  padding: 0 var(--page-gutter);
+  max-width: px(350);
+  width: 100%;
+}
+
+.plusMinusAnimation {
+  position: absolute !important;
+  user-select: none !important;
+  top: var(--page-gutter);
+  right: var(--page-gutter);
+  pointer-events: none;
+}
+
+.rightSide {
+  position: relative;
+}
+
+.rightContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @include bp(mobile) {
+    padding: var(--page-gutter);
+  }
+}
+
+.peopleGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--page-gutter);
+  padding-bottom: px(50);
+
+  @include bp(mobile) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include bp(laptop) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

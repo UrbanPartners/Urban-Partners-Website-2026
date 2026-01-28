@@ -1,0 +1,114 @@
+/* stylelint-disable-next-line block-no-empty */
+.Preloader {
+  @include position-100(fixed);
+  @include z-index(preloader);
+  color: var(--green-dark);
+
+  --text-overflow-padding: 0.2em;
+
+  body[data-viewed-preloader='true'] & {
+    display: none;
+  }
+}
+
+.inner {
+  @include grid-50-50;
+  @include position-100(absolute);
+  overflow: hidden;
+  display: grid;
+  background-color: var(--grey-5);
+}
+
+.logoContainer {
+  position: absolute;
+  left: var(--page-gutter);
+  top: var(--page-gutter);
+  width: px(100);
+
+  @include bp(tablet) {
+    width: px(110);
+  }
+
+  @include bp(xl) {
+    width: px(150);
+  }
+}
+
+// .logo {
+
+// }
+
+.left {
+  position: relative;
+}
+
+.rotatingTextListOuter {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: px(12);
+  overflow: hidden;
+}
+
+.rotatingTextList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  opacity: 0;
+}
+
+.rotatingText {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  padding-right: var(--text-overflow-padding);
+}
+
+.rotatingText,
+.rotatingTextSuffix {
+  @include font-h10;
+  line-height: 1 !important;
+
+  [data-split-text-type='line'] {
+    padding-right: var(--text-overflow-padding);
+  }
+}
+
+.right {
+  position: relative;
+}
+
+.rotatingTextSuffixContainer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: px(12);
+  opacity: 0.75;
+  padding-left: var(--text-overflow-padding);
+}
+
+.loadingLineContainer {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+}
+
+.bgLine,
+.loadingLine {
+  @include position-100(absolute);
+  transform-origin: bottom;
+  transform: scaleY(0);
+}
+
+.bgLine {
+  background-color: var(--line-color-faded);
+}
+
+.loadingLine {
+  background-color: var(--green-dark);
+}

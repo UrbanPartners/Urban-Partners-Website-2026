@@ -1,0 +1,118 @@
+/* ================================================
+Variant A
+================================================ */
+
+.variantAContainer {
+  position: relative;
+  margin-bottom: -3px;
+
+  --variant-a-header-height: #{px(120)};
+
+  @include bp(tablet) {
+    padding-bottom: var(--variant-a-header-height);
+
+    --variant-a-header-height: #{px(200)};
+  }
+
+  @include bp(desktop) {
+    --variant-a-header-height: #{px(256)};
+  }
+}
+
+.variantAContainer__line {
+  z-index: 30;
+}
+
+.variantAContainer__titleContainer {
+  width: 100%;
+  background-color: var(--grey-5);
+  padding: var(--page-gutter);
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: var(--variant-a-header-height);
+  z-index: 20;
+  margin-bottom: -1px;
+  border-bottom: 1px solid var(--line-color-faded);
+
+  @include bp(tablet) {
+    width: 50%;
+    left: 50%;
+    margin-bottom: calc(calc(var(--variant-a-header-height) * -1) + 2px);
+    border-left: 1px solid var(--line-color-faded);
+  }
+}
+
+.variantAContainer__title {
+  @include font-h9;
+}
+
+.variantAContainer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include bp(tablet) {
+    @include grid-50-50;
+  }
+}
+
+.variantAItem {
+  border-bottom: 1px solid var(--line-color-faded);
+  margin-top: -1px;
+
+  &:nth-child(even) {
+    @include bp(tablet) {
+      transform: translateY(calc(var(--variant-a-header-height) - 1px));
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background-color: var(--line-color-faded);
+        z-index: 10;
+      }
+    }
+  }
+}
+
+/* ================================================
+Variant B
+================================================ */
+.variantBContainer {
+  position: relative;
+}
+
+.variantBContainer__titleContainer {
+  padding: var(--page-gutter);
+  height: px(120);
+
+  @include bp(tablet) {
+    height: px(208);
+  }
+}
+
+.variantBContainer__title {
+  @include font-h9;
+}
+
+.variantBContainer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+
+  & > * {
+    outline: 1px solid var(--line-color-faded);
+  }
+
+  @include bp(tablet) {
+    @include grid-50-50;
+  }
+}
+
+.variantBContainer__loadMoreContainer {
+  @include flex-center;
+  margin-top: calc(var(--page-gutter) * 2);
+}

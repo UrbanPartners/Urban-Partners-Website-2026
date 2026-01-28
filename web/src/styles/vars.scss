@@ -1,0 +1,85 @@
+@use 'sass:map';
+@use 'sass:color';
+
+// ================================================
+// Breakpoints
+// ================================================
+$layout: (
+  mobile: 768,
+  tablet: 1024,
+  navigation: 1024,
+  laptop: 1200,
+  desktop: 1512,
+  xl: 1800,
+);
+$layout-mobile: map.get($layout, mobile) + px;
+$layout-tablet: map.get($layout, tablet) + px;
+$layout-laptop: map.get($layout, laptop) + px;
+$layout-desktop: map.get($layout, desktop) + px;
+$layout-xl: map.get($layout, xl) + px;
+
+// ================================================
+// Colors
+// ================================================
+
+// General
+$white: #fff;
+$white-rgb: 255, 255, 255;
+$black: #000;
+$black-rgb: 0, 0, 0;
+
+// Colors
+$green-dark: #1b3f3c;
+$green-medium: #32524f;
+$green-midtone: #5f7977;
+$green-light: #bbc5c4;
+$green-pale: #d1d8d6;
+$grey-1: #edebe9;
+$grey-2: #f3f2ef;
+$grey-3: #f9f8f5;
+$grey-4: #fcfbfa;
+$grey-5: #fffefc;
+
+// ================================================
+// Grid
+// ================================================
+$gutter: px(20);
+$page-gutter: px(32);
+$page-gutter-mobile: px(16);
+
+// ================================================
+// General
+// ================================================
+$transition-short: 0.25s;
+$section-spacing: $page-gutter;
+$section-spacing-mobile: $page-gutter-mobile;
+$nav-height: px(64);
+
+// ================================================
+// Components
+// ================================================
+
+$line-size-tiny-mobile: px(60);
+$line-size-tiny: px(64);
+$line-size-small: px(110);
+
+// Big media
+$big-media-default-height-mobile: px(435);
+$big-media-default-height: px(832);
+$big-media-tall-height-mobile: px(480);
+$big-media-tall-height: px(1056);
+
+// ================================================
+// Fonts
+// ================================================
+$primary-font-name: 'PPNeueMontreal';
+$secondary-font-name: 'Reckless';
+$primary-fonts: $primary-font-name, sans-serif;
+$secondary-fonts: $secondary-font-name, serif;
+
+// ================================================
+// z-index data (see z-index mixin)
+// ================================================
+/* stylelint-disable-next-line */
+$elements:
+  main, menu-bg-overlay, navigation, menu, hamburger-button, wipe, preloader, mobile-in-progress, preview-button;

@@ -1,0 +1,21 @@
+.PlusMinusAnimation {
+  @include reset-button;
+  @include flex-center;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+
+  --size: #{px(22)};
+}
+
+.line {
+  position: absolute;
+  width: var(--size);
+  height: px(2);
+  background-color: currentColor;
+  transform-origin: center;
+}
+
+.horizontalLine {
+  transform: rotate(90deg);
+}

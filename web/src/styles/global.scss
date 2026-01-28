@@ -1,0 +1,226 @@
+// Global styling, normalize overwritten
+
+@import 'fonts';
+@import 'shared';
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* stylelint-disable-next-line */
+:root {
+  // Colors
+  --white: #{$white};
+  --black: #{$black};
+  --green-dark: #{$green-dark};
+  --green-medium: #{$green-medium};
+  --green-midtone: #{$green-midtone};
+  --green-light: #{$green-light};
+  --green-pale: #{$green-pale};
+  --grey-1: #{$grey-1};
+  --grey-2: #{$grey-2};
+  --grey-3: #{$grey-3};
+  --grey-4: #{$grey-4};
+  --grey-5: #{$grey-5};
+
+  // Mixed
+  --dark-green-10: #{mix($green-dark, $grey-5, 10%)};
+  --dark-green-20: #{mix($green-dark, $grey-5, 20%)};
+  --dark-green-30: #{mix($green-dark, $grey-5, 30%)};
+  --dark-green-40: #{mix($green-dark, $grey-5, 40%)};
+  --dark-green-50: #{mix($green-dark, $grey-5, 50%)};
+  --dark-green-60: #{mix($green-dark, $grey-5, 60%)};
+  --dark-green-70: #{mix($green-dark, $grey-5, 70%)};
+  --dark-green-80: #{mix($green-dark, $grey-5, 80%)};
+  --dark-green-90: #{mix($green-dark, $grey-5, 90%)};
+
+  // Line colors
+  --line-color-faded: #{mix($green-dark, $grey-5, 20%)};
+
+  // Component Colors
+  --menu-border-color: #{mix($grey-5, $green-dark, 20%)};
+  --menu-open-button-bg-color: #{mix($grey-5, $green-dark, 5%)};
+  --news-results-count-bg: #{mix($grey-3, $green-dark, 85%)};
+  --loading-image-bg: var(--green-pale);
+  --video-player-faded-color: #{rgba($grey-3, 20%)};
+
+  // Our Story
+  --our-story-case-study-line-color: #{rgba($grey-3, 30%)};
+
+  // Grid
+  --gutter: #{$gutter};
+  --page-gutter: #{$page-gutter-mobile};
+  --page-gutter-2x: #{$page-gutter-mobile * 2};
+  --section-spacing: #{$section-spacing-mobile};
+
+  @include bp(tablet) {
+    --page-gutter: #{$page-gutter};
+    --page-gutter-2x: #{$page-gutter * 2};
+    --section-spacing: #{$section-spacing};
+  }
+
+  // General
+  --nav-height: #{$nav-height};
+  --transition-short: #{$transition-short};
+  --nav-transition-time: #{$transition-short};
+
+  // Components
+  --line-size-tiny: #{$line-size-tiny-mobile};
+  --line-size-small: #{$line-size-small};
+  --item-list-grid-padding: #{px(27)};
+  --video-controls-height: var(--line-size-tiny);
+
+  @include bp(tablet) {
+    --line-size-tiny: #{$line-size-tiny};
+  }
+
+  // Down arrow animation
+  --down-arrow-animation-width: #{px(30)};
+
+  @include bp(tablet) {
+    --down-arrow-animation-width: #{px(45)};
+  }
+
+  @include bp(desktop) {
+    --down-arrow-animation-width: #{px(50)};
+  }
+
+  // Big media
+  --big-media-default-height: #{$big-media-default-height-mobile};
+  --big-media-tall-height: #{$big-media-tall-height-mobile};
+
+  @include bp(tablet) {
+    --big-media-default-height: #{$big-media-default-height * 0.7};
+    --big-media-tall-height: #{$big-media-tall-height * 0.7};
+  }
+
+  @include bp(desktop) {
+    --big-media-default-height: #{$big-media-default-height};
+    --big-media-tall-height: #{$big-media-tall-height};
+  }
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: initial;
+  min-height: 100%;
+  height: auto;
+  font-size: 10px;
+}
+
+body {
+  font-family: $primary-fonts;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-size: px(16);
+  height: auto;
+  color: var(--green-dark);
+  background-color: var(--grey-5);
+
+  // Disabling interaction
+  &[data-enable-interaction='false'] {
+    pointer-events: none !important;
+
+    * {
+      pointer-events: none !important;
+    }
+  }
+
+  &[data-is-body-scroller='false'] {
+    @include position-100(fixed);
+    height: 100svh;
+    overflow: hidden;
+  }
+}
+
+main {
+  @include z-index(main);
+  min-height: 100svh;
+  position: relative;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+dl,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+// ====================================
+// Debugger
+// ====================================
+
+// stylelint-disable-next-line
+#onScreenDebugger {
+  position: fixed;
+  top: var(--page-gutter);
+  right: var(--page-gutter);
+  width: px(120);
+  height: px(120);
+  overflow: auto;
+  background-color: white;
+  color: black;
+  font-size: px(10);
+  padding: 5px;
+  z-index: 9999999999999;
+  white-space: pre-line;
+}
+
+// ====================================
+// Lenis
+// ====================================
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,106 @@
+.TextBlocksWithImageSwapper {
+  position: relative;
+
+  --line-offset: var(--line-size-tiny);
+
+  @include bp(tablet) {
+    --line-offset: #{px(90)};
+  }
+
+  @include bp(desktop) {
+    --line-offset: #{px(120)};
+  }
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, var(--line-offset)) minmax(0, 1fr);
+  position: relative;
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.imageContainerOuter {
+  position: sticky;
+  top: 0;
+  padding: var(--page-gutter);
+  width: calc(100% - var(--line-offset));
+  display: none;
+
+  @include bp(tablet) {
+    display: block;
+  }
+
+  @include bp(desktop) {
+    width: calc(85% - var(--line-offset));
+  }
+}
+
+.imageContainer {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  position: relative;
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0s !important;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  gap: px(60);
+
+  @include bp(tablet) {
+    gap: px(120);
+  }
+
+  @include bp(desktop) {
+    gap: px(159);
+  }
+}
+
+.item {
+  position: relative;
+}
+
+.title {
+  @include font-h10;
+  padding: calc(var(--line-offset) * 0.34) var(--page-gutter-2x) var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    padding: calc(var(--line-offset) * 0.4) var(--page-gutter) var(--page-gutter);
+  }
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-h10;
+  padding: 0 var(--page-gutter-2x) var(--page-gutter-2x);
+  color: var(--dark-green-70);
+  max-width: px(800);
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+  }
+}
+
+.lineAnimationTop {
+  transform: translateX(calc(var(--line-offset) * -1)) !important;
+  width: calc(100% + var(--line-offset)) !important;
+}
+
+.lineAnimationSide {
+  height: var(--line-offset) !important;
+}

@@ -1,0 +1,24 @@
+.video {
+  @include position-100(absolute);
+  opacity: 0;
+  object-fit: cover;
+  transition: opacity var(--video-show-duration);
+
+  &.visuallyShowVideo {
+    opacity: 1;
+  }
+
+  &.coverTargetDimensions {
+    object-fit: initial;
+    top: var(--video-top-offset);
+    left: var(--video-left-offset);
+    width: var(--video-width);
+    height: var(--video-height);
+  }
+}
+
+.describedByText {
+  position: absolute;
+  font-size: 1px;
+  opacity: 0.0001;
+}

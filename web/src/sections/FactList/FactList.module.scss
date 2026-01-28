@@ -1,0 +1,114 @@
+.FactList {
+  position: relative;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--page-gutter);
+  position: relative;
+  padding-top: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    @include off-grid;
+    flex-direction: row;
+    padding-top: var(--page-gutter);
+  }
+}
+
+.leftColumn {
+  grid-column: 1;
+  padding-right: var(--page-gutter);
+}
+
+.titleContainer {
+  margin-bottom: px(70);
+
+  @include bp(tablet) {
+    margin-bottom: px(90);
+  }
+}
+
+.title {
+  @include font-h9;
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-body-4;
+  color: var(--dark-green-70);
+  max-width: px(335);
+
+  [data-link] {
+    color: var(--dark-green-90) !important;
+  }
+}
+
+.rightColumn {
+  grid-column: 2;
+  position: relative;
+  margin-top: calc(var(--page-gutter) * 4);
+  padding-top: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    padding-left: var(--page-gutter);
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  @include bp(tablet, true) {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(var(--page-gutter) * -1);
+      width: calc(100% + var(--page-gutter) * 2);
+      height: 1px;
+      background-color: var(--line-color-faded);
+    }
+  }
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gutter);
+}
+
+.item {
+  // border-bottom: 1px solid var(--green-light);
+}
+
+.itemContent {
+  display: grid;
+  grid-template-columns: minmax(0, #{px(150)}) 1fr;
+  position: relative;
+
+  @include bp(tablet) {
+    gap: var(--page-gutter);
+    grid-template-columns: minmax(0, #{px(220)}) minmax(0, 0.8fr);
+  }
+}
+
+.itemTitle,
+.itemDescription {
+  min-height: var(--line-size-tiny);
+  align-items: center;
+  justify-content: flex-start;
+  display: flex;
+}
+
+.itemTitle {
+  @include font-body-5;
+  position: relative;
+  padding-right: var(--page-gutter);
+}
+
+.itemDescription {
+  @include font-body-5;
+  color: var(--green-midtone);
+  padding-left: var(--page-gutter);
+}

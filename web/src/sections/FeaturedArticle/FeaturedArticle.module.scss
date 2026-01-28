@@ -1,0 +1,195 @@
+/* ================================================
+Variant A
+================================================ */
+
+.FeaturedArticleVariantA {
+  position: relative;
+
+  .imageContainer {
+    aspect-ratio: 390 / 570;
+
+    @include bp(tablet) {
+      aspect-ratio: 1920 / 960;
+    }
+  }
+
+  .textContent {
+    position: relative;
+    display: block;
+    padding: var(--page-gutter) var(--page-gutter) 0 var(--page-gutter);
+
+    @include bp(tablet) {
+      @include grid-50-50;
+      padding: 0;
+    }
+  }
+
+  .titleContainer {
+    width: calc(100% - var(--line-size-tiny));
+    margin-bottom: px(106);
+
+    @include bp(tablet) {
+      padding: calc(var(--page-gutter) * 0.4) var(--page-gutter) 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .titleText {
+    @include font-h6;
+    display: block;
+  }
+
+  .descriptionContainer {
+    --arrow-button-width: calc(var(--line-size-tiny) * 2);
+
+    @include bp(tablet) {
+      position: relative;
+      padding: calc(var(--page-gutter) * 0.8) var(--page-gutter) 0;
+      padding-right: calc(var(--arrow-button-width) + var(--page-gutter));
+    }
+  }
+
+  .description {
+    @include font-h10;
+    color: var(--dark-green-60);
+    max-width: px(600);
+    white-space: pre-line;
+  }
+
+  .arrowButtonContainer {
+    width: var(--line-size-tiny);
+    height: var(--line-size-tiny);
+    position: absolute !important;
+    right: 0;
+    top: 0;
+    border-left: 1px solid var(--line-color-faded);
+
+    @include bp(tablet) {
+      width: var(--arrow-button-width);
+    }
+  }
+
+  .colorBar {
+    background-color: var(--green-dark);
+  }
+
+  .arrowButton {
+    z-index: 2;
+    @include position-100(absolute);
+
+    svg {
+      width: calc(var(--line-size-tiny) * 0.3);
+    }
+  }
+
+  .hiddenIcon {
+    color: var(--white);
+  }
+}
+
+/* ================================================
+Variant B
+================================================ */
+
+.FeaturedArticleVariantB {
+  position: relative;
+  background-color: var(--grey-3);
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+
+    @include bp(tablet) {
+      @include grid-50-50;
+      flex-direction: row;
+    }
+  }
+
+  .left {
+    padding-top: var(--page-gutter);
+    order: 2;
+    border-top: 1px solid var(--line-color-faded);
+
+    @include bp(tablet) {
+      order: 1;
+      border-top: none;
+    }
+  }
+
+  .right {
+    position: relative;
+    padding: var(--page-gutter);
+    order: 1;
+
+    @include bp(tablet) {
+      display: flex;
+      justify-content: flex-end;
+      padding: var(--page-gutter) var(--page-gutter) px(90);
+      order: 2;
+    }
+  }
+
+  .imageContainer {
+    aspect-ratio: 357 / 525;
+    position: relative;
+    width: 100%;
+
+    @include bp(mobile) {
+      aspect-ratio: 1/1;
+    }
+
+    @include bp(tablet) {
+      width: 70%;
+    }
+  }
+
+  .image {
+    @include position-100(absolute);
+    object-fit: cover;
+  }
+
+  .textContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .titleContainer {
+    padding: 0 var(--page-gutter);
+    margin-bottom: px(62);
+
+    @include bp(tablet) {
+      margin-bottom: px(85);
+    }
+  }
+
+  .titleText {
+    @include font-h6;
+    display: block;
+  }
+
+  .descriptionContainer {
+    padding: 0 var(--page-gutter);
+    position: relative;
+    margin-bottom: px(100);
+
+    @include bp(tablet) {
+      margin-bottom: 0;
+    }
+  }
+
+  .description {
+    @include font-h10;
+    color: var(--dark-green-60);
+    max-width: px(600);
+    white-space: pre-line;
+  }
+
+  .arrowButton {
+    margin-top: auto;
+  }
+
+  .lineAnimationBottom {
+    z-index: 4;
+  }
+}

@@ -1,0 +1,44 @@
+.videoPlayer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  // Ensure the video player fills the container
+  :global(.react-player) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  // Style the video element itself
+  :global(video) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Custom controls styling (optional)
+  :global(.react-player__preview) {
+    background: rgba(0, 0, 0, 10%);
+  }
+
+  // Loading state
+  &.loading {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Error state
+  &.error {
+    background: #ffebee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c62828;
+  }
+}

@@ -1,0 +1,384 @@
+/* stylelint-disable */
+
+@mixin font-h1 {
+  font-family: $primary-fonts;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(160);
+
+  @include bp(tablet) {
+    text-wrap: balance;
+    font-size: px(200);
+  }
+
+  @include bp(xl) {
+    font-size: px(240);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h2 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(60);
+
+  @include bp(tablet) {
+    text-wrap: balance;
+    font-size: px(150);
+  }
+
+  @include bp(xl) {
+    font-size: px(200);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h3 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(90);
+
+  @include bp(tablet) {
+    text-wrap: balance;
+    font-size: px(120);
+  }
+
+  @include bp(xl) {
+    font-size: px(160);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h4 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(60);
+
+  @include bp(tablet) {
+    text-wrap: balance;
+    font-size: px(86);
+  }
+
+  @include bp(xl) {
+    font-size: px(110);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h5 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(50);
+
+  @include bp(tablet) {
+    text-wrap: balance;
+    font-size: px(60);
+  }
+
+  @include bp(xl) {
+    font-size: px(80);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h6 {
+  font-family: $secondary-fonts;
+  font-weight: 400;
+  line-height: 123%; // needed because of split text
+  letter-spacing: -0.04em;
+  font-size: px(36);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(45);
+  }
+
+  @include bp(xl) {
+    font-size: px(60);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h7 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(36);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(45);
+  }
+
+  @include bp(xl) {
+    font-size: px(60);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h8 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(42);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(42);
+  }
+
+  @include bp(xl) {
+    font-size: px(50);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h9 {
+  font-family: $primary-fonts;
+  font-weight: 400;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(24);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(32);
+  }
+
+  @include bp(xl) {
+    font-size: px(45);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h10 {
+  font-family: $primary-fonts;
+  font-weight: 400;
+  line-height: 110%;
+  letter-spacing: -0.04em;
+  font-size: px(22);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(26);
+  }
+
+  @include bp(xl) {
+    font-size: px(30);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-body-1 {
+  font-family: $primary-fonts;
+  font-weight: 400;
+  line-height: 125%;
+  letter-spacing: -0.03em;
+  font-size: px(18);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(26);
+  }
+
+  @include bp(xl) {
+    font-size: px(30);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-body-2 {
+  font-family: $primary-fonts;
+  font-weight: 500;
+  line-height: 125%;
+  letter-spacing: -0.02em;
+  font-size: px(18);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(18);
+  }
+
+  @include bp(xl) {
+    font-size: px(22);
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+@mixin font-body-3 {
+  font-family: $primary-fonts;
+  // font-weight: 375;
+  font-weight: 300;
+  line-height: 180%;
+  letter-spacing: -0.03em;
+  font-size: px(20);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(15);
+  }
+
+  @include bp(xl) {
+    font-size: px(20);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-body-4 {
+  font-family: $primary-fonts;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  font-size: px(18);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(15);
+  }
+
+  @include bp(xl) {
+    font-size: px(18);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-body-5 {
+  font-family: $primary-fonts;
+  font-weight: 500;
+  line-height: 100%;
+  font-size: px(18);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(14);
+  }
+
+  @include bp(xl) {
+    font-size: px(16);
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+@mixin font-body-6 {
+  font-family: $primary-fonts;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  font-size: px(15);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(15);
+  }
+
+  @include bp(xl) {
+    font-size: px(15);
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+@mixin font-body-7 {
+  font-family: $primary-fonts;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  font-size: px(15);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(15);
+  }
+
+  @include bp(xl) {
+    font-size: px(15);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-body-8 {
+  font-family: $primary-fonts;
+  font-weight: 500;
+  line-height: 125%;
+  font-size: px(14);
+  text-wrap: pretty;
+
+  @include bp(tablet) {
+    font-size: px(12);
+  }
+
+  @include bp(xl) {
+    font-size: px(14);
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}

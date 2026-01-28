@@ -1,0 +1,23 @@
+.NewsSearchAndTitle {
+  position: relative;
+}
+
+.inner {
+  position: relative;
+}
+
+.titleContainer {
+  margin-bottom: 0;
+  padding: 0 var(--page-gutter);
+  min-height: px(300);
+
+  @include bp(tablet) {
+    min-height: 0;
+    margin-bottom: px(177);
+  }
+}
+
+.titleText {
+  @include font-h2;
+  letter-spacing: -0.03em; // fix for split text word getting cut off
+}

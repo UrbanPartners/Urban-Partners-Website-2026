@@ -1,0 +1,3 @@
+type SvgProps = {
+  className?: string
+}

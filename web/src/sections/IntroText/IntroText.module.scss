@@ -1,0 +1,35 @@
+.IntroText {
+  position: relative;
+}
+
+.inner {
+  padding: 0 var(--page-gutter);
+  position: relative;
+  padding-top: var(--page-gutter);
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.title {
+  @include font-h5;
+  white-space: pre-line;
+
+  @include bp(tablet) {
+    padding-right: var(--page-gutter);
+  }
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-h9;
+  max-width: px(865);
+  width: 100%;
+  margin-top: px(54);
+
+  @include bp(tablet) {
+    margin-top: 0;
+    padding-left: var(--page-gutter);
+  }
+}

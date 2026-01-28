@@ -1,0 +1,308 @@
+.VideoPlayerWithControls {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.videoPlayer {
+  width: 100%;
+  height: 100%;
+
+  &.initiallyHideVideoAndPreviewImage {
+    opacity: 0;
+  }
+
+  & > div {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+
+    & > video {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+  }
+}
+
+.previewContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.previewImage {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+.previewOverlay {
+  @include position-100(absolute);
+  background-color: $black;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.controlsOverlay {
+  @include reset-button;
+  @include position-100(absolute);
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 50%);
+  opacity: 0;
+}
+
+.controls {
+  padding: 0;
+  position: absolute;
+  top: auto;
+  bottom: var(--page-gutter);
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  color: var(--grey-5);
+  transition: opacity $transition-short;
+
+  @include bp(tablet) {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: auto;
+  }
+
+  &.hideControls {
+    opacity: 0;
+  }
+
+  [data-browser='safari'] & {
+    &.hasClickedPlay {
+      @include bp(tablet, true) {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.controlsInner {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--video-controls-height);
+}
+
+.durationLine {
+  --line-color: var(--grey-5);
+
+  .lineFullWidth & {
+    left: calc(var(--page-gutter) * -1);
+    width: calc(100% + calc(var(--page-gutter) * 2)) !important;
+  }
+}
+
+.currentTimeLineContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  display: grid;
+  grid-template-areas: 'a';
+  height: var(--line-thickness);
+
+  --line-thickness: #{px(10)};
+
+  @include bp(tablet) {
+    bottom: 100%;
+    height: px(66);
+  }
+
+  .lineFullWidth & {
+    margin-left: calc(var(--page-gutter) * -1);
+    width: calc(100% + calc(var(--page-gutter) * 2)) !important;
+  }
+
+  .controls:not(.hasClickedPlay) & {
+    display: none;
+  }
+}
+
+.seekingTimeLine,
+.currentTimeLine,
+.bufferedTimeLine {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background-color: var(--grey-5);
+  height: var(--line-thickness);
+}
+
+.seekingTimeLineTick {
+  height: 100%;
+  width: px(1);
+  background-color: var(--grey-5);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.8;
+  transform: translateX(-1px);
+}
+
+.bufferedTimeLine {
+  background-color: var(--video-player-faded-color);
+}
+
+.leftContainer,
+.playPause__text,
+.durationTotal {
+  @include font-body-5;
+}
+
+.durationTotal {
+  text-align: right;
+  width: px(100); // prevent jumping as text changes
+  padding-right: var(--page-gutter);
+}
+
+.initialPlayPauseContainer {
+  @include reset-button;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--page-gutter);
+  padding-left: var(--page-gutter);
+  position: absolute;
+  right: auto;
+  left: 0%;
+  height: 100%;
+  width: 50%;
+  z-index: 5;
+
+  @include bp(tablet) {
+    gap: px(57);
+    width: calc(33.33333svw - var(--page-gutter));
+    right: 0%;
+    left: auto;
+  }
+}
+
+.initialPlayPauseContainer__translucentLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--grey-5);
+  opacity: 0.2;
+  z-index: 4;
+  transition: transform var(--transition-short);
+  transform: scaleX(0);
+  transform-origin: left;
+
+  .isHoveringInitialPlayPause & {
+    transform: scaleX(1);
+  }
+}
+
+.initialPlayPauseContainer__playPauseLine {
+  --line-color: var(--grey-5);
+
+  @include bp(tablet, true) {
+    margin-right: -1px;
+  }
+}
+
+.playPause__icon {
+  width: px(17);
+  max-width: px(17);
+}
+
+.initialPlayPauseContainerText {
+  display: grid;
+  grid-template-areas: 'a';
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+.initialPlayPauseContainerText__textPlay,
+.initialPlayPauseContainerText__textPause {
+  grid-area: a;
+  display: block;
+  white-space: nowrap;
+}
+
+.initialPlayPauseContainerText__textPause {
+  transform: translateY(110%);
+}
+
+/* ========================
+Left Container
+======================== */
+
+.leftContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--page-gutter);
+  padding-left: 0;
+  opacity: 0;
+
+  @include bp(tablet) {
+    padding-left: var(--page-gutter);
+    gap: px(61);
+  }
+}
+
+.playPauseButton {
+  @include reset-button;
+  width: px(24);
+}
+
+.volumeContainer {
+  display: flex;
+  align-items: center;
+  gap: px(14);
+}
+
+.volumeButton {
+  @include reset-button;
+  width: px(19);
+}
+
+.volumeSlider {
+  width: px(71);
+  margin-top: -2px;
+  height: px(20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.volumeSlider__bar {
+  width: 100%;
+  height: px(3);
+  border-radius: px(100);
+  background-color: var(--video-player-faded-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.volumeSlider__bar__fill {
+  height: 100%;
+  width: 100%;
+  background-color: var(--grey-3);
+  transform-origin: left;
+}

@@ -1,0 +1,93 @@
+.inner {
+  display: flex;
+  flex-direction: column;
+  padding: px(90) var(--page-gutter) 0;
+  position: relative;
+
+  @include bp(tablet) {
+    padding: 0 var(--page-gutter);
+    @include off-grid;
+  }
+}
+
+.left {
+  position: relative;
+  order: 2;
+  @include grid-50-50;
+
+  @include bp(tablet) {
+    order: 1;
+    @include off-grid;
+    flex-direction: row;
+  }
+}
+
+.lineAnimationMobile {
+  left: calc(var(--page-gutter) * -1) !important;
+  width: calc(100% + var(--page-gutter) * 2) !important;
+
+  @include bp(tablet) {
+    display: none;
+  }
+}
+
+.right {
+  order: 1;
+  padding-bottom: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    padding-left: var(--page-gutter);
+    order: 2;
+    padding-bottom: 0;
+  }
+}
+
+.authorThumbnailContainer {
+  padding-top: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    padding-top: 0;
+    margin-top: var(--page-gutter);
+  }
+}
+
+.authorThumbnail {
+  padding-top: 0 !important;
+}
+
+.quoteBox {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    display: block;
+    width: auto;
+    max-width: none;
+    padding-top: 0;
+    padding-left: var(--page-gutter);
+  }
+}
+
+.quoteOpening {
+  width: px(40);
+  margin-top: 0;
+
+  @include bp(tablet) {
+    margin-top: px(36);
+  }
+}
+
+.quoteText {
+  padding-top: var(--page-gutter);
+  @include rich-text-base-styling;
+  @include font-h7;
+  width: 100%;
+  max-width: px(600);
+
+  @include bp(tablet) {
+    max-width: px(960);
+  }
+}

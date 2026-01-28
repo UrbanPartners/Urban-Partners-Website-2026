@@ -1,0 +1,3 @@
+type SanityBlogPost = {
+  richTextContent?: SanityContentBlockProps[]
+}

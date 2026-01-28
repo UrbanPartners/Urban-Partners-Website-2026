@@ -1,0 +1,91 @@
+.RichTextSection {
+  position: relative;
+}
+
+.inner {
+  position: relative;
+  padding: 0 var(--page-gutter);
+
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.content {
+  position: relative;
+  padding: var(--page-gutter) 0;
+  max-width: px(600);
+  margin: 0 auto;
+
+  @include bp(tablet) {
+    padding: var(--page-gutter) 0 var(--page-gutter) var(--page-gutter);
+    margin: 0;
+  }
+}
+
+.verticalLine {
+  @include bp(mobile, true) {
+    display: none;
+  }
+}
+
+.richText {
+  @include rich-text-base-styling;
+  @include font-body-4;
+  color: var(--green-midtone);
+  width: 100%;
+
+  @include bp(tablet) {
+    max-width: px(460);
+  }
+
+  [data-h1],
+  [data-h2],
+  [data-h3] {
+    color: var(--green-dark);
+    margin-bottom: px(0);
+
+    & + * {
+      margin-top: 0;
+    }
+  }
+
+  [data-h1] {
+    @include font-h10;
+    font-weight: 500;
+  }
+
+  [data-h2] {
+    @include font-body-1;
+    font-weight: 500;
+  }
+
+  [data-h3] {
+    @include font-body-4;
+    font-weight: 500;
+  }
+
+  [data-blockquote] {
+    color: var(--green-dark);
+
+    svg {
+      color: var(--green-dark);
+    }
+  }
+
+  strong {
+    color: var(--green-dark);
+  }
+}
+
+.authorBlock {
+  @include break-through-page-gutter;
+  padding-bottom: px(250);
+  margin-top: px(90);
+}
+
+.authorBlockInner {
+  position: relative;
+  padding-bottom: var(--page-gutter);
+  padding-left: var(--page-gutter);
+}

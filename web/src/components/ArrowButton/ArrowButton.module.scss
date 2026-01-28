@@ -1,0 +1,33 @@
+.arrowButton {
+  @include reset-button;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  @include flex-center;
+}
+
+.icon {
+  width: 100%;
+}
+
+.shown {
+  opacity: 1;
+  transform: translateX(0%);
+
+  .onlyShowHiddenOnHover & {
+    opacity: 0 !important;
+  }
+}
+
+.hidden {
+  transform: translateX(-100%);
+  position: absolute;
+
+  [data-icon-name='arrowDiagonal'] & {
+    transform: translateY(100%);
+  }
+
+  [data-icon-name='download'] & {
+    transform: translateY(-100%);
+  }
+}

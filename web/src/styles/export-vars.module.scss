@@ -1,0 +1,11 @@
+/* stylelint-disable */
+@import 'shared';
+
+:export {
+  // Breakpoints
+  mobile: $layout-mobile;
+  tablet: $layout-tablet;
+  laptop: $layout-laptop;
+  desktop: $layout-desktop;
+  xl: $layout-xl;
+}

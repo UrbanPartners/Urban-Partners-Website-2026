@@ -1,0 +1,41 @@
+.title {
+  margin-bottom: var(--item-list-grid-padding);
+  @include font-body-7;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  position: relative;
+  padding: var(--item-list-grid-padding) 0;
+  @include item-list-grid-50-50;
+
+  [data-first-column-width='1/4'] & {
+    @include bp(tablet) {
+      @include item-list-grid-1-4;
+    }
+  }
+
+  [data-first-column-width='1/2'] & {
+    @include bp(tablet) {
+      @include item-list-grid-50-50;
+    }
+  }
+}
+
+.itemTitle {
+  @include font-body-7;
+  color: var(--dark-green-70);
+  padding-right: px(15);
+}
+
+.itemDescription {
+  @include rich-text-base-styling;
+  @include font-body-7;
+}

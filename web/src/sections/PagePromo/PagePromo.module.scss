@@ -1,0 +1,138 @@
+.PagePromo {
+  position: relative;
+  background-color: var(--grey-3);
+}
+
+.inner {
+  @include bp(tablet) {
+    @include off-grid;
+  }
+}
+
+.leftSide {
+  padding: var(--page-gutter);
+  aspect-ratio: 360/405;
+
+  @include bp(tablet) {
+    aspect-ratio: auto;
+  }
+}
+
+.imageLink,
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+.rightSide {
+  padding: var(--page-gutter) 0 var(--page-gutter) var(--page-gutter);
+  position: relative;
+
+  // @include bp(tablet) {
+  //   @include off-grid;
+  // }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.textContent__top {
+  margin-bottom: var(--page-gutter-2x);
+
+  @include bp(tablet) {
+    min-height: px(180);
+  }
+
+  @include bp(desktop) {
+    min-height: px(240);
+  }
+}
+
+.title {
+  padding-bottom: var(--page-gutter);
+
+  span {
+    display: block;
+    @include font-h4;
+    text-wrap: initial;
+  }
+}
+
+.textContent__middle {
+  position: relative;
+  margin-bottom: px(60);
+
+  @include bp(tablet) {
+    margin-bottom: px(140);
+    @include off-grid-flipped;
+  }
+}
+
+.subtitle {
+  padding-top: var(--page-gutter);
+  display: none;
+
+  @include bp(tablet) {
+    display: block;
+  }
+}
+
+.subtitleText {
+  @include font-h10;
+}
+
+.descriptionContainer {
+  position: relative;
+  padding-right: calc(var(--line-size-tiny) + var(--page-gutter));
+
+  @include bp(tablet) {
+    padding-right: 0;
+  }
+}
+
+.description {
+  @include rich-text-base-styling;
+  @include font-body-4;
+  max-width: px(370);
+  padding: var(--page-gutter) var(--page-gutter) var(--page-gutter) 0;
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+  }
+}
+
+.textContent__bottom {
+  position: relative;
+
+  @include bp(tablet) {
+    @include off-grid-flipped;
+  }
+}
+
+.ctaLineAnimation {
+  margin-bottom: -1px;
+
+  @include bp(tablet, true) {
+    right: calc(var(--line-size-tiny) + var(--page-gutter)) !important;
+    left: auto !important;
+  }
+}
+
+.ctaContainer {
+  @include bp(tablet, true) {
+    padding-right: var(--page-gutter);
+
+    [data-text-and-icon-button-label] {
+      padding-left: 0;
+    }
+  }
+}

@@ -1,0 +1,153 @@
+.PeopleAccordionPerson {
+  display: grid;
+  grid-template-columns: 0.3fr 0.7fr;
+  position: relative;
+  padding: var(--page-gutter) var(--page-gutter) 0;
+  gap: var(--page-gutter);
+
+  @include bp(mobile) {
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+    padding: 0;
+  }
+}
+
+.lineAnimationTop,
+.lineAnimationMiddle {
+  @include bp(mobile) {
+    display: none;
+  }
+}
+
+.lineAnimationMiddle {
+  left: calc(30% + calc(var(--page-gutter) / 2)) !important;
+
+  @include bp(tablet, true) {
+    height: var(--page-gutter-2x) !important;
+  }
+}
+
+.imageContainer {
+  width: 100%;
+  position: relative;
+  margin-bottom: 0;
+  aspect-ratio: 336/448;
+
+  @include bp(mobile) {
+    margin-bottom: var(--page-gutter);
+  }
+}
+
+.textContent {
+  position: relative;
+  padding-right: var(--page-gutter);
+  display: flex;
+  flex-direction: column;
+
+  @include bp(mobile) {
+    display: block;
+    padding-left: 0;
+  }
+}
+
+.arrowButton {
+  position: absolute;
+  right: 0;
+  top: px(8);
+  width: px(13);
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: cover;
+}
+
+.titleContainer {
+  @include bp(mobile, true) {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+}
+
+.title {
+  margin-bottom: px(29);
+
+  @include bp(mobile) {
+    margin-bottom: px(15);
+  }
+
+  &.titleMobile {
+    @include bp(tablet) {
+      display: none !important;
+    }
+  }
+
+  &.titleDesktop {
+    @include bp(tablet, true) {
+      display: none !important;
+    }
+  }
+}
+
+.titleText {
+  @include font-body-2;
+}
+
+.name {
+  display: block;
+}
+
+.email {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  @include bp(tablet) {
+    display: block;
+  }
+}
+
+.emailLink {
+  display: block;
+
+  @include hover {
+    .emailText {
+      opacity: 1;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+.emailText {
+  @include font-body-8;
+  color: var(--green-dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.5;
+  position: relative;
+  display: inline-flex;
+  transition: opacity #{$transition-short};
+  line-height: 1;
+  width: fit-content;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--green-dark);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform #{$transition-short};
+  }
+}

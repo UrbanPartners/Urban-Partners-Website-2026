@@ -1,0 +1,248 @@
+.LocationsSection {
+  position: relative;
+  color: var(--grey-5);
+  margin-top: -300svh;
+}
+
+.animatedBars {
+  display: grid;
+  grid-template-columns: 0.5fr 0.25fr 0.25fr;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-top: -100svh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  height: 100vh; // vh for mobile chrome
+
+  [data-browser='safari'] & {
+    height: 100svh;
+  }
+
+  @include bp(tablet) {
+    @include grid-thirds;
+  }
+}
+
+.animatedBars__item {
+  width: 100%;
+  height: calc(100% + 1px);
+  background-color: var(--green-dark);
+  transform: translateY(100%);
+  border-bottom: 1px solid var(--our-story-case-study-line-color);
+}
+
+.titleContainer {
+  pointer-events: none;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 50%;
+  margin-top: -100svh;
+  z-index: 5;
+  padding: var(--page-gutter);
+  opacity: 0;
+  height: 100vh; // vh for mobile chrome
+
+  [data-browser='safari'] & {
+    height: 100svh;
+  }
+
+  @include bp(tablet) {
+    width: 100%;
+  }
+}
+
+.title__text {
+  @include font-h7;
+  white-space: pre-line;
+}
+
+.stickyContent {
+  z-index: 3;
+  position: sticky;
+  top: 0;
+  left: 0;
+  margin-top: -100svh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  padding-bottom: 50vh;
+  height: 100vh; // vh for mobile chrome
+
+  [data-browser='safari'] & {
+    padding-bottom: 50svh;
+    height: 100svh;
+  }
+
+  @include bp(tablet) {
+    padding-bottom: 0;
+    width: 33.33333%;
+    display: grid;
+    grid-template-areas: 'top' 'bottom';
+    grid-template-rows: minmax(0, 0.5fr) minmax(0, 0.5fr);
+  }
+}
+
+.stickyContent__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: -1;
+  background-color: var(--green-dark);
+  transform: scaleY(0);
+  transform-origin: bottom;
+
+  @include bp(tablet) {
+    display: none;
+  }
+}
+
+.verticalLine,
+.horizontalLine {
+  position: absolute;
+  background-color: var(--our-story-case-study-line-color);
+}
+
+.verticalLine {
+  right: 50%;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  order: -1;
+
+  @include bp(tablet, true) {
+    height: 50% !important;
+  }
+
+  @include bp(tablet) {
+    height: 100%;
+    order: initial;
+    right: 0;
+  }
+}
+
+.horizontalLine {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.stickyContent__top {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--page-gutter);
+
+  @include bp(tablet) {
+    grid-area: top;
+  }
+}
+
+.stickyContent__description {
+  @include rich-text-base-styling;
+  @include font-body-7;
+  width: 100%;
+  max-width: px(246);
+  opacity: 0;
+
+  [data-link] {
+    color: var(--grey-5) !important;
+  }
+}
+
+.stickyContent__bottom {
+  display: flex;
+  flex-direction: column;
+  padding: var(--page-gutter);
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  @include bp(tablet) {
+    justify-content: space-between;
+    align-items: flex-start;
+    grid-area: bottom;
+  }
+}
+
+.ctaContainer {
+  opacity: 0;
+}
+
+.locationsImages {
+  width: px(200);
+  height: px(200);
+  position: relative;
+  display: none;
+  clip-path: polygon(0% var(--left-y), 100% var(--right-y), 100% 100%, 0% 100%);
+
+  --left-y: 100%;
+  --right-y: 100%;
+
+  @include bp(tablet) {
+    display: block;
+  }
+}
+
+.imageContainer {
+  @include position-100(absolute);
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: contain;
+  object-position: bottom;
+  opacity: 0.00001;
+  transition: none !important;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.locationsList {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -100svh;
+  padding-top: calc(var(--intro-animation-height-multiplier) * 100svh);
+  padding-bottom: calc(var(--outro-animation-height-multiplier) * 100svh);
+}
+
+.locationsListInner {
+  width: 100%;
+  background-color: var(--green-dark);
+
+  @include bp(tablet) {
+    width: 66.666666%;
+  }
+}
+
+.locationTitle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: px(108);
+  padding: 0 var(--page-gutter);
+  border-top: 1px solid var(--our-story-case-study-line-color);
+
+  @include bp(tablet) {
+    height: px(288);
+  }
+}
+
+.locationTitle__text {
+  @include font-h2;
+  white-space: nowrap;
+  line-height: 0.8;
+}
