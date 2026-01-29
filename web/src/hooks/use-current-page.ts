@@ -1,13 +1,11 @@
 'use client'
 
-import { DOC_TYPES, LANGUAGES, PRELOADER_COOKIE_NAME } from '@/data'
+import { DOC_TYPES, HOME_SLUG, PRELOADER_COOKIE_NAME } from '@/data'
 import useStore from '@/store'
 import Cookies from 'js-cookie'
 import { usePathname } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import { useMemo } from 'react'
-
-const LANGUAGE_VALUES = Object.values(LANGUAGES)
 
 const useCurrentPage = () => {
   const params = useParams()
@@ -35,12 +33,10 @@ const useCurrentPage = () => {
   }
 
   let isHome = false
+  const isHomeOtherLanguage = params?.slug === undefined
+  const isHomeMainLanguage = params?.slug?.[0] === HOME_SLUG && params?.slug?.length === 1
 
-  if (params?.slug) {
-    if (LANGUAGE_VALUES.includes(params?.slug[0])) {
-      isHome = true
-    }
-  } else {
+  if (isHomeOtherLanguage || isHomeMainLanguage) {
     isHome = true
   }
 
