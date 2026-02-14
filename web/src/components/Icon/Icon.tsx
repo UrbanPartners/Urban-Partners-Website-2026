@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import ArrowDiagonal from '@/components/_svgs/ArrowDiagonal'
+import ArrowDownLarge from '@/components/_svgs/ArrowDownLarge'
 import ArrowDown from '@/components/_svgs/ArrowDown'
 import ArrowRight from '@/components/_svgs/ArrowRight'
 import CaretDown from '@/components/_svgs/CaretDown'
@@ -19,6 +20,7 @@ import VolumeMuted from '@/components/_svgs/VolumeMuted'
 export const ICONS = {
   arrowDiagonal: ArrowDiagonal,
   arrowDown: ArrowDown,
+  arrowDownLarge: ArrowDownLarge,
   arrowRight: ArrowRight,
   caretDown: CaretDown,
   caretRight: CaretRight,

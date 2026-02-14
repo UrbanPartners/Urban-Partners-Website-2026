@@ -10,7 +10,7 @@ export const fields = groq`
   "variant": coalesce(variant, "a"),
   title,
   "offsetPosts": coalesce(offsetPosts, false),
-  "totalItems": count(*[_type == "${DOC_TYPES.BLOG_POST}"]),
+  "totalItems": count(*[_type == "${DOC_TYPES.BLOG_POST}" && !blogPostData.${DEFAULT_LANGUAGE}BlogPostData.disableFromNewsFeed]),
   "items": *[_type == "${DOC_TYPES.BLOG_POST}" && !blogPostData.${DEFAULT_LANGUAGE}BlogPostData.disableFromNewsFeed] | order(blogPostData.${DEFAULT_LANGUAGE}BlogPostData.publishedDate desc) {
     ${cardFields}
   }[0...${PAGINATION_ITEMS_PER_PAGE * 2}]

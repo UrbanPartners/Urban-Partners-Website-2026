@@ -139,8 +139,8 @@ export default {
           name: 'itemsByYear',
           title: 'Items By Year',
           type: 'array',
-          description: 'Minimum 2, Maximum 20',
-          validation: (Rule: Rule) => Rule.required().min(2).max(20),
+          description: 'Minimum 1, Maximum 20',
+          validation: (Rule: Rule) => Rule.required().min(1).max(20),
           of: [
             {
               type: 'object',

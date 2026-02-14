@@ -122,7 +122,7 @@ const DownArrowAnimation = forwardRef<DownArrowAnimationRef, DownArrowAnimationP
           className={styles.iconContainer}
         >
           <Icon
-            name="arrowDown"
+            name="arrowDownLarge"
             className={styles.icon}
           />
         </div>

@@ -3,6 +3,8 @@ import { getReadingTime, portableTextToText } from '@/utils'
 
 const MIN_READING_TIME = 2
 
+export const AUTO_SPACING_SECTIONS = ['bigMedia', 'imageBlocks', 'expandingCarousel']
+
 export const getReadingTimeFromPageSections = (sections: SectionsSchema | undefined) => {
   if (!sections || !sections?.length) return 0
 
@@ -92,10 +94,10 @@ export const caseStudyFormatter = (data: SanityPage, language?: string): SanityP
       })
     }
 
-    if (data.caseStudyData?.fund) {
+    if (data.caseStudyData?.type) {
       factsItems.push({
-        title: geti18nText(language as string, 'fund'),
-        description: data.caseStudyData?.fund,
+        title: geti18nText(language as string, 'type'),
+        description: data.caseStudyData?.type,
       })
     }
 
@@ -112,22 +114,32 @@ export const caseStudyFormatter = (data: SanityPage, language?: string): SanityP
       description: data.caseStudyData?.factsDescription,
       items: factsItems,
     })
-    topSections.push({
-      _type: 'spacer',
-      desktop: 'auto',
-      mobile: 'auto',
-    })
+
+    if (sectionsAddedManually.length > 0) {
+      const firstSection = sectionsAddedManually[0]
+      if (firstSection) {
+        const hasAutoSpacing = AUTO_SPACING_SECTIONS.includes(firstSection._type)
+        topSections.push({
+          _type: 'spacer',
+          desktop: hasAutoSpacing ? 'auto' : '0',
+          mobile: hasAutoSpacing ? 'auto' : '0',
+          hasLine: false,
+        })
+      }
+    }
   }
 
   const sectionsWithSpacing = sectionsAddedManually
-    .map(section => {
+    .map((section, i) => {
+      const isLastSection = i === sectionsAddedManually?.length - 1
+
       if (section._type === 'quote' || section._type === 'introText') {
         return [
           section,
           {
             _type: 'spacer',
-            desktop: 255,
-            mobile: 100,
+            desktop: isLastSection ? '0' : 255,
+            mobile: isLastSection ? '0' : 100,
           },
         ]
       }
@@ -136,14 +148,16 @@ export const caseStudyFormatter = (data: SanityPage, language?: string): SanityP
         section,
         {
           _type: 'spacer',
-          desktop: 'auto',
-          mobile: 'auto',
+          desktop: isLastSection ? '0' : 'auto',
+          mobile: isLastSection ? '0' : 'auto',
         },
       ]
     })
     .flat()
 
-  data.sections = [...topSections, ...sectionsWithSpacing]
+  const finalSections = [...topSections, ...sectionsWithSpacing]
+
+  data.sections = finalSections
 
   return data
 }

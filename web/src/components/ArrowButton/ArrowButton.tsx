@@ -78,7 +78,7 @@ const ArrowButton = React.forwardRef<ArrowButtonRef, ArrowButtonProps>(
         shownConfig.y = isHover ? '-100%' : '0%'
       }
 
-      if (iconName === 'download') {
+      if (iconName === 'download' || iconName === 'arrowDown') {
         delete shownConfig.x
         shownConfig.y = isHover ? '100%' : '0%'
       }
@@ -95,7 +95,7 @@ const ArrowButton = React.forwardRef<ArrowButtonRef, ArrowButtonProps>(
         hiddenConfig.y = isHover ? '0%' : '100%'
       }
 
-      if (iconName === 'download') {
+      if (iconName === 'download' || iconName === 'arrowDown') {
         delete hiddenConfig.x
         hiddenConfig.y = isHover ? '0%' : '-100%'
       }

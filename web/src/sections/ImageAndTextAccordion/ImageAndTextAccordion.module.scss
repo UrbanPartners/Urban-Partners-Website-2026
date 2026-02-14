@@ -95,7 +95,7 @@
 
   @include bp(desktop) {
     display: grid;
-    grid-template-columns: #{px(380)} minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
   }
 }
 
@@ -155,11 +155,14 @@
 }
 
 .bigNumberContainer {
-  @include item-list-grid-50-50;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   position: relative;
   align-items: center;
+  align-items: flex-end;
 
   @include bp(tablet) {
+    @include item-list-grid-50-50;
     align-items: flex-end;
   }
 
@@ -171,7 +174,14 @@
 
 .bigNumber {
   @include font-h4;
-  line-height: 0.8;
+
+  @include bp(tablet) {
+    transform: translateY(0.12em);
+  }
+
+  .isLongBigNumber & {
+    @include font-h5;
+  }
 }
 
 .bigNumberSubtitle {

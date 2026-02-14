@@ -96,6 +96,13 @@
 .bottomContent {
   padding: 0 var(--page-gutter);
 
+  @include bp(tablet) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   .InfoTiles.isMobile & {
     padding-bottom: var(--page-gutter-2x);
   }

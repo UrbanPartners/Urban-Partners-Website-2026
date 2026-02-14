@@ -18,6 +18,7 @@ const I18N_ENGLISH = {
   transactionYear: 'Transaction Year',
   sector: 'Sector',
   fund: 'Fund',
+  type: 'Type',
   size: 'Size (m²)',
 
   // Video
@@ -25,12 +26,119 @@ const I18N_ENGLISH = {
   pauseVideo: 'Pause Video',
 }
 
-const I18N_DK = {}
-const I18N_SE = {}
-const I18N_DE = {}
-const I18N_FI = {}
-const I18N_PL = {}
-const I18N_NO = {}
+const I18N_DK = {
+  postedBy: 'Skrevet af #{author}',
+  readingTime: '#{readingTimeMinutes} min læsetid',
+  caseStudy: 'Case',
+  readArticle: 'Læs artiklen',
+  numberOfArticles: '#{count} Artikler',
+  resultsForTerm: 'Resultater for "#{term}"',
+  resultsForCategory: 'Kategori: #{category}',
+  resultsForReference: 'Omtalt i #{reference}',
+  location: 'Lokation',
+  country: 'Land',
+  transactionYear: 'Transaktionsår',
+  sector: 'Sektor',
+  fund: 'Fond',
+  size: 'Størrelse (m²)',
+  playVideo: 'Afspil video',
+  pauseVideo: 'Sæt videon på pause',
+}
+
+const I18N_SE = {
+  postedBy: 'Publicerad av #{author}',
+  readingTime: '#{readingTimeMinutes} min lästid',
+  caseStudy: 'Case',
+  readArticle: 'Läs artikeln',
+  numberOfArticles: '#{räkna} artiklar',
+  resultsForTerm: 'Resultat för "#{term}"',
+  resultsForCategory: 'Kategori: #{category}',
+  resultsForReference: 'Omnämnd av #{reference}',
+  location: 'Plats',
+  country: 'Land',
+  transactionYear: 'Transaktionsår',
+  sector: 'Sektor or Bransch',
+  fund: 'Fond',
+  size: 'Storlek  (m²)',
+  playVideo: 'Spela upp video',
+  pauseVideo: 'Pausa video',
+}
+
+const I18N_DE = {
+  postedBy: 'Veröffentlicht von #{author}',
+  readingTime: '#{readingTimeMinutes} min lesezeit',
+  caseStudy: 'Fallstudie',
+  readArticle: 'Artikel lesen',
+  numberOfArticles: '#{count} Artikel',
+  resultsForTerm: 'Ergebnisse für "#{term}"',
+  resultsForCategory: 'Kategorie: #{category}',
+  resultsForReference: 'Referenziert von #{reference}',
+  location: 'Standort',
+  country: 'Land',
+  transactionYear: 'Transaktionsjahr',
+  sector: 'Sektor',
+  fund: 'Fonds',
+  size: 'Größe (m²)',
+  playVideo: 'Video abspielen',
+  pauseVideo: 'Video pausieren',
+}
+
+const I18N_FI = {
+  postedBy: 'Julkaissut #{author}',
+  readingTime: '#{readingTimeMinutes} min lukuaika.',
+  caseStudy: 'Case ',
+  readArticle: 'Lue artikkeli',
+  numberOfArticles: '#{count} artikkelia',
+  resultsForTerm: 'Tulokset  "#{term}"',
+  resultsForCategory: 'Kategoria: #{category}',
+  resultsForReference: 'Mainittu  #{reference}',
+  location: 'Sijainti',
+  country: 'Maa',
+  transactionYear: 'Sijoitusvuosi',
+  sector: 'Sektori',
+  fund: 'Rahasto',
+  size: 'Koko (m²)',
+  playVideo: 'Toista video',
+  pauseVideo: 'Pysäytä video',
+}
+
+const I18N_PL = {
+  postedBy: 'Opublikowane przez #{author}',
+  readingTime: '#{readingTimeMinutes} min czytania',
+  caseStudy: 'Case Study',
+  readArticle: 'Przeczytaj artykuł',
+  numberOfArticles: '#{count} artykułów',
+  resultsForTerm: 'Wyniki dla  "#{term}"',
+  resultsForCategory: 'Kategoria: #{category}',
+  resultsForReference: 'Wspomniane w #{reference}',
+  location: 'Lokalizacja',
+  country: 'Kraj',
+  transactionYear: 'Data transakcji',
+  sector: 'Sektor',
+  fund: 'Fundusz',
+  size: 'Powierzchnia (m²)',
+  playVideo: 'Odtwórz video',
+  pauseVideo: 'Wstrzymaj video',
+}
+
+const I18N_NO = {
+  postedBy: 'Skrevet av #{author}',
+  readingTime: '#{readingTimeMinutes} min lesetid',
+  caseStudy: 'Case studie',
+  readArticle: 'Lese en artikkel',
+  numberOfArticles: '#{count} artikler',
+  resultsForTerm: 'Resultat for "#{term}"',
+  resultsForCategory: 'Kategori: #{category}',
+  resultsForReference: 'Referanse #{reference}',
+  location: 'Lokasjon',
+  country: 'Land',
+  transactionYear: 'Transaksjons år',
+  sector: 'Sektor',
+  fund: 'Fond',
+  size: 'Størrelse  (m²)',
+  playVideo: 'Spill film',
+  pauseVideo: 'Pause film',
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getLangMerged = (langObject: any) => {

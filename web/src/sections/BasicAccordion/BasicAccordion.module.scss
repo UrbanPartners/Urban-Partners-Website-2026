@@ -23,6 +23,10 @@ BasicAccordion
 
 .rightSide {
   position: relative;
+
+  @include bp(tablet) {
+    padding-left: var(--page-gutter);
+  }
 }
 
 .title {

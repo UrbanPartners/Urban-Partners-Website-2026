@@ -47,7 +47,10 @@ export const blogPostFormatter = (data: SanityPage): SanityPage => {
   })
 
   const sectionsWithSpacing = sectionsAddedManually
-    .map(section => {
+    .map((section, i) => {
+      const nextSection = sectionsAddedManually[i + 1]
+      const isLastSection = i === sectionsAddedManually?.length - 1
+
       if (section._type === 'quote' || section._type === 'introText') {
         return [
           section,
@@ -57,6 +60,30 @@ export const blogPostFormatter = (data: SanityPage): SanityPage => {
             mobile: 100,
           },
         ]
+      }
+
+      if (section._type === 'richTextSection' && isLastSection) {
+        return [
+          section,
+          {
+            _type: 'spacer',
+            desktop: '0',
+            mobile: '0',
+          },
+        ]
+      }
+
+      if (section._type === 'richTextSection' && nextSection) {
+        if (section?._type === 'richTextSection' && nextSection?._type === 'introText') {
+          return [
+            section,
+            {
+              _type: 'spacer',
+              desktop: '0',
+              mobile: '0',
+            },
+          ]
+        }
       }
 
       return [

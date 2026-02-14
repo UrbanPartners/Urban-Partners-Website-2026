@@ -203,6 +203,7 @@
   object-position: bottom;
   opacity: 0.00001;
   transition: none !important;
+  background-color: transparent !important;
 
   &.active {
     opacity: 1;

@@ -30,6 +30,8 @@ export default {
       name: 'subtitle',
       title: 'Subtitle',
       type: 'string',
+      validation: (Rule: Rule) => Rule.required(),
+      initialValue: 'Overview',
     },
     {
       name: 'description',

@@ -187,7 +187,7 @@ const VariantBList = ({ items, title, isLoading, hasMore, handleLoadMore }: Vari
             onClick={handleLoadMore}
             disabled={isLoading}
             className={styles.variantBContainer__loadMore}
-            icon="arrowRight"
+            icon="arrowDown"
             label="Load More"
           />
         </div>

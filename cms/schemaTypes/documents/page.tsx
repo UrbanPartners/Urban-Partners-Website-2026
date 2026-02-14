@@ -553,6 +553,7 @@ const caseStudy = getPageSchema({
         'imageBlocks',
         'introText',
         'expandingCarousel',
+        'bigMedia',
       ],
       group: 'content',
     }),
@@ -641,7 +642,7 @@ const caseStudy = getPageSchema({
                 type: 'string',
               },
               {
-                name: 'fund',
+                name: 'type',
                 type: 'string',
               },
               {

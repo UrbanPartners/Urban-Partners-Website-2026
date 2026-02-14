@@ -420,6 +420,7 @@ const LocationsSection = ({ title, description, cta, locations }: SanityOurStory
                     [styles.active]: activeLocationIndex === i,
                   })}
                   preload
+                  animated={false}
                 />
               </div>
             ))}

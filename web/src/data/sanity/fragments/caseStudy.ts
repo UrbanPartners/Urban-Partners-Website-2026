@@ -21,6 +21,7 @@ export const fields = groq`
       'transactionYear',
       'sector',
       'fund',
+      'type',
       'size',
     ])}
   },

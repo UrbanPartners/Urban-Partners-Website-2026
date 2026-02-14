@@ -130,6 +130,7 @@ const TimelineYear = forwardRef<TimelineYearRef, TimelineYearProps>(
     const containerRef = useRef<HTMLDivElement | null>(null)
     const charRefsByYear = useRef<Record<string, HTMLSpanElement[]>>({})
     const subtitleRef = useRef<SplitTextRef | null>(null)
+    const animateByMapRef = useRef<Record<string, string>>({})
 
     useEffect(() => {
       if (!mastContainerInView) return
@@ -140,35 +141,56 @@ const TimelineYear = forwardRef<TimelineYearRef, TimelineYearProps>(
     const animateByYear = useCallback(
       (activeYearSuffix: string) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const animateByMap: any = {}
         const currentYearParsed = parseInt(activeYearSuffix)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const ignoreAnimation: any = {}
         suffixes.forEach(suffix => {
           const suffixParsed = parseInt(suffix)
+
+          const currentValue = animateByMapRef.current[suffix]
+
           if (suffixParsed === currentYearParsed) {
-            animateByMap[suffix] = 'current'
+            if (currentValue === 'current') {
+              ignoreAnimation[suffix] = true
+              return
+            }
+            animateByMapRef.current[suffix] = 'current'
             return
           }
           if (suffixParsed < currentYearParsed) {
-            animateByMap[suffix] = 'before'
+            if (currentValue === 'before') {
+              ignoreAnimation[suffix] = true
+              return
+            }
+            animateByMapRef.current[suffix] = 'before'
           } else {
-            animateByMap[suffix] = 'after'
+            if (currentValue === 'after') {
+              ignoreAnimation[suffix] = true
+              return
+            }
+            animateByMapRef.current[suffix] = 'after'
           }
         })
 
-        Object.keys(charRefsByYear.current).forEach(yearPrefix => {
-          const chars = charRefsByYear.current[yearPrefix]
+        Object.keys(charRefsByYear.current).forEach(yearSuffix => {
+          const chars = charRefsByYear.current[yearSuffix]
           if (!chars?.length) return
+          const shouldIgnore = ignoreAnimation[yearSuffix]
+
           chars.forEach((char, index) => {
             if (!char) return
 
-            const animateBy = animateByMap[yearPrefix]
+            if (shouldIgnore) return
+
+            const animateBy = animateByMapRef.current[yearSuffix]
+
             if (!animateBy) return
 
             gsap.killTweensOf(char)
 
             const baseConfig = {
-              delay: index * 0.05,
-              duration: 0.3,
+              delay: index * 0.04,
+              duration: 0.2,
               ease: 'Power3.easeOut',
             }
 

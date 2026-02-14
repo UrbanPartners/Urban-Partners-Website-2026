@@ -14,6 +14,7 @@ import useBreakpoint from '@/hooks/use-breakpoint'
 import classNames from 'classnames'
 import { ACCORDION_OUT_DURATION, ACCORDION_EASE_OUT } from '../PeopleAccordion/PeopleAccordion'
 import useWindowResize from '@/hooks/use-window-resize'
+import TextSwapper, { TextSwapperRef } from '@/components/TextSwapper/TextSwapper'
 
 const PER_ROW = 4
 
@@ -82,6 +83,7 @@ const InfoTilesItem = ({
   const totalRows = Math.ceil(itemsLength / PER_ROW)
   const itemRow = Math.floor(index / PER_ROW) + 1
   const isInLastRow = itemRow === totalRows
+  const textSwapperRef = useRef<TextSwapperRef>(null)
 
   const resetHtml = () => {
     if (containerRef.current) {
@@ -93,7 +95,7 @@ const InfoTilesItem = ({
 
   const getCalculations = () => {
     const titleContainerHeight = titleContainerRef.current?.getBoundingClientRect().height
-    const bottomContentHeight = bottomContentRef.current?.getBoundingClientRect().height
+    const bottomContentHeight = bottomContentRef.current?.offsetHeight
     const maxHeight = titleContainerHeight + bottomContentHeight
     const minHeight = titleContainerHeight
 
@@ -241,7 +243,17 @@ const InfoTilesItem = ({
                   key={linkIndex}
                   link={linkItem}
                   className={styles.bottomLink}
-                />
+                  onMouseEnter={() => {
+                    textSwapperRef.current?.swapText()
+                  }}
+                >
+                  <span className={styles.bottomLink__inner}>
+                    <TextSwapper
+                      ref={textSwapperRef}
+                      label={linkItem.label}
+                    />
+                  </span>
+                </Link>
               ))}
             </div>
           )}

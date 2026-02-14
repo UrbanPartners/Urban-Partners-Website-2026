@@ -78,6 +78,10 @@ const ImageAndTextAccordionItem = ({ item }: { item: SanityImageAndTextAccordion
   const [isHovering, setIsHovering] = useState(false)
   const [allowToggle, setAllowToggle] = useState(false)
   const textSwapperRef = useRef<TextSwapperRef>(null)
+  const isLongBigNumber = useMemo(() => {
+    if (!item?.bigNumber) return false
+    return item?.bigNumber?.length > 6
+  }, [item.bigNumber])
 
   useEffect(() => {
     setTimeout(() => {
@@ -367,6 +371,9 @@ const ImageAndTextAccordionItem = ({ item }: { item: SanityImageAndTextAccordion
         },
         {
           [styles.isOpen]: isOpen,
+        },
+        {
+          [styles.isLongBigNumber]: isLongBigNumber,
         },
       )}
       ref={containerRef}

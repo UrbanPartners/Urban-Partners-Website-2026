@@ -27,7 +27,8 @@
     transform: translateY(100%);
   }
 
-  [data-icon-name='download'] & {
+  [data-icon-name='download'] &,
+  [data-icon-name='arrowDown'] & {
     transform: translateY(-100%);
   }
 }
