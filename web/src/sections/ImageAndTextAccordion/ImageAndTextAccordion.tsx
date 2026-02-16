@@ -413,6 +413,7 @@ const ImageAndTextAccordionItem = ({ item }: { item: SanityImageAndTextAccordion
                 label={item.title}
                 ref={textSwapperRef}
                 animateInView
+                className={styles.titleTextSwapper}
               />
             </h2>
           </button>

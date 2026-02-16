@@ -160,18 +160,8 @@
   z-index: 1;
   max-width: px(520);
   margin-bottom: px(40);
-  min-height: px(100);
-
-  @include bp(tablet) {
-    min-height: px(120);
-  }
-
-  @include bp(desktop) {
-    min-height: px(180);
-  }
 
   @include bp-height(700, true) {
-    min-height: 0;
     margin-bottom: px(20);
   }
 }
@@ -186,5 +176,9 @@
   z-index: 1;
   @include font-body-7;
   color: var(--dark-green-70);
-  max-width: px(320);
+  max-width: px(420);
+
+  @include bp(desktop) {
+    max-width: px(520);
+  }
 }
