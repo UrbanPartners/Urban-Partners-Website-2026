@@ -172,7 +172,7 @@ export const mergeSiteSettings = (pageData: SanityPage, settingsMetaData: Sanity
   if (pageData?.metadata) {
     Object.keys(pageData?.metadata).forEach(key => {
       if (pageData?.metadata[key as keyof SanityMetadata] !== null) {
-        if (key === 'image' && !pageData?.metadata?.image?.asset?.url) return
+        if (key === 'image' && !pageData?.metadata?.image?.asset?._id) return
         ignoreNulls[key as keyof SanityMetadata] = pageData?.metadata[key as keyof SanityMetadata]
       }
     })

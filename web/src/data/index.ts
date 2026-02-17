@@ -22,7 +22,7 @@ export const DOC_TYPES = {
 
 // Directories
 export const DIRECTORY_NAMES = {
-  BLOG_POSTS: 'blog',
+  BLOG_POSTS: 'news',
   CASE_STUDIES: 'case-study',
 }
 
