@@ -10,23 +10,65 @@ import SplitTextComponent from '@/components/SplitTextComponent/SplitTextCompone
 import FadeIn from '@/components/FadeIn/FadeIn'
 import { useMemo } from 'react'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import LineBreakElement from '@/components/LineBreakElement/LineBreakElement'
 
 // Custom serializer for grid content
 const GRID_CONTENT_SERIALIZER = {
   ...portableTextSerializer,
   block: {
     ...portableTextSerializer.block,
-    h3: ({ children }) => (
-      <SplitTextComponent
-        type="chars"
-        inConfig={{
-          stagger: 0.035,
-        }}
-        animateInView
-      >
-        <h3 data-h3>{children}</h3>
-      </SplitTextComponent>
-    ),
+    h3: ({ children }) => {
+      if (!children) return null
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let splitChildren: any = null
+      if (Array.isArray(children)) {
+        splitChildren = children
+          .map(child => {
+            if (typeof child === 'string') {
+              return child.split(' ')
+            }
+            return child
+          })
+          .flat()
+          .join('\n')
+      }
+
+      let isLongTitle = false
+      if (typeof splitChildren === 'string') {
+        isLongTitle = splitChildren.length > 7
+      }
+
+      return (
+        <SplitTextComponent
+          type="words"
+          inConfig={{
+            stagger: 0.035,
+          }}
+          animateInView
+          className={classnames(styles.titleSplitText, {
+            [styles.isLongTitle]: isLongTitle,
+          })}
+          // revertOnAnimateIn={false}
+        >
+          {typeof splitChildren === 'string' && isLongTitle ? (
+            <>
+              <LineBreakElement
+                className={styles.titleText}
+                text={splitChildren}
+              />
+            </>
+          ) : (
+            <h3
+              data-h3
+              className={styles.titleText}
+            >
+              {children}
+            </h3>
+          )}
+        </SplitTextComponent>
+      )
+    },
     normal: ({ children }) => (
       <FadeIn
         element="span"

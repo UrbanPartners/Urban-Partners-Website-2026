@@ -14,6 +14,7 @@ import { formatDateToDDMMYYYY } from '@/utils'
 import MaskReveal from '@/components/MaskReveal/MaskReveal'
 import gsap from 'gsap'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import FadeIn from '@/components/FadeIn/FadeIn'
 
 interface NewsCardProps {
   publishedDate: string
@@ -96,9 +97,9 @@ const NewsCard = ({ className, publishedDate, slug, image, title }: NewsCardProp
               ref={imageRef}
             />
           </MaskReveal>
-          <SplitTextComponent animateInView>
+          <FadeIn animateInView>
             <h3 className={styles.title}>{title}</h3>
-          </SplitTextComponent>
+          </FadeIn>
         </div>
         <TextAndIconButton
           ref={textAndIconButtonRef}

@@ -13,9 +13,17 @@
         min-height: px(415);
       }
 
-      [data-h3] {
+      .titleText {
         @include font-h3;
         line-height: 0.8;
+      }
+
+      .titleSplitText.isLongTitle {
+        .titleText {
+          @include bp(tablet, true) {
+            @include font-h5;
+          }
+        }
       }
 
       [data-p] {
@@ -71,11 +79,35 @@
 .content {
   @include rich-text-base-styling;
 
-  [data-h3] {
+  .titleText {
     @include font-h5;
     line-height: 0.8;
-    white-space: nowrap !important;
-    text-wrap: initial !important;
+
+    // white-space: nowrap !important;
+    // text-wrap: initial !important;
+
+    white-space: pre-line;
+    font-kerning: none; // Fix for font jumping on revert
+  }
+
+  .titleSplitText.isLongTitle {
+    .titleText {
+      @include bp(tablet, true) {
+        display: block;
+
+        & > div {
+          display: block !important;
+        }
+      }
+
+      @include bp(tablet) {
+        &::after {
+          content: '';
+          display: inline-block;
+          width: 0.2em;
+        }
+      }
+    }
   }
 
   [data-p] {

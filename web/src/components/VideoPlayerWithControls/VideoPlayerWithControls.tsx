@@ -26,11 +26,14 @@ export interface VideoPlayerWithControlsProps extends Omit<VideoPlayerProps, 'cl
   disabledOutOfViewPause?: boolean
   lineFullWidth?: boolean
   forceMp4?: boolean
+  controlsOnMouseEnter?: () => void
+  controlsOnMouseLeave?: () => void
 }
 
 export interface ControlsRef {
   playVideo: () => void
   pauseVideo: () => void
+  setIsHoveringInitialPlayPause: (isHovering: boolean) => void
 }
 
 export interface VideoPlayerWithControlsRef {
@@ -117,9 +120,7 @@ const VideoPlayerWithControls = forwardRef<VideoPlayerWithControlsRef, VideoPlay
     }
 
     useImperativeHandle(ref, () => ({
-      get controls() {
-        return controlsRef.current
-      },
+      controls: controlsRef.current,
     }))
 
     return (
@@ -162,6 +163,8 @@ const VideoPlayerWithControls = forwardRef<VideoPlayerWithControlsRef, VideoPlay
               hasClickedPlay={hasClickedPlay}
               disabledOutOfViewPause={disabledOutOfViewPause}
               lineFullWidth={lineFullWidth}
+              onMouseEnter={videoPlayerProps.controlsOnMouseEnter}
+              onMouseLeave={videoPlayerProps.controlsOnMouseLeave}
             />
           </>
         )}
@@ -188,6 +191,8 @@ const Controls = forwardRef<
     initiallyHideVideoAndPreviewImage: boolean
     disabledOutOfViewPause: boolean
     lineFullWidth: boolean
+    onMouseEnter?: () => void
+    onMouseLeave?: () => void
   }
 >(
   (
@@ -205,6 +210,8 @@ const Controls = forwardRef<
       onClickedPlay = () => {},
       disabledOutOfViewPause = false,
       lineFullWidth = false,
+      onMouseEnter,
+      onMouseLeave,
     },
     ref,
   ) => {
@@ -521,7 +528,7 @@ const Controls = forwardRef<
 
     return (
       <>
-        {previewImage && !hasClickedPlay && !initiallyHideVideoAndPreviewImage && (
+        {!hasClickedPlay && !initiallyHideVideoAndPreviewImage && (
           <div
             className={styles.previewContainer}
             onClick={playVideo}
@@ -530,10 +537,12 @@ const Controls = forwardRef<
               className={styles.previewOverlay}
               style={{ opacity: previewOverlayOpacity / 100 }}
             />
-            <SanityImage
-              source={previewImage}
-              className={styles.previewImage}
-            />
+            {previewImage && (
+              <SanityImage
+                source={previewImage}
+                className={styles.previewImage}
+              />
+            )}
           </div>
         )}
 
@@ -542,6 +551,18 @@ const Controls = forwardRef<
           ref={controlsOverlayRef}
           aria-label={playerState === 'playing' ? i18n('pauseVideo') : i18n('playVideo')}
           onClick={handlePlayPauseClick}
+          onMouseEnter={() => {
+            setIsHoveringInitialPlayPause(true)
+            if (onMouseEnter) {
+              onMouseEnter()
+            }
+          }}
+          onMouseLeave={() => {
+            setIsHoveringInitialPlayPause(false)
+            if (onMouseLeave) {
+              onMouseLeave()
+            }
+          }}
         />
         <div
           className={classNames(

@@ -18,10 +18,12 @@ interface MediaSectionBackgroundImageProps {
   controlsRef: ControlsRef | null
   setClickedPlay: (clickedPlay: boolean) => void
   isVideoPlayer: boolean
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }
 
 const MediaSectionBackgroundImage = forwardRef<MediaSectionBackgroundImageRef, MediaSectionBackgroundImageProps>(
-  ({ image, overlay, className, controlsRef, setClickedPlay, isVideoPlayer }, ref) => {
+  ({ image, overlay, className, controlsRef, setClickedPlay, isVideoPlayer, onMouseEnter, onMouseLeave }, ref) => {
     const containerRef = useRef<HTMLButtonElement | null>(null)
 
     useImperativeHandle(ref, () => ({
@@ -37,6 +39,8 @@ const MediaSectionBackgroundImage = forwardRef<MediaSectionBackgroundImageRef, M
             '--overlay-darkness': overlay / 100,
           } as CSSProperties
         }
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         onClick={() => {
           if (!isVideoPlayer) return
           if (controlsRef) {

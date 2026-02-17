@@ -28,6 +28,12 @@
   @include bp(tablet) {
     @include off-grid;
   }
+
+  .LargeTitleHeroWithMedia:not(.showArrow) & {
+    @include bp(tablet) {
+      margin-bottom: calc(var(--page-gutter) * 2);
+    }
+  }
 }
 
 .middleContentInner {

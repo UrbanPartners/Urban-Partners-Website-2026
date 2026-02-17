@@ -200,7 +200,7 @@
 .image {
   @include position-100(absolute);
   object-fit: contain;
-  object-position: bottom;
+  object-position: bottom left;
   opacity: 0.00001;
   transition: none !important;
   background-color: transparent !important;

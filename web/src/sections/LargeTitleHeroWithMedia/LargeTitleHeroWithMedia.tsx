@@ -29,7 +29,7 @@ const LargeTitleHeroWithMedia = ({
 
   return (
     <div
-      className={classnames(styles.LargeTitleHeroWithMedia, className)}
+      className={classnames(styles.LargeTitleHeroWithMedia, className, { [styles.showArrow]: showArrow })}
       data-media-size={mediaSize}
       data-media-height={mediaHeight}
     >

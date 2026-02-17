@@ -125,6 +125,7 @@ Card
   @include font-body-2;
   text-wrap: balance;
   max-width: var(--card-text-content-max-width);
+  padding-right: px(10);
   @include clamp-lines(2);
 }
 

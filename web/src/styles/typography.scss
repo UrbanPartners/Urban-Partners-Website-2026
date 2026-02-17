@@ -4,7 +4,7 @@
   font-family: $primary-fonts;
   font-weight: 300;
   line-height: 110%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-size: px(160);
 
   @include bp(tablet) {
@@ -26,7 +26,7 @@
   // font-weight: 375;
   font-weight: 300;
   line-height: 110%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-size: px(60);
 
   @include bp(tablet) {
@@ -43,70 +43,134 @@
   }
 }
 
-@mixin font-h3 {
+@mixin font-h3-base {
   font-family: $primary-fonts;
-  // font-weight: 375;
   font-weight: 300;
   line-height: 110%;
-  letter-spacing: -0.04em;
-  font-size: px(90);
-
-  @include bp(tablet) {
-    text-wrap: balance;
-    font-size: px(120);
-  }
-
-  @include bp(xl) {
-    font-size: px(160);
-  }
+  letter-spacing: -0.03em;
 
   strong {
     font-weight: 500;
+  }
+}
+
+@mixin font-h3-mobile {
+  @include font-h3-base;
+  font-size: px(90);
+}
+
+@mixin font-h3-tablet {
+  @include font-h3-base;
+  text-wrap: balance;
+  font-size: px(120);
+}
+
+@mixin font-h3-xl {
+  @include font-h3-base;
+  text-wrap: balance;
+  font-size: px(160);
+}
+
+@mixin font-h3-desktop-queries {
+  @include bp(tablet) {
+    @include font-h3-tablet;
+  }
+
+  @include bp(xl) {
+    @include font-h3-xl;
+  }
+}
+
+@mixin font-h3 {
+  @include font-h3-mobile;
+  @include font-h3-desktop-queries;
+}
+
+@mixin font-h4-base {
+  font-family: $primary-fonts;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+@mixin font-h4-mobile {
+  @include font-h4-base;
+  font-size: px(60);
+}
+
+@mixin font-h4-tablet {
+  @include font-h4-base;
+  text-wrap: balance;
+  font-size: px(86);
+}
+
+@mixin font-h4-xl {
+  @include font-h4-base;
+  text-wrap: balance;
+  font-size: px(110);
+}
+
+@mixin font-h4-desktop-queries {
+  @include bp(tablet) {
+    @include font-h4-tablet;
+  }
+
+  @include bp(xl) {
+    @include font-h4-xl;
   }
 }
 
 @mixin font-h4 {
+  @include font-h4-mobile;
+  @include font-h4-desktop-queries;
+}
+
+@mixin font-h5-base {
   font-family: $primary-fonts;
   // font-weight: 375;
   font-weight: 300;
   line-height: 110%;
-  letter-spacing: -0.04em;
-  font-size: px(60);
-
-  @include bp(tablet) {
-    text-wrap: balance;
-    font-size: px(86);
-  }
-
-  @include bp(xl) {
-    font-size: px(110);
-  }
+  letter-spacing: -0.03em;
 
   strong {
     font-weight: 500;
   }
 }
 
-@mixin font-h5 {
-  font-family: $primary-fonts;
-  // font-weight: 375;
-  font-weight: 300;
-  line-height: 110%;
-  letter-spacing: -0.04em;
+@mixin font-h5-mobile {
+  @include font-h5-base;
   font-size: px(50);
+}
 
+@mixin font-h5-tablet {
+  @include font-h5-base;
+  text-wrap: balance;
+  font-size: px(60);
+}
+
+@mixin font-h5-xl {
+  @include font-h5-base;
+  text-wrap: balance;
+  font-size: px(80);
+}
+
+@mixin font-h5-desktop-queries {
   @include bp(tablet) {
-    text-wrap: balance;
-    font-size: px(60);
+    @include font-h5-tablet;
   }
 
   @include bp(xl) {
-    font-size: px(80);
+    @include font-h5-xl;
   }
+}
 
-  strong {
-    font-weight: 500;
-  }
+@mixin font-h5 {
+  @include font-h5-mobile;
+  @include font-h5-desktop-queries;
 }
 
 @mixin font-h6 {
@@ -135,7 +199,7 @@
   // font-weight: 375;
   font-weight: 300;
   line-height: 110%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-size: px(36);
   text-wrap: pretty;
 
@@ -157,7 +221,7 @@
   // font-weight: 375;
   font-weight: 300;
   line-height: 110%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-size: px(42);
   text-wrap: pretty;
 
@@ -178,7 +242,7 @@
   font-family: $primary-fonts;
   font-weight: 400;
   line-height: 110%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-size: px(24);
   text-wrap: pretty;
 
@@ -199,7 +263,7 @@
   font-family: $primary-fonts;
   font-weight: 400;
   line-height: 110%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-size: px(22);
   text-wrap: pretty;
 
