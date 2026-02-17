@@ -5,6 +5,7 @@ import blogCategory from './documents/blogCategory'
 import blogReference from './documents/blogReference'
 import globalSettings from './documents/globalSettings'
 import person from './documents/person'
+import redirect from './documents/redirect'
 
 // Objects
 import cmsSettings from './objects/cmsSettings'
@@ -116,4 +117,5 @@ export const schemaTypes = [
   page.caseStudy,
   sharedSection,
   globalSettings,
+  redirect,
 ]

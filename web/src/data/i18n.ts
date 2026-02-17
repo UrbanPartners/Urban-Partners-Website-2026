@@ -11,6 +11,7 @@ const I18N_ENGLISH = {
   resultsForTerm: 'Results for "#{term}"',
   resultsForCategory: 'Category: #{category}',
   resultsForReference: 'Referenced by #{reference}',
+  category: 'Category',
 
   // Case study
   location: 'Location',
@@ -24,6 +25,7 @@ const I18N_ENGLISH = {
   // Video
   playVideo: 'Play Video',
   pauseVideo: 'Pause Video',
+
 }
 
 const I18N_DK = {
@@ -40,6 +42,7 @@ const I18N_DK = {
   transactionYear: 'Transaktionsår',
   sector: 'Sektor',
   fund: 'Fond',
+  type: 'Type',
   size: 'Størrelse (m²)',
   playVideo: 'Afspil video',
   pauseVideo: 'Sæt videon på pause',
@@ -59,6 +62,7 @@ const I18N_SE = {
   transactionYear: 'Transaktionsår',
   sector: 'Sektor or Bransch',
   fund: 'Fond',
+  type: 'Typ',
   size: 'Storlek  (m²)',
   playVideo: 'Spela upp video',
   pauseVideo: 'Pausa video',
@@ -78,6 +82,7 @@ const I18N_DE = {
   transactionYear: 'Transaktionsjahr',
   sector: 'Sektor',
   fund: 'Fonds',
+  type: 'Typ',
   size: 'Größe (m²)',
   playVideo: 'Video abspielen',
   pauseVideo: 'Video pausieren',
@@ -97,6 +102,7 @@ const I18N_FI = {
   transactionYear: 'Sijoitusvuosi',
   sector: 'Sektori',
   fund: 'Rahasto',
+  type: 'Tyyppi',
   size: 'Koko (m²)',
   playVideo: 'Toista video',
   pauseVideo: 'Pysäytä video',
@@ -116,6 +122,7 @@ const I18N_PL = {
   transactionYear: 'Data transakcji',
   sector: 'Sektor',
   fund: 'Fundusz',
+  type: 'Typ',
   size: 'Powierzchnia (m²)',
   playVideo: 'Odtwórz video',
   pauseVideo: 'Wstrzymaj video',
@@ -135,6 +142,7 @@ const I18N_NO = {
   transactionYear: 'Transaksjons år',
   sector: 'Sektor',
   fund: 'Fond',
+  type: 'Type',
   size: 'Størrelse  (m²)',
   playVideo: 'Spill film',
   pauseVideo: 'Pause film',

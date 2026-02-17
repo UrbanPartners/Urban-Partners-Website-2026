@@ -1,6 +1,13 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@/data'
-import ROUTES_REDIRECTS from './src/utils/redirects'
+import { createClient } from 'next-sanity'
 import path from 'path'
+
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
+  useCdn: false,
+})
 
 const nextConfig = {
   sassOptions: {
@@ -47,7 +54,41 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    return [...ROUTES_REDIRECTS]
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('Not fetching redirects in non-production environment')
+      return []
+    }
+
+    let redirects = await client.fetch(`*[_type == "redirect"]{
+      source,
+      destination,
+      type,
+      publishedDate
+    }`)
+
+    if (!redirects?.length) {
+      console.warn('No redirects fetched from Sanity within next.config.ts')
+      return []
+    }
+
+    redirects = redirects
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((redirect: any) => {
+        if (!redirect?.source || !redirect?.destination || !redirect?.type) {
+          return null
+        }
+
+        return {
+          source: redirect.source,
+          destination: redirect.destination,
+          permanent: redirect.type === 'permanent',
+        }
+      })
+      .filter(Boolean)
+
+    console.warn(`Adding ${redirects.length} redirects to next.config.ts`)
+
+    return redirects
   },
 }
 

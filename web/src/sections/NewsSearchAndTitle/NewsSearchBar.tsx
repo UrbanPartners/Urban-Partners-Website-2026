@@ -30,6 +30,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
   const { scroll } = useContext(ScrollContext)
   const resultsRef = useRef<ResultsRef>(null)
   const { isMobile } = useBreakpoint()
+  const { i18n } = useI18n()
 
   const selectedBlogReferenceTitle = useMemo(() => {
     return blogReferences?.find(reference => reference._id === selectedBlogReference)?.title || ''
@@ -199,7 +200,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
             <FormElement
               element="select"
               name="category"
-              label="Category"
+              label={i18n('category')}
               items={categoryOptions}
               onChange={(value: string) => {
                 setSelectedBlogCategory(value)
@@ -209,7 +210,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
             <FormElement
               element="select"
               name="reference"
-              label="Reference"
+              label={i18n('type')}
               items={referenceOptions}
               onChange={(value: string) => {
                 setSelectedBlogReference(value)

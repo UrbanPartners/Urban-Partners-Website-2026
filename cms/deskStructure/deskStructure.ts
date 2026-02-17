@@ -1,3 +1,4 @@
+import RedirectsNumberLeft from '../components/RedirectsNumberLeft'
 import buildNestedPages from './buildNestedPages'
 
 export const structure = {
@@ -34,6 +35,23 @@ export const structure = {
             .title('Shared Sections')
             .icon(() => '🔄')
             .child(S.documentTypeList('sharedSection').title('Shared Sections')),
+          S.listItem()
+            .title('Redirects')
+            .icon(() => '🔀')
+            .child(
+              S.list()
+                .title('Redirects')
+                .items([
+                  S.listItem()
+                    .title('All Redirects')
+                    .child(S.documentTypeList('redirect').title('All Redirects')),
+                  S.listItem()
+                    .title('Redirect Usage Stats')
+                    .child(() =>
+                      S.component(RedirectsNumberLeft).title('Redirect Usage Statistics'),
+                    ),
+                ]),
+            ),
 
           // Settings
           S.divider(),
