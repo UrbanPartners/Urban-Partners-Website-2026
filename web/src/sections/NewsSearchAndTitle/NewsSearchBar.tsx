@@ -200,7 +200,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
             <FormElement
               element="select"
               name="category"
-              label={i18n('category')}
+              label={i18n('theme')}
               items={categoryOptions}
               onChange={(value: string) => {
                 setSelectedBlogCategory(value)

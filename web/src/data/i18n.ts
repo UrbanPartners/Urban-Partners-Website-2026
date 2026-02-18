@@ -12,6 +12,7 @@ const I18N_ENGLISH = {
   resultsForCategory: 'Category: #{category}',
   resultsForReference: 'Referenced by #{reference}',
   category: 'Category',
+  theme: 'Theme',
 
   // Case study
   location: 'Location',
@@ -20,7 +21,7 @@ const I18N_ENGLISH = {
   sector: 'Sector',
   fund: 'Fund',
   type: 'Type',
-  size: 'Size (m²)',
+  size: 'Size',
 
   // Video
   playVideo: 'Play Video',
@@ -43,7 +44,7 @@ const I18N_DK = {
   sector: 'Sektor',
   fund: 'Fond',
   type: 'Type',
-  size: 'Størrelse (m²)',
+  size: 'Størrelse',
   playVideo: 'Afspil video',
   pauseVideo: 'Sæt videon på pause',
 }
@@ -63,7 +64,7 @@ const I18N_SE = {
   sector: 'Sektor or Bransch',
   fund: 'Fond',
   type: 'Typ',
-  size: 'Storlek  (m²)',
+  size: 'Storlek',
   playVideo: 'Spela upp video',
   pauseVideo: 'Pausa video',
 }
@@ -83,7 +84,7 @@ const I18N_DE = {
   sector: 'Sektor',
   fund: 'Fonds',
   type: 'Typ',
-  size: 'Größe (m²)',
+  size: 'Größe',
   playVideo: 'Video abspielen',
   pauseVideo: 'Video pausieren',
 }
@@ -103,7 +104,7 @@ const I18N_FI = {
   sector: 'Sektori',
   fund: 'Rahasto',
   type: 'Tyyppi',
-  size: 'Koko (m²)',
+  size: 'Koko',
   playVideo: 'Toista video',
   pauseVideo: 'Pysäytä video',
 }
@@ -123,7 +124,7 @@ const I18N_PL = {
   sector: 'Sektor',
   fund: 'Fundusz',
   type: 'Typ',
-  size: 'Powierzchnia (m²)',
+  size: 'Powierzchnia',
   playVideo: 'Odtwórz video',
   pauseVideo: 'Wstrzymaj video',
 }
@@ -143,7 +144,7 @@ const I18N_NO = {
   sector: 'Sektor',
   fund: 'Fond',
   type: 'Type',
-  size: 'Størrelse  (m²)',
+  size: 'Størrelse',
   playVideo: 'Spill film',
   pauseVideo: 'Pause film',
 }
