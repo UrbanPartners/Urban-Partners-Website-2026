@@ -54,6 +54,7 @@ type SanityOurStoryScrollerMediaSection = {
   backgroundImage: SanityImage
   backgroundImageOverlay: number
   media?: SanityMedia
+  cta: SanityLink
 }
 
 type SanityOurStoryScroller = SectionCMSInterface & {

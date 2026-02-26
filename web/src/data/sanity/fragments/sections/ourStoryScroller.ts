@@ -53,6 +53,7 @@ export const fields = groq`
     ${imageAsset.fragment('backgroundImage')},
     "backgroundImageOverlay": coalesce(backgroundImageOverlay, 40),
     ${mediaAsset.fragment('media')},
+    ${link.fragment('cta')},
   },
 `
 

@@ -53,6 +53,10 @@
   top: calc(50% - var(--page-gutter));
   left: 0;
   position: absolute;
+
+  @include bp(tablet, true) {
+    display: none;
+  }
 }
 
 .contentContainer {
@@ -98,15 +102,19 @@
   position: absolute;
   top: 50%;
   transform: translateY(-75%);
-  padding-top: calc(var(--page-gutter) * 0.5);
   left: 0;
   width: 100%;
   z-index: 4;
-  pointer-events: none;
+
+  --text-content-padding-top: calc(var(--page-gutter) * 0.5);
 
   @include bp(tablet) {
     transform: none;
     top: calc(50% - var(--video-controls-height) / 2);
+  }
+
+  .isVideoPlayer & {
+    pointer-events: none;
   }
 }
 
@@ -135,6 +143,7 @@
     padding-bottom: 0;
     margin-bottom: 0;
     width: auto;
+    padding-top: var(--text-content-padding-top);
   }
 
   &::after {
@@ -157,7 +166,44 @@
   max-width: px(237);
   padding-left: var(--page-gutter);
 
+  @include bp(tablet) {
+    padding-top: var(--text-content-padding-top);
+  }
+
   [data-link] {
     color: var(--grey-5) !important;
+  }
+}
+
+.ctaContainer {
+  position: relative;
+  width: 100%;
+  z-index: 4;
+  border-bottom: none;
+  border-top: 1px solid var(--our-story-case-study-line-color);
+  opacity: 0;
+
+  @include bp(tablet, true) {
+    position: absolute;
+    bottom: var(--page-gutter-2x);
+    left: 0;
+    border-bottom: 1px solid var(--grey-3);
+    border-top: none;
+  }
+}
+
+.ctaLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  z-index: 5;
+  background-color: var(--our-story-case-study-line-color);
+  pointer-events: none;
+
+  @include bp(tablet, true) {
+    background-color: var(--grey-3);
+    left: 50%;
   }
 }

@@ -12,6 +12,8 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import useWindowResize from '@/hooks/use-window-resize'
 import { ScrollContext } from '@/context/Scroll'
 import useInView from '@/hooks/use-in-view'
+import TextAndIconButton from '@/components/TextAndIconButton/TextAndIconButton'
+import useBreakpoint from '@/hooks/use-breakpoint'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -23,6 +25,7 @@ const MediaSection = ({
   backgroundImageOverlay,
   backgroundImage,
   media,
+  cta,
 }: SanityOurStoryScrollerMediaSection) => {
   const bgImageLeftSideElementRef = useRef<HTMLButtonElement | null>(null)
   const bgImageRightSideElementRef = useRef<HTMLButtonElement | null>(null)
@@ -39,7 +42,9 @@ const MediaSection = ({
   const resizeKey = useWindowResize()
   const containerRef = useRef<HTMLDivElement | null>(null)
   const { scroll } = useContext(ScrollContext)
+  const { isMobile } = useBreakpoint()
   const lineContainerRef = useRef<HTMLDivElement | null>(null)
+  const ctaContainerRef = useRef<HTMLDivElement | null>(null)
   const { isInView, setElementToObserve } = useInView({
     fireOnce: false,
   })
@@ -145,6 +150,21 @@ const MediaSection = ({
       )
     }
 
+    if (ctaContainerRef.current) {
+      timelineRef.current.fromTo(
+        ctaContainerRef.current,
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+          duration: duration * 0.5,
+          ease,
+        },
+        '<',
+      )
+    }
+
     scrollTriggerRef.current = ScrollTrigger.create({
       start: 'top top',
       trigger: containerRef.current,
@@ -170,6 +190,26 @@ const MediaSection = ({
       scroll.scrollTo(containerRef.current?.offsetTop + containerRef.current?.offsetHeight - window.innerHeight)
     }
   }
+
+  const ctaContent = (
+    <>
+      {!isVideoPlayer && cta?.link && cta?.linkType !== 'disabled' ? (
+        <div
+          className={styles.ctaContainer}
+          ref={ctaContainerRef}
+        >
+          <div className={styles.ctaLine} />
+          <TextAndIconButton
+            link={cta}
+            label={cta.label}
+            style="white-transparent-theme"
+          />
+        </div>
+      ) : (
+        <div />
+      )}
+    </>
+  )
 
   return (
     <div
@@ -285,11 +325,11 @@ const MediaSection = ({
                     {description}
                   </p>
                 )}
-
-                <div />
+                {!isMobile && <>{ctaContent}</>}
               </div>
             )}
           </div>
+          {isMobile && <>{ctaContent}</>}
         </div>
       </div>
     </div>

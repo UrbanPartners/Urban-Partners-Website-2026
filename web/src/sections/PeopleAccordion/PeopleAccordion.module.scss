@@ -104,10 +104,10 @@
   padding-bottom: px(50);
 
   @include bp(mobile) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(0, 0.5) minmax(0, 0.5);
   }
 
   @include bp(laptop) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: minmax(0, 0.333333fr) minmax(0, 0.333333fr) minmax(0, 0.333333fr);
   }
 }

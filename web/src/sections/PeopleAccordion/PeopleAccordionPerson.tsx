@@ -11,6 +11,7 @@ import Link from '@/components/Link/Link'
 import ArrowButton, { ArrowButtonRef } from '@/components/ArrowButton/ArrowButton'
 import LineAnimation, { LineAnimationRef } from '@/components/LineAnimation/LineAnimation'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import gsap from 'gsap'
 import classNames from 'classnames'
 
 export interface PeopleAccordionPersonRef {
@@ -30,10 +31,29 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
   const arrowButtonRef = useRef<ArrowButtonRef>(null)
   const lineAnimationTopRef = useRef<LineAnimationRef>(null)
   const lineAnimationMiddleRef = useRef<LineAnimationRef>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const link = person.linkedInUrl
   const { isMobile } = useBreakpoint()
 
   const animateIn = () => {
+    if (containerRef.current) {
+      gsap.set(containerRef.current, {
+        pointerEvents: 'auto',
+      })
+    }
+
+    if (arrowButtonRef.current) {
+      const element = arrowButtonRef.current.getElement()
+      if (element) {
+        gsap.killTweensOf(element)
+        gsap.to(element, {
+          opacity: 1,
+          duration: 0.4,
+          ease: 'Power3.easeOut',
+        })
+      }
+    }
+
     if (maskRevealRef.current) {
       maskRevealRef.current.animateIn()
     }
@@ -57,6 +77,24 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
   }
 
   const animateOut = () => {
+    if (containerRef.current) {
+      gsap.set(containerRef.current, {
+        pointerEvents: 'none',
+      })
+    }
+
+    if (arrowButtonRef.current) {
+      const element = arrowButtonRef.current.getElement()
+      if (element) {
+        gsap.killTweensOf(element)
+        gsap.to(element, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'Power3.easeOut',
+        })
+      }
+    }
+
     if (maskRevealRef.current) {
       maskRevealRef.current.animateOut()
     }
@@ -109,6 +147,18 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
     </SplitTextComponent>
   )
 
+  const designationContent = (
+    <FadeIn
+      ref={fadeInRef}
+      className={styles.designationContainer}
+      inConfig={{
+        delay: 0.7,
+      }}
+    >
+      <p className={styles.designationText}>{person.designation}</p>
+    </FadeIn>
+  )
+
   const titleContentDesktop = (
     <SplitTextComponent
       ref={splitTextRefDesktop}
@@ -146,6 +196,7 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
       >
         {titleContentMobile}
         {titleContentDesktop}
+        {designationContent}
         <ArrowButton
           ref={arrowButtonRef}
           disableOnHover
@@ -160,12 +211,16 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
       <div className={styles.titleContainer}>
         {titleContentMobile}
         {titleContentDesktop}
+        {designationContent}
       </div>
     )
   }
 
   return (
-    <div className={styles.PeopleAccordionPerson}>
+    <div
+      className={styles.PeopleAccordionPerson}
+      ref={containerRef}
+    >
       <LineAnimation
         position="top"
         animateFrom="left"
@@ -204,28 +259,7 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
           />
         </MaskReveal>
       )}
-      <div className={styles.textContent}>
-        {titleContent}
-        {person.email && (
-          <Link
-            link={{
-              linkType: 'external',
-              link: `mailto:${person.email}`,
-            }}
-            className={styles.emailLink}
-          >
-            <FadeIn
-              ref={fadeInRef}
-              className={styles.email}
-              inConfig={{
-                delay: 0.7,
-              }}
-            >
-              <p className={styles.emailText}>{person.email}</p>
-            </FadeIn>
-          </Link>
-        )}
-      </div>
+      <div className={styles.textContent}>{titleContent}</div>
     </div>
   )
 })

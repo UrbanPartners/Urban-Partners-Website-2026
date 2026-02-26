@@ -342,6 +342,15 @@ export default {
           isRequired: false,
           typesAllowed: ['videoPlayer'],
         }),
+        {
+          name: 'cta',
+          title: 'CTA',
+          type: 'link',
+          description: 'If video media is entered, this CTA will be hidden.',
+          initialValue: {
+            linkType: 'disabled',
+          },
+        },
       ],
     },
   ],
