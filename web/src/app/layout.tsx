@@ -9,6 +9,7 @@ import { WipeProvider } from '@/context/WipeContext'
 import PageTransition from '@/components/PageTransition/PageTransition'
 import Script from 'next/script'
 import { PRELOADER_COOKIE_NAME } from '@/data'
+import Head from 'next/head'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,6 +31,17 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning={true}>
+      <Head>
+        {process.env.NEXT_PUBLIC_COOKIE_BOT_ID && (
+          <Script
+            id="Cookiebot"
+            src="https://consent.cookiebot.com/uc.js"
+            data-cbid={process.env.NEXT_PUBLIC_COOKIE_BOT_ID}
+            type="text/javascript"
+            async
+          />
+        )}
+      </Head>
       <body suppressHydrationWarning={true}>
         <WipeProvider>
           <PageTransition>{children}</PageTransition>
@@ -60,6 +72,14 @@ export default function RootLayout({
           })();
         `}</Script>
         {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
+        {process.env.NEXT_PUBLIC_COOKIE_BOT_ID && (
+          <Script
+            id="CookieDeclaration"
+            src={`https://consent.cookiebot.com/${process.env.NEXT_PUBLIC_COOKIE_BOT_ID}/cd.js`}
+            type="text/javascript"
+            async
+          />
+        )}
       </body>
     </html>
   )
