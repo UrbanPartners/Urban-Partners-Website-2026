@@ -37,8 +37,8 @@ export default function RootLayout({
             id="Cookiebot"
             src="https://consent.cookiebot.com/uc.js"
             data-cbid={process.env.NEXT_PUBLIC_COOKIE_BOT_ID}
+            data-blockingmode="auto"
             type="text/javascript"
-            async
           />
         )}
       </Head>
