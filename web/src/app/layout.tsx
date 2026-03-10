@@ -37,12 +37,21 @@ export default function RootLayout({
             id="matomo-container"
           >
             {`
-              var _mtm = window._mtm = window._mtm || [];
-              _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-              (function() {
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.async=true; g.src='https://matomo.nrep.com/js/container_${process.env.NEXT_PUBLIC_MATOMO_CONTAINER}.js'; s.parentNode.insertBefore(g,s);
-              })();
+              window.addEventListener('CookiebotOnAccept', function (e) {
+                if (Cookiebot.consent.statistics) {
+                  console.log("Loading Matomo");
+                  loadMatomo();
+                }
+              });
+
+              function loadMatomo() {
+                var _mtm = window._mtm = window._mtm || [];
+                _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+                (function() {
+                  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                  g.async=true; g.src='https://matomo.nrep.com/js/container_${process.env.NEXT_PUBLIC_MATOMO_CONTAINER}.js'; s.parentNode.insertBefore(g,s);
+                })();
+              }
             `}
           </Script>
         )}
