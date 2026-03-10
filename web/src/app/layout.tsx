@@ -9,7 +9,6 @@ import { WipeProvider } from '@/context/WipeContext'
 import PageTransition from '@/components/PageTransition/PageTransition'
 import Script from 'next/script'
 import { PRELOADER_COOKIE_NAME } from '@/data'
-import Head from 'next/head'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -31,9 +30,25 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning={true}>
-      <Head>
+      <body suppressHydrationWarning={true}>
+        {process.env.NEXT_PUBLIC_MATOMO_CONTAINER && (
+          <Script
+            strategy="beforeInteractive"
+            id="matomo-container"
+          >
+            {`
+              var _mtm = window._mtm = window._mtm || [];
+              _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+              (function() {
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.async=true; g.src='https://matomo.nrep.com/js/container_${process.env.NEXT_PUBLIC_MATOMO_CONTAINER}.js'; s.parentNode.insertBefore(g,s);
+              })();
+            `}
+          </Script>
+        )}
         {process.env.NEXT_PUBLIC_COOKIE_BOT_ID && (
           <Script
+            strategy="beforeInteractive"
             id="Cookiebot"
             src="https://consent.cookiebot.com/uc.js"
             data-cbid={process.env.NEXT_PUBLIC_COOKIE_BOT_ID}
@@ -41,8 +56,6 @@ export default function RootLayout({
             type="text/javascript"
           />
         )}
-      </Head>
-      <body suppressHydrationWarning={true}>
         <WipeProvider>
           <PageTransition>{children}</PageTransition>
         </WipeProvider>
@@ -78,6 +91,7 @@ export default function RootLayout({
             src={`https://consent.cookiebot.com/${process.env.NEXT_PUBLIC_COOKIE_BOT_ID}/cd.js`}
             type="text/javascript"
             async
+            strategy="lazyOnload"
           />
         )}
       </body>
