@@ -13,6 +13,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
 import Preloader from '@/components/Preloader/Preloader'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import BioOverlay from '@/components/BioOverlay/BioOverlay'
 
 ScrollTrigger.config({
   ignoreMobileResize: true,
@@ -63,6 +64,7 @@ const Layout = ({ children }: SanityLayout) => {
       {!isMobile && <Navigation />}
       <PreviewButton />
       <Preloader />
+      <BioOverlay />
       <main className={SCROLL_CONTAINER_CLASS}>
         {isMobile && <Navigation />}
         <div className={SCROLL_CONTENT_CLASS}>{children}</div>

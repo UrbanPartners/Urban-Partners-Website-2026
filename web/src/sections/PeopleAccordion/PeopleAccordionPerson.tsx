@@ -1,18 +1,18 @@
 'use client'
 
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import styles from './PeopleAccordionPerson.module.scss'
 import SanityImage from '@/components/SanityImage/SanityImage'
 import MaskReveal, { MaskRevealRef } from '@/components/MaskReveal/MaskReveal'
 import SplitTextComponent, { SplitTextRef } from '@/components/SplitTextComponent/SplitTextComponent'
 import FadeIn, { FadeInRef } from '@/components/FadeIn/FadeIn'
 import { SanityImage as SanityImageType } from '@/types/sanity/SanityImage'
-import Link from '@/components/Link/Link'
 import ArrowButton, { ArrowButtonRef } from '@/components/ArrowButton/ArrowButton'
 import LineAnimation, { LineAnimationRef } from '@/components/LineAnimation/LineAnimation'
 import useBreakpoint from '@/hooks/use-breakpoint'
 import gsap from 'gsap'
 import classNames from 'classnames'
+import useStore from '@/store'
 
 export interface PeopleAccordionPersonRef {
   animateIn: () => void
@@ -32,8 +32,14 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
   const lineAnimationTopRef = useRef<LineAnimationRef>(null)
   const lineAnimationMiddleRef = useRef<LineAnimationRef>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const link = person.linkedInUrl
   const { isMobile } = useBreakpoint()
+  const setBioOverlayData = useStore(state => state.setBioOverlayData)
+  const hasBioOverlayData = useMemo(() => {
+    const hasBio = person?.bio && person?.bio?.length > 0
+    const hasFullName = person?.firstName && person?.lastName
+    const hasImage = person?.image
+    return hasBio && hasFullName && hasImage
+  }, [person])
 
   const animateIn = () => {
     if (containerRef.current) {
@@ -175,25 +181,9 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
     return null
   }
 
-  if (link) {
+  if (hasBioOverlayData) {
     titleContent = (
-      <Link
-        link={{
-          linkType: 'external',
-          link: link,
-        }}
-        className={styles.titleContainer}
-        onMouseEnter={() => {
-          if (arrowButtonRef.current) {
-            arrowButtonRef.current.setIsHover(true)
-          }
-        }}
-        onMouseLeave={() => {
-          if (arrowButtonRef.current) {
-            arrowButtonRef.current.setIsHover(false)
-          }
-        }}
-      >
+      <div className={styles.titleContainer}>
         {titleContentMobile}
         {titleContentDesktop}
         {designationContent}
@@ -204,7 +194,7 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
           className={styles.arrowButton}
           element="span"
         />
-      </Link>
+      </div>
     )
   } else {
     titleContent = (
@@ -220,6 +210,22 @@ const PeopleAccordionPerson = forwardRef<PeopleAccordionPersonRef, PeopleAccordi
     <div
       className={styles.PeopleAccordionPerson}
       ref={containerRef}
+      onMouseEnter={() => {
+        if (!hasBioOverlayData) return
+        if (arrowButtonRef.current) {
+          arrowButtonRef.current.setIsHover(true)
+        }
+      }}
+      onMouseLeave={() => {
+        if (!hasBioOverlayData) return
+        if (arrowButtonRef.current) {
+          arrowButtonRef.current.setIsHover(false)
+        }
+      }}
+      onClick={() => {
+        if (!hasBioOverlayData) return
+        setBioOverlayData(person)
+      }}
     >
       <LineAnimation
         position="top"

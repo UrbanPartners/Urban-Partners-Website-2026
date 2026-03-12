@@ -23,6 +23,9 @@ const I18N_ENGLISH = {
   type: 'Type',
   size: 'Size',
 
+  // Bio overlay
+  bio: 'Bio',
+
   // Video
   playVideo: 'Play Video',
   pauseVideo: 'Pause Video',

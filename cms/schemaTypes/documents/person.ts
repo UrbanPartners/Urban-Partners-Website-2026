@@ -2,6 +2,7 @@ import {Rule} from 'sanity'
 import {SanityDocument} from 'sanity/migrate'
 import {generateFieldsByLanguage} from './page'
 import {DEFAULT_LANGUAGE} from '../../data/languages'
+import getRichTextFields from '../../utils/richText'
 
 export default {
   name: 'person',
@@ -66,6 +67,11 @@ export default {
           },
           {
             type: 'string',
+            name: 'designation2',
+            description: 'ie "Partner at Urban Partners"',
+          },
+          {
+            type: 'string',
             name: 'linkedInUrl',
             title: 'LinkedIn URL',
           },
@@ -74,8 +80,39 @@ export default {
             name: 'email',
           },
           {
+            type: 'string',
+            name: 'phoneNumber',
+            description: 'ie "+44 7900 000 000"',
+          },
+          {
+            type: 'string',
+            name: 'location',
+            description: 'ie "London"',
+          },
+          {
             type: 'imageAsset',
             name: 'image',
+          },
+          {
+            name: 'bioSummary',
+            title: 'Bio Summary',
+            description: 'This is the large text that shows up above the rest of the bio',
+            type: 'array',
+            of: [
+              getRichTextFields({
+                items: [],
+              }),
+            ],
+          },
+          {
+            name: 'bio',
+            title: 'Bio',
+            type: 'array',
+            of: [
+              getRichTextFields({
+                items: ['strong', 'link'],
+              }),
+            ],
           },
         ]
       },

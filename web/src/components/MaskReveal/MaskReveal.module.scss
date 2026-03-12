@@ -28,6 +28,26 @@
       --right-y: 0%;
     }
 
+    &.FROM_LEFT {
+      clip-path: polygon(0% 0%, var(--x) 0%, var(--x) 100%, 0% 100%);
+
+      --x: 0%;
+
+      &.showInitially {
+        --x: 100%;
+      }
+    }
+
+    &.FROM_RIGHT {
+      clip-path: polygon(var(--x) 0%, 100% 0%, 100% 100%, var(--x) 100%);
+
+      --x: 100%;
+
+      &.showInitially {
+        --x: 0%;
+      }
+    }
+
     &.showInitially {
       &.FROM_TOP {
         --left-y: 100%;

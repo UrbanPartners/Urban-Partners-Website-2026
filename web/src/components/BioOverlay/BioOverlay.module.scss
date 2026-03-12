@@ -1,0 +1,260 @@
+.BioOverlay {
+  @include position-100(fixed);
+  @include z-index(bio-overlay);
+  overflow: hidden;
+  color: var(--grey-3);
+  height: 100svh;
+
+  // Chrome mobile fix
+  [data-browser='chrome'] & {
+    @include bp(mobile, true) {
+      height: 100vh;
+    }
+  }
+
+  --line-opacity: 0.25;
+  --bio-overlay-columns: 1fr;
+
+  @include bp(tablet) {
+    --bio-overlay-columns: #{px(385)} 1fr;
+  }
+}
+
+.backgroundOverlay {
+  @include position-100(absolute);
+  background-color: rgba(255, 255, 255, 50%);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.inner,
+.greenBg {
+  max-height: 100%;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  @include bp(desktop) {
+    width: 65%;
+    min-width: px(1300);
+  }
+}
+
+.greenBg {
+  background: var(--green-dark);
+  z-index: 2;
+}
+
+.inner {
+  z-index: 3;
+  overflow: auto;
+  padding: var(--page-gutter);
+
+  // Chrome mobile fix
+  [data-browser='chrome'] & {
+    @include bp(mobile, true) {
+      padding-bottom: calc(100vh - 100svh);
+    }
+  }
+}
+
+.topCloseContainer {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeButtonContainer {
+  position: relative;
+
+  @include bp(tablet) {
+    margin-bottom: px(-20);
+  }
+}
+
+.topCloseLine__horizontal,
+.topCloseLine__vertical,
+.bottomContent__lineAnimationHorizontal,
+.bottomContent__lineAnimationVertical {
+  opacity: var(--line-opacity);
+}
+
+.bottomContent__lineAnimationHorizontal {
+  @include bp(tablet, true) {
+    margin-left: calc(var(--page-gutter) * -1) !important;
+    width: calc(100% + var(--page-gutter) * 2) !important;
+  }
+}
+
+.closeButton {
+  @include reset-button;
+  @include font-body-3;
+  @include flex-center;
+  width: px(64);
+  height: px(64);
+  z-index: 2;
+  cursor: pointer;
+
+  svg {
+    width: px(16);
+  }
+}
+
+.topContent {
+  display: grid;
+  grid-template-columns: var(--bio-overlay-columns);
+  padding-top: var(--page-gutter);
+
+  @include bp(tablet) {
+    padding-top: 0;
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nameSection {
+  padding: var(--page-gutter-2x) 0 0 0;
+
+  @include bp(tablet) {
+    padding: 0 var(--page-gutter);
+  }
+}
+
+.bioLabel {
+  @include font-body-8;
+  margin-bottom: px(64);
+  display: block;
+
+  @include bp(tablet, true) {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+}
+
+.firstName,
+.lastName {
+  @include font-h4;
+  margin: 0;
+
+  .isLongName & {
+    @include font-h5;
+  }
+}
+
+.lastName {
+  margin-top: -0.1em;
+}
+
+.bottomContent {
+  display: grid;
+  grid-template-columns: var(--bio-overlay-columns);
+  margin-top: var(--page-gutter-2x);
+  position: relative;
+  padding-left: px(60);
+
+  @include bp(tablet) {
+    margin-top: var(--page-gutter);
+    padding-left: 0;
+  }
+}
+
+.leftColumn {
+  display: none;
+  flex-direction: column;
+  gap: px(4);
+  padding: var(--page-gutter) var(--page-gutter) 0 0;
+
+  @include bp(tablet) {
+    display: flex;
+  }
+}
+
+.designationContainer {
+  margin-top: px(54);
+
+  @include bp(tablet) {
+    margin-top: 0;
+  }
+}
+
+.bioLabelMobile {
+  @include bp(tablet) {
+    display: none;
+  }
+}
+
+.bioLabelDesktop {
+  display: none;
+
+  @include bp(tablet) {
+    display: block;
+  }
+}
+
+.designationMobile {
+  @include bp(tablet) {
+    display: none;
+  }
+}
+
+.designationDesktop {
+  display: none;
+
+  @include bp(tablet) {
+    display: block;
+  }
+}
+
+.designation,
+.designation2 {
+  @include font-body-6;
+  margin: 0;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: var(--page-gutter-2x) var(--page-gutter) var(--page-gutter);
+
+  @include bp(tablet) {
+    padding: var(--page-gutter);
+  }
+}
+
+.summary {
+  @include rich-text-base-styling;
+  @include font-h10;
+  color: var(--grey-5);
+  max-width: px(768);
+  margin-bottom: px(46);
+
+  @include bp(tablet) {
+    margin-bottom: px(71);
+  }
+}
+
+.bio {
+  @include rich-text-base-styling;
+  @include font-body-7;
+  opacity: 0.7;
+  max-width: px(425);
+
+  [data-link] {
+    color: var(--grey-3) !important;
+  }
+}

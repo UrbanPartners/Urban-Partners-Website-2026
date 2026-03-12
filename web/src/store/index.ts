@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { Coordinate } from '@/types/GeneralTypes'
+import { BioOverlayData } from '@/components/BioOverlay/BioOverlay'
 
 const STORAGE_KEY = 'UP_STORAGE'
 
@@ -16,6 +17,9 @@ type StoreValues = {
   preloaderIsAnimatingOut: boolean
   pageHistory: string[]
   cmsDebug: boolean
+
+  // Bio Overlay
+  bioOverlayData: BioOverlayData | null
 
   // Navigation
   navIsOpen: boolean
@@ -39,6 +43,9 @@ type StoreSetters = {
   setPreloaderIsAnimatingOut: (value: StoreValues['preloaderIsAnimatingOut']) => void
   updatePageHistory: (value: string) => void
   setCmsDebug: (value: StoreValues['cmsDebug']) => void
+
+  // Bio Overlay
+  setBioOverlayData: (value: StoreValues['bioOverlayData']) => void
 
   // Navigtion
   setNavIsOpen: (value: StoreValues['navIsOpen']) => void
@@ -81,6 +88,10 @@ export const useStore = create(
         },
         cmsDebug: false,
         setCmsDebug: cmsDebug => set({ cmsDebug }),
+
+        // Bio Overlay
+        bioOverlayData: null,
+        setBioOverlayData: bioOverlayData => set({ bioOverlayData }),
 
         // Navigation
         navIsOpen: false,

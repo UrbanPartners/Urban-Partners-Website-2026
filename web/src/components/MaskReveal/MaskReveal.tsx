@@ -9,7 +9,7 @@ import styles from './MaskReveal.module.scss'
 type MaskRevealProps = {
   className?: string
   children: ReactNode
-  direction?: 'FROM_TOP' | 'FROM_BOTTOM'
+  direction?: 'FROM_TOP' | 'FROM_BOTTOM' | 'FROM_LEFT' | 'FROM_RIGHT'
   maskType?: 'default' | 'twoColumns'
   id?: string
   animateWhenInView?: boolean
@@ -21,6 +21,7 @@ type MaskRevealProps = {
   hasSubtleBg?: boolean
   longerDuration?: boolean
   revertOnAnimateInComplete?: boolean
+  lenisPrevent?: boolean
 }
 
 export interface MaskRevealRef {
@@ -48,6 +49,7 @@ const MaskReveal = forwardRef<MaskRevealRef, MaskRevealProps>(
       hasSubtleBg = false,
       longerDuration = false,
       revertOnAnimateInComplete = false,
+      lenisPrevent = false,
     },
     ref,
   ) => {
@@ -65,21 +67,31 @@ const MaskReveal = forwardRef<MaskRevealRef, MaskRevealProps>(
       const duration = longerDuration ? DURATION_LONGER : DURATION
 
       if (maskType === 'default') {
-        let leftY = '0'
-        let rightY = '0'
+        if (direction === 'FROM_LEFT' || direction === 'FROM_RIGHT') {
+          const x = direction === 'FROM_LEFT' ? '100%' : '0%'
+          gsap.to(containerRef.current, {
+            '--x': x,
+            duration,
+            ease: EASE,
+            ...inConfig,
+          })
+        } else {
+          let leftY = '0'
+          let rightY = '0'
 
-        if (direction === 'FROM_TOP') {
-          leftY = '100%'
-          rightY = '100%'
+          if (direction === 'FROM_TOP') {
+            leftY = '100%'
+            rightY = '100%'
+          }
+
+          gsap.to(containerRef.current, {
+            '--left-y': leftY,
+            '--right-y': rightY,
+            duration,
+            ease: EASE,
+            ...inConfig,
+          })
         }
-
-        gsap.to(containerRef.current, {
-          '--left-y': leftY,
-          '--right-y': rightY,
-          duration,
-          ease: EASE,
-          ...inConfig,
-        })
       }
 
       if (maskType === 'twoColumns') {
@@ -128,21 +140,31 @@ const MaskReveal = forwardRef<MaskRevealRef, MaskRevealProps>(
       const duration = longerDuration ? DURATION_LONGER : DURATION
 
       if (maskType === 'default') {
-        let leftY = '100%'
-        let rightY = '100%'
+        if (direction === 'FROM_LEFT' || direction === 'FROM_RIGHT') {
+          const x = direction === 'FROM_LEFT' ? '0%' : '100%'
+          gsap.to(containerRef.current, {
+            '--x': x,
+            duration,
+            ease: EASE,
+            ...outConfig,
+          })
+        } else {
+          let leftY = '100%'
+          let rightY = '100%'
 
-        if (direction === 'FROM_TOP') {
-          leftY = '0%'
-          rightY = '0%'
+          if (direction === 'FROM_TOP') {
+            leftY = '0%'
+            rightY = '0%'
+          }
+
+          gsap.to(containerRef.current, {
+            '--left-y': leftY,
+            '--right-y': rightY,
+            duration,
+            ease: EASE,
+            ...outConfig,
+          })
         }
-
-        gsap.to(containerRef.current, {
-          '--left-y': leftY,
-          '--right-y': rightY,
-          duration,
-          ease: EASE,
-          ...outConfig,
-        })
       }
 
       if (maskType === 'twoColumns') {
@@ -206,6 +228,7 @@ const MaskReveal = forwardRef<MaskRevealRef, MaskRevealProps>(
         suppressHydrationWarning={true}
         id={id}
         data-mask-type={maskType}
+        data-lenis-prevent={lenisPrevent || undefined}
         className={classnames(
           styles.MaskReveal,
           className,
