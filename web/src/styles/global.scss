@@ -193,6 +193,14 @@ blockquote {
 }
 
 // ====================================
+// Hide cookiebot at bottom of page
+// ====================================
+
+.CookieDeclaration {
+  display: none !important;
+}
+
+// ====================================
 // Lenis
 // ====================================
 html.lenis {
