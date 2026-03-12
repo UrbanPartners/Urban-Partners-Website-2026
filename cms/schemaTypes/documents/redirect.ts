@@ -107,6 +107,10 @@ export default {
             return 'Source must start with a slash'
           }
 
+          if (value === context?.document?.destination) {
+            return 'Source cannot be the same as destination'
+          }
+
           return true
         }),
     },
@@ -123,6 +127,10 @@ export default {
           // Detect if doesnt start with / or http
           if (!value.startsWith('/') && !value.startsWith('http')) {
             return 'Destination must start with a slash or http'
+          }
+
+          if (value === context?.document?.source) {
+            return 'Destination cannot be the same as source'
           }
 
           return true

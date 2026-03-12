@@ -54,10 +54,10 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('Not fetching redirects in non-production environment')
-      return []
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //   console.warn('Not fetching redirects in non-production environment')
+    //   return []
+    // }
 
     let redirects = await client.fetch(`*[_type == "redirect"]{
       source,
@@ -75,12 +75,33 @@ const nextConfig = {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((redirect: any) => {
         if (!redirect?.source || !redirect?.destination || !redirect?.type) {
+          console.warn('[next.config] skipping malformed redirect:', JSON.stringify(redirect))
           return null
         }
 
+        const { source, destination } = redirect
+
+        if (!destination.startsWith('/') && !destination.startsWith('http')) {
+          console.warn(
+            `[next.config] suspicious destination (no leading slash or http): "${destination}" (source: "${source}")`,
+          )
+        }
+
+        if (source === destination) {
+          console.warn(`[next.config] source === destination loop detected: "${source}"`)
+          return null
+        }
+
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+        if (siteUrl && destination.startsWith(siteUrl)) {
+          console.warn(
+            `[next.config] destination points back to same domain — potential loop: "${source}" → "${destination}"`,
+          )
+        }
+
         return {
-          source: redirect.source,
-          destination: redirect.destination,
+          source,
+          destination,
           permanent: redirect.type === 'permanent',
         }
       })
