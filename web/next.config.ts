@@ -54,10 +54,10 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    // if (process.env.NODE_ENV !== 'production') {
-    //   console.warn('Not fetching redirects in non-production environment')
-    //   return []
-    // }
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('Not fetching redirects in non-production environment')
+      return []
+    }
 
     let redirects = await client.fetch(`*[_type == "redirect"]{
       source,
