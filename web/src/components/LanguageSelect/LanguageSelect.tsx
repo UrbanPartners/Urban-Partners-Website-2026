@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import classnames from 'classnames'
 import styles from './LanguageSelect.module.scss'
-import { DEFAULT_LANGUAGE, LANGUAGES, LANGUAGE_COOKIE_EXPIRY_SECONDS, LANGUAGE_COOKIE_NAME } from '@/data'
+import { DEFAULT_LANGUAGE, HOME_SLUG, LANGUAGES, LANGUAGE_COOKIE_EXPIRY_SECONDS, LANGUAGE_COOKIE_NAME } from '@/data'
 import useCurrentPage from '@/hooks/use-current-page'
 import { setCookie, getUrlFromPageData } from '@/utils'
 import Icon from '@/components/Icon/Icon'
@@ -72,6 +72,7 @@ const LanguageSelect = ({ className, theme = 'dark' }: LanguageSelectProps) => {
 
           // Navigate to the same page in the selected language (same logic as Link component)
           const urlPath = getUrlFromPageData(currentDocType, currentSlug !== DEFAULT_LANGUAGE ? currentSlug : '')
+
           let path = `/${selectedLanguage}`
           if (path !== urlPath) {
             path = `/${selectedLanguage}${urlPath}`
@@ -85,6 +86,10 @@ const LanguageSelect = ({ className, theme = 'dark' }: LanguageSelectProps) => {
 
           if (path === `/${DEFAULT_LANGUAGE}`) {
             path = '/'
+          }
+
+          if (currentSlug === HOME_SLUG) {
+            path = selectedLanguage === DEFAULT_LANGUAGE ? '/' : `/${selectedLanguage}`
           }
 
           router.push(path)

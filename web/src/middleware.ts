@@ -3,7 +3,7 @@ import {
   HOME_SLUG,
   LANGUAGES,
   // PRELOADER_COOKIE_NAME,
-  //LANGUAGE_COOKIE_NAME
+  // LANGUAGE_COOKIE_NAME,
 } from '@/data'
 import { NextResponse } from 'next/server'
 import {
@@ -19,10 +19,13 @@ export const config = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getBrowserLanguage = (req: NextRequest) => {
-  const languageHeaderString = req.headers.get('accept-language') || ''
+  let languageHeaderString = req.headers.get('accept-language') || ''
 
-  // hack to get ZH to === TW
-  // languageHeaderString = languageHeaderString.replace(/zh/g, LANGUAGES.TW)
+  // Danish fix
+  languageHeaderString = languageHeaderString.replace('da', LANGUAGES.DK)
+
+  // Norwegian fix
+  languageHeaderString = languageHeaderString.replace('nn', LANGUAGES.NO)
 
   const preferredLanguage = languageHeaderString
     ?.split(',')
@@ -80,6 +83,22 @@ export function middleware(request: NextRequest) {
   }
 
   if (isPageRequest) {
+    // const allCookies = request.cookies.getAll()
+    // const languageCookie = allCookies.filter(cookie => cookie.name === LANGUAGE_COOKIE_NAME)[0]
+    // const languageCookieValue = languageCookie?.value || null
+    // const preferredLanguage = getBrowserLanguage(request)
+    // const newPath = `/${preferredLanguage ? preferredLanguage : LANGUAGES.EN}${pathname}`
+
+    // If no language cookie set and they have a preferred language,
+    // set cookie to that language and redirect to proper language path
+    // if (!languageCookieValue && preferredLanguage !== DEFAULT_LANGUAGE) {
+    //   const url = request.nextUrl.clone()
+    //   url.pathname = newPath
+    //   const res = NextResponse.redirect(url)
+    //   res.cookies.set(LANGUAGE_COOKIE_NAME, preferredLanguage ?? LANGUAGES.EN)
+    //   return res
+    // }
+
     // REWRITE to default language homepage (ie / to /en)
     if (pathname === '/') {
       const url = request.nextUrl.clone()
@@ -104,19 +123,6 @@ export function middleware(request: NextRequest) {
       const res = NextResponse.redirect(url)
       return res
     }
-
-    // const locale = getLanguageFromPath(pathname)
-
-    // redirect non-default language pages to the preferred language
-    // if (typeof locale === 'string' && locale !== DEFAULT_LANGUAGE) {
-    //   const allCookies = request.cookies.getAll()
-    //   const languageCookie = allCookies.filter(cookie => cookie.name === LANGUAGE_COOKIE_NAME)[0]
-    //   const languageCookieValue = languageCookie?.value || null
-    //   const preferredLanguage = languageCookieValue || getBrowserLanguage(request)
-    //   request.nextUrl.pathname = `/${preferredLanguage ? preferredLanguage : LANGUAGES.EN}${pathname}`
-    //   const response = NextResponse.redirect(request.nextUrl)
-    //   return response
-    // }
   }
 
   const response = NextResponse.next()
