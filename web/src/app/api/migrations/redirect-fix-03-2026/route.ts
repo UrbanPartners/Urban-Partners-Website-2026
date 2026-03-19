@@ -10,6 +10,10 @@ const migrationClient = createClient({
 })
 
 export async function GET() {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ message: 'Not allowed' }, { status: 403 })
+  }
+
   const redirects = await migrationClient.fetch('*[_type == "redirect"] { _id, destination }')
   const domainsToRemove = ['https://urban.partners', 'https://urban-partners']
   const nonRelativeDestinations: Record<string, number> = {}
