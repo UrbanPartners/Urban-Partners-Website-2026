@@ -7,7 +7,6 @@ import useStore from '@/store'
 import { deviceInfo } from '@/utils'
 import Navigation from '@/components/Navigation/Navigation'
 import { useParams, usePathname } from 'next/navigation'
-import PreviewButton from '@/components/PreviewButton/PreviewButton'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
@@ -62,7 +61,6 @@ const Layout = ({ children }: SanityLayout) => {
   return (
     <ScrollProvider>
       {!isMobile && <Navigation />}
-      <PreviewButton />
       <Preloader />
       <BioOverlay />
       <main className={SCROLL_CONTAINER_CLASS}>

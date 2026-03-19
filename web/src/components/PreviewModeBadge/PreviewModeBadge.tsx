@@ -27,7 +27,7 @@ const PreviewModeBadge = ({
     fire()
   }, [isPreviewMode, hasSanityPreviewToken])
 
-  if (!hasSanityPreviewToken) return null
+  if (!hasSanityPreviewToken || process.env.NODE_ENV === 'development') return null
 
   return (
     <div className={styles.PreviewModeBadge}>
