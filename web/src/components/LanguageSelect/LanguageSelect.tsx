@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import classnames from 'classnames'
 import styles from './LanguageSelect.module.scss'
 import { DEFAULT_LANGUAGE, HOME_SLUG, LANGUAGES, LANGUAGE_COOKIE_EXPIRY_SECONDS, LANGUAGE_COOKIE_NAME } from '@/data'
@@ -10,6 +10,7 @@ import Icon from '@/components/Icon/Icon'
 import gsap from 'gsap'
 import { useRouter } from 'next/navigation'
 import TextSwapper, { TextSwapperRef } from '@/components/TextSwapper/TextSwapper'
+import { Link } from 'next-transition-router'
 
 function capitalizeAll(str: string) {
   return str.toUpperCase()
@@ -26,6 +27,47 @@ const LanguageSelect = ({ className, theme = 'dark' }: LanguageSelectProps) => {
   const iconRef = useRef<SVGSVGElement | null>(null)
   const router = useRouter()
   const textSwapperRef = useRef<TextSwapperRef | null>(null)
+  const [pathsByLanguage, setPathsByLanguage] = useState<Record<string, string>>({})
+
+  const getPathByLanguage = useCallback(
+    (language: string, urlPath: string) => {
+      let path = `/${language}`
+
+      if (path !== urlPath) {
+        path = `/${language}${urlPath}`
+      }
+
+      // Default lang structuring
+      if (path.startsWith(`/${DEFAULT_LANGUAGE}`)) {
+        path = path.replace(`/${DEFAULT_LANGUAGE}`, '')
+        path = `${urlPath}`
+      }
+
+      if (path === `/${DEFAULT_LANGUAGE}`) {
+        path = '/'
+      }
+
+      if (currentSlug === HOME_SLUG) {
+        path = language === DEFAULT_LANGUAGE ? '/' : `/${language}`
+      }
+
+      return path
+    },
+    [currentSlug],
+  )
+
+  useEffect(() => {
+    // Navigate to the same page in the selected language (same logic as Link component)
+    const urlPath = getUrlFromPageData(currentDocType, currentSlug !== DEFAULT_LANGUAGE ? currentSlug : '')
+
+    const _pathsByLanguage: Record<string, string> = {}
+
+    Object.values(LANGUAGES).forEach(language => {
+      _pathsByLanguage[language] = getPathByLanguage(language, urlPath) || ''
+    })
+
+    setPathsByLanguage(_pathsByLanguage)
+  }, [currentDocType, currentSlug, currentLanguage, getPathByLanguage])
 
   useEffect(() => {
     if (iconRef.current) {
@@ -73,24 +115,7 @@ const LanguageSelect = ({ className, theme = 'dark' }: LanguageSelectProps) => {
           // Navigate to the same page in the selected language (same logic as Link component)
           const urlPath = getUrlFromPageData(currentDocType, currentSlug !== DEFAULT_LANGUAGE ? currentSlug : '')
 
-          let path = `/${selectedLanguage}`
-          if (path !== urlPath) {
-            path = `/${selectedLanguage}${urlPath}`
-          }
-
-          // Default lang structuring
-          if (path.startsWith(`/${DEFAULT_LANGUAGE}`)) {
-            path = path.replace(`/${DEFAULT_LANGUAGE}`, '')
-            path = `${urlPath}`
-          }
-
-          if (path === `/${DEFAULT_LANGUAGE}`) {
-            path = '/'
-          }
-
-          if (currentSlug === HOME_SLUG) {
-            path = selectedLanguage === DEFAULT_LANGUAGE ? '/' : `/${selectedLanguage}`
-          }
+          const path = getPathByLanguage(selectedLanguage, urlPath)
 
           router.push(path)
         }}
@@ -109,6 +134,15 @@ const LanguageSelect = ({ className, theme = 'dark' }: LanguageSelectProps) => {
         name="arrowDown"
         className={styles.icon}
       />
+      {Object.values(pathsByLanguage).map((path, i) => (
+        <Link
+          className={styles.hiddenLink}
+          key={`${path}_${i}`}
+          href={path}
+        >
+          {path}
+        </Link>
+      ))}
     </div>
   )
 }

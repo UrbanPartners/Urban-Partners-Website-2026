@@ -42,3 +42,12 @@
     color var(--transition-short),
     fill var(--transition-short);
 }
+
+.hiddenLink {
+  opacity: 0.0001;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+}

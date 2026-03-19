@@ -3,7 +3,7 @@ import {
   HOME_SLUG,
   LANGUAGES,
   // PRELOADER_COOKIE_NAME,
-  // LANGUAGE_COOKIE_NAME,
+  LANGUAGE_COOKIE_NAME,
 } from '@/data'
 import { NextResponse } from 'next/server'
 import {
@@ -83,21 +83,21 @@ export function middleware(request: NextRequest) {
   }
 
   if (isPageRequest) {
-    // const allCookies = request.cookies.getAll()
-    // const languageCookie = allCookies.filter(cookie => cookie.name === LANGUAGE_COOKIE_NAME)[0]
-    // const languageCookieValue = languageCookie?.value || null
-    // const preferredLanguage = getBrowserLanguage(request)
-    // const newPath = `/${preferredLanguage ? preferredLanguage : LANGUAGES.EN}${pathname}`
+    const allCookies = request.cookies.getAll()
+    const languageCookie = allCookies.filter(cookie => cookie.name === LANGUAGE_COOKIE_NAME)[0]
+    const languageCookieValue = languageCookie?.value || null
+    const preferredLanguage = getBrowserLanguage(request)
+    const newPath = `/${preferredLanguage ? preferredLanguage : LANGUAGES.EN}${pathname}`
 
     // If no language cookie set and they have a preferred language,
     // set cookie to that language and redirect to proper language path
-    // if (!languageCookieValue && preferredLanguage !== DEFAULT_LANGUAGE) {
-    //   const url = request.nextUrl.clone()
-    //   url.pathname = newPath
-    //   const res = NextResponse.redirect(url)
-    //   res.cookies.set(LANGUAGE_COOKIE_NAME, preferredLanguage ?? LANGUAGES.EN)
-    //   return res
-    // }
+    if (!languageCookieValue && preferredLanguage !== DEFAULT_LANGUAGE) {
+      const url = request.nextUrl.clone()
+      url.pathname = newPath
+      const res = NextResponse.redirect(url)
+      res.cookies.set(LANGUAGE_COOKIE_NAME, preferredLanguage ?? LANGUAGES.EN)
+      return res
+    }
 
     // REWRITE to default language homepage (ie / to /en)
     if (pathname === '/') {
