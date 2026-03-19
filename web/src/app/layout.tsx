@@ -9,6 +9,7 @@ import { WipeProvider } from '@/context/WipeContext'
 import PageTransition from '@/components/PageTransition/PageTransition'
 import Script from 'next/script'
 import { PRELOADER_COOKIE_NAME } from '@/data'
+import PreviewModeBadge from '@/components/PreviewModeBadge/PreviewModeBadge'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -23,11 +24,12 @@ export const generateMetadata = async () => {
   return formatMetadata(metadata, null)
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { isEnabled } = await draftMode()
   return (
     <html suppressHydrationWarning={true}>
       <body suppressHydrationWarning={true}>
@@ -65,6 +67,10 @@ export default function RootLayout({
             type="text/javascript"
           />
         )}
+        <PreviewModeBadge
+          isPreviewMode={isEnabled}
+          hasSanityPreviewToken={Boolean(process.env.SANITY_PREVIEW_TOKEN)}
+        />
         <WipeProvider>
           <PageTransition>{children}</PageTransition>
         </WipeProvider>
