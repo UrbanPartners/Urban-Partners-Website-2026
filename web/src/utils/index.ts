@@ -263,6 +263,30 @@ export const getUrlFromPageData = (pageType: string, slug: string | string[]): s
   return url
 }
 
+export const getPathByLanguage = (language: string, urlPath: string, currentSlug: string) => {
+  let path = `/${language}`
+
+  if (path !== urlPath) {
+    path = `/${language}${urlPath}`
+  }
+
+  // Default lang structuring
+  if (path.startsWith(`/${DEFAULT_LANGUAGE}`)) {
+    path = path.replace(`/${DEFAULT_LANGUAGE}`, '')
+    path = `${urlPath}`
+  }
+
+  if (path === `/${DEFAULT_LANGUAGE}`) {
+    path = '/'
+  }
+
+  if (currentSlug === HOME_SLUG) {
+    path = language === DEFAULT_LANGUAGE ? '/' : `/${language}`
+  }
+
+  return path
+}
+
 export const generateOrgStructuredDataSchema = ({
   companyTitle,
   companyDescription,
@@ -397,6 +421,33 @@ export const formatMetadata = (
     keywords = metadata.keywords
   }
 
+  // Hreflang metadata
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let alternates: any = {}
+
+  if (pageData?._type) {
+    const currentSlug = pageData?.slug.current
+    const urlPath = getUrlFromPageData(pageData?._type, currentSlug)
+
+    Object.values(LANGUAGES).forEach(language => {
+      if (!pageData?.enabledLanguages?.includes(language)) return
+
+      const languageUrlPath = getPathByLanguage(language, urlPath, currentSlug)
+
+      if (!languageUrlPath) return
+
+      if (!alternates?.languages) {
+        alternates.languages = {}
+      }
+
+      alternates.languages[language] = languageUrlPath
+    })
+
+    if (alternates?.languages?.[DEFAULT_LANGUAGE]) {
+      alternates.canonical = alternates?.languages?.[DEFAULT_LANGUAGE]
+    }
+  }
+
   const data: any = {
     title,
     robots: {
@@ -410,6 +461,7 @@ export const formatMetadata = (
       },
     },
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ''),
+    alternates: Object.keys(alternates).length ? alternates : undefined,
     description,
     keywords: keywords?.split(','),
     openGraph: {

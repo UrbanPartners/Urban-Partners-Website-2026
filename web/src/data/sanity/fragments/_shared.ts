@@ -48,6 +48,7 @@ export const pageMetadataFields = groq`
       })
       .join(',')}
   },
+  "enabledLanguages": isEnabled,
   ${languageArray
     .map(language => {
       return `

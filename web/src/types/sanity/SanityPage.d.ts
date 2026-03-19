@@ -6,6 +6,7 @@ type SanityPage = {
   slug: {
     current: string
   }
+  enabledLanguages: string[]
   isEnabled: boolean
   metadata: SanityMetadata
   blogPostData?: SanityBlogPostData
