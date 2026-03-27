@@ -3,7 +3,7 @@ import {DEFAULT_LANGUAGE, LANGUAGES} from '../../data/languages'
 import {sectionTypes} from './sharedSection'
 import LanguageGridSelect from '../../components/LanguageGridSelect'
 import {factsListDescriptionFields} from '../sections/factList'
-import {getImageValidation, getRequiredImageDimensionsValidation} from '../../utils'
+import {getImageValidation} from '../../utils'
 import {CopyFromLocaleArrayInput} from '../../components/CopySections'
 
 const LOCATION_HOME_SLUG = 'home'

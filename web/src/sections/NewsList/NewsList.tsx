@@ -11,6 +11,7 @@ import { PAGINATION_ITEMS_PER_PAGE } from '@/data'
 import TextAndIconButton from '@/components/TextAndIconButton/TextAndIconButton'
 import useStickyTop from '@/hooks/use-sticky-top'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import useCurrentPage from '@/hooks/use-current-page'
 
 const ITEMS_PER_VARIANT_MAP = {
   a: Math.floor(PAGINATION_ITEMS_PER_PAGE / 2),
@@ -39,6 +40,7 @@ const NewsList = ({ className, variant, title, offsetPosts, items, totalItems }:
   const initialOffset = offsetPosts && variant === 'b' ? ITEMS_PER_VARIANT_MAP.a : 0
   const itemLengthWithOffset = initialOffset + paginatedItems.length
   const hasMore = itemLengthWithOffset < totalItems
+  const { currentLanguage } = useCurrentPage()
 
   const fetchMoreContent = useCallback(
     async (offset: number, perPage: number) => {
@@ -54,6 +56,7 @@ const NewsList = ({ className, variant, title, offsetPosts, items, totalItems }:
           body: JSON.stringify({
             offset,
             perPage,
+            language: currentLanguage,
           }),
         })
 
@@ -68,7 +71,7 @@ const NewsList = ({ className, variant, title, offsetPosts, items, totalItems }:
         setIsLoading(false)
       }
     },
-    [isLoading],
+    [isLoading, currentLanguage],
   )
 
   const handleLoadMore = () => {
