@@ -14,4 +14,8 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
+  releases: {
+    limit: 2,
+    enabled: true,
+  },
 })

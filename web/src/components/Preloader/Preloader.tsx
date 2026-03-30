@@ -25,7 +25,7 @@ interface PreloaderComponentProps {
 
 export const MASK_OUT_DURATION = 1.3
 const LINE_ROTATION_DURATION = SPLIT_TEXT_DEFAULT_IN_CONFIG.duration * 0.8
-const SHOW_PRELOADER_ALWAYS = true
+const SHOW_PRELOADER_ALWAYS = false
 
 const Preloader = ({ className }: PreloaderComponentProps) => {
   const { globalSettingsData } = useContext(GlobalSettingsContext)
