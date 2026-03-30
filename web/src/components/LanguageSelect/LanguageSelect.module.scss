@@ -44,8 +44,8 @@
 }
 
 :global(body[data-os='windows']) .select option {
-  color: #000000;
-  background-color: #ffffff;
+  color: $black;
+  background-color: $white;
 }
 
 .hiddenLink {
