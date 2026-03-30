@@ -43,6 +43,11 @@
     fill var(--transition-short);
 }
 
+:global(body[data-os='windows']) .select option {
+  color: #000000;
+  background-color: #ffffff;
+}
+
 .hiddenLink {
   opacity: 0.0001;
   position: absolute;

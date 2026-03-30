@@ -88,9 +88,7 @@ const LanguageSelect = ({ className, theme = 'dark' }: LanguageSelectProps) => {
 
           // Navigate to the same page in the selected language (same logic as Link component)
           const urlPath = getUrlFromPageData(currentDocType, currentSlug !== DEFAULT_LANGUAGE ? currentSlug : '')
-
           const path = getPathByLanguage(selectedLanguage, urlPath, currentSlug)
-
           router.push(path)
         }}
       >
