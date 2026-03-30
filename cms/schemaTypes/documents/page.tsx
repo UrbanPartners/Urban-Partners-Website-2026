@@ -257,14 +257,30 @@ const getPageSchema = ({
       title: `Title (${DEFAULT_LANGUAGE.toUpperCase()})`,
       description: 'This title will show up in the browser tab',
       group: 'basicInformation',
-      validation: (Rule: Rule) => Rule.required(),
     }
 
     if (!hasTitleTranslationFields) {
-      return [mainTitleFields]
-    } else {
       return [
-        mainTitleFields,
+        {
+          ...mainTitleFields,
+          validation: (Rule: Rule) => Rule.required(),
+        },
+      ]
+    } else {
+      const atLeastOneTitleValidation = (Rule: Rule) =>
+        Rule.custom((_: any, context: any) => {
+          const hasAnyTitle = Object.values(LANGUAGES).some(
+            (lang) => context?.document?.[`${lang}Title`],
+          )
+          if (!hasAnyTitle) return 'At least 1 language title value is required'
+          return true
+        })
+
+      return [
+        {
+          ...mainTitleFields,
+          validation: atLeastOneTitleValidation,
+        },
         ...Object.values(LANGUAGES)
           .map((lang) => {
             if (lang === DEFAULT_LANGUAGE) return null
@@ -274,6 +290,7 @@ const getPageSchema = ({
               group: 'basicInformation',
               name: `${lang}Title`,
               title: `Title (${lang.toUpperCase()})`,
+              validation: atLeastOneTitleValidation,
             }
           })
           .filter(Boolean),
@@ -314,10 +331,20 @@ const getPageSchema = ({
     fieldsets,
     preview: {
       select: {
-        title: `${DEFAULT_LANGUAGE}Title`,
+        ...Object.values(LANGUAGES).reduce(
+          (acc, lang) => ({...acc, [`${lang}Title`]: `${lang}Title`}),
+          {} as Record<string, string>,
+        ),
         slug: 'slug.current',
       },
-      prepare({title, slug}: {title: string; slug: string}) {
+      prepare(selection: Record<string, string>) {
+        const title =
+          selection[`${DEFAULT_LANGUAGE}Title`] ||
+          Object.values(LANGUAGES)
+            .map((lang) => selection[`${lang}Title`])
+            .find(Boolean) ||
+          ''
+        const {slug} = selection
         let subtitle = ''
 
         switch (name) {
