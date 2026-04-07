@@ -79,7 +79,13 @@ const nextConfig = {
           return null
         }
 
-        const { source, destination } = redirect
+        let source = redirect?.source
+        const destination = redirect?.destination
+
+        // if source ends with /, remove it
+        if (source.startsWith('/') && source.length > 1 && source[source.length - 1] === '/') {
+          source = source.slice(0, -1)
+        }
 
         if (!destination.startsWith('/') && !destination.startsWith('http')) {
           console.warn(
