@@ -86,15 +86,19 @@ export function middleware(request: NextRequest) {
     const allCookies = request.cookies.getAll()
     const languageCookie = allCookies.filter(cookie => cookie.name === LANGUAGE_COOKIE_NAME)[0]
     const languageCookieValue = languageCookie?.value || null
+    const firstSegment = pathname.split('/')[1]
+    const pathnameWithoutLanguage = LANGUAGES_AS_ARRAY.includes(firstSegment)
+      ? pathname.replace(`/${firstSegment}`, '') || '/'
+      : pathname
     const preferredLanguage = getBrowserLanguage(request)
-    const newPath = `/${preferredLanguage ? preferredLanguage : LANGUAGES.EN}${pathname}`
+    const newPath = `/${preferredLanguage ? preferredLanguage : LANGUAGES.EN}${pathnameWithoutLanguage}`
 
     // If no language cookie set and they have a preferred language,
     // set cookie to that language and redirect to proper language path
     if (!languageCookieValue && preferredLanguage !== DEFAULT_LANGUAGE) {
       const url = request.nextUrl.clone()
       url.pathname = newPath
-      const res = NextResponse.redirect(url)
+      const res = NextResponse.redirect(url, { status: 302 })
       res.cookies.set(LANGUAGE_COOKIE_NAME, preferredLanguage ?? LANGUAGES.EN)
       return res
     }
@@ -111,7 +115,7 @@ export function middleware(request: NextRequest) {
     if (pathname.includes(`/${DEFAULT_LANGUAGE}/`)) {
       const url = request.nextUrl.clone()
       url.pathname = pathname.replace(`/${DEFAULT_LANGUAGE}`, '')
-      const res = NextResponse.redirect(url)
+      const res = NextResponse.redirect(url, { status: 301 })
       return res
     }
 
@@ -120,7 +124,7 @@ export function middleware(request: NextRequest) {
       const url = request.nextUrl.clone()
       url.pathname = '/'
 
-      const res = NextResponse.redirect(url)
+      const res = NextResponse.redirect(url, { status: 301 })
       return res
     }
   }

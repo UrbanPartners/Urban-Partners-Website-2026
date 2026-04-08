@@ -1,8 +1,9 @@
 import Sections from '@/components/Sections/Sections'
-import { FOUR_OH_FOUR_SLUG, LANGUAGES } from '@/data'
+import { DIRECTORY_NAMES, DOC_TYPES, FOUR_OH_FOUR_SLUG, LANGUAGES } from '@/data'
 import { getPage } from '@/data/sanity'
 import useStore from '@/store'
-import { notFound } from 'next/navigation'
+import { getPathByLanguage } from '@/utils'
+import { notFound, redirect } from 'next/navigation'
 
 const PageRenderer = async ({
   slug,
@@ -19,6 +20,11 @@ const PageRenderer = async ({
   const data = await getPage(slug, docType, isDraftMode, lang)
 
   const pageIsDisabled = !data?.isEnabled && !process.env.SANITY_PREVIEW_TOKEN && slug !== FOUR_OH_FOUR_SLUG
+
+  if (docType === DOC_TYPES.BLOG_POST && !data) {
+    return redirect(getPathByLanguage(lang, `/${DIRECTORY_NAMES.BLOG_POSTS}`, slug))
+  }
+
   if (!data || pageIsDisabled) return notFound()
   if (!data?.sections?.length) return null
 
