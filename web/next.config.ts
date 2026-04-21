@@ -54,10 +54,10 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('Not fetching redirects in non-production environment')
-      return []
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //   console.warn('Not fetching redirects in non-production environment')
+    //   return []
+    // }
 
     let redirects = await client.fetch(`*[_type == "redirect"]{
       source,
@@ -85,6 +85,11 @@ const nextConfig = {
         // if source ends with /, remove it
         if (source.startsWith('/') && source.length > 1 && source[source.length - 1] === '/') {
           source = source.slice(0, -1)
+        }
+
+        // Replace scanadanavian chars with url encoded version
+        if (/[åäöæøÅÄÖÆØ]/.test(source)) {
+          source = source.replace(/[åäöæøÅÄÖÆØ]/g, (char: string) => encodeURIComponent(char))
         }
 
         if (!destination.startsWith('/') && !destination.startsWith('http')) {
