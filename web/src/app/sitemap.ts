@@ -16,7 +16,7 @@ const sitemap = async () => {
   if (home) {
     homePages = Object.values(LANGUAGES).map(language => {
       return {
-        url: `/${language}`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL}/${language}`,
         lastModified: home._updatedAt,
       }
     })
