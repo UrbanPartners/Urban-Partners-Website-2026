@@ -140,6 +140,7 @@ type SelectLinkDropdownProps = {
 const SelectLinkDropdown = forwardRef<HTMLSelectElement, SelectLinkDropdownProps>(
   ({ className, items, ariaLabel }, ref) => {
     const { currentLanguage } = useCurrentPage()
+    const { isMobile } = useBreakpoint()
 
     const options = useMemo(() => {
       return items
@@ -162,7 +163,11 @@ const SelectLinkDropdown = forwardRef<HTMLSelectElement, SelectLinkDropdownProps
       const value = event.target.value
       event.target.selectedIndex = 0
       if (!value) return
-      window.open(value, '_blank', 'noopener,noreferrer')
+      if (isMobile) {
+        window.location.href = value
+      } else {
+        window.open(value, '_blank', 'noopener,noreferrer')
+      }
     }
 
     return (
