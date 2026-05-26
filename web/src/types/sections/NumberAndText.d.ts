@@ -4,4 +4,5 @@ type SanityNumberAndText = SectionCMSInterface & {
   subheading?: string
   subheadingDescription?: SanityContentBlockProps[]
   cta?: SanityButton
+  linkDropdownItems?: SanityLink[]
 }

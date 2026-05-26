@@ -32,25 +32,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     const { linkType, label, link: url, hash, navigationOffset } = link
     const { scroll } = useContext(ScrollContext)
     const { currentPath, currentLanguage } = useCurrentPage()
-    const urlObject = url as SanityLinkInternal
-    const slug = typeof url === 'object' ? url?.slug : ''
-    const urlPath = getUrlFromPageData(urlObject?._type, slug)
-
-    // Other pages with languages
-    let path = `/${language ? language : currentLanguage}`
-    if (path !== urlPath) {
-      path = `/${language ? language : currentLanguage}${urlPath}`
-    }
-
-    // Default lang structuring
-    if (path.startsWith(`/${DEFAULT_LANGUAGE}`)) {
-      path = path.replace(`/${DEFAULT_LANGUAGE}`, '')
-      path = `${urlPath}`
-    }
-
-    if (path === `/${DEFAULT_LANGUAGE}`) {
-      path = '/'
-    }
+    const path = resolveLinkHref(link, currentLanguage as string, language) || ''
 
     if (linkType === 'disabled') {
       return null
@@ -191,5 +173,41 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
 )
 
 Link.displayName = 'Link'
+
+export const resolveLinkHref = (
+  link: SanityLink,
+  currentLanguage?: string,
+  language?: string,
+): string | null => {
+  const { linkType, link: url } = link
+
+  if (linkType === 'external' || linkType === 'file') {
+    return typeof url === 'string' ? url : null
+  }
+
+  if (linkType === 'internal' || linkType === 'videoPopout') {
+    const urlObject = url as SanityLinkInternal
+    const slug = typeof url === 'object' ? url?.slug : ''
+    const urlPath = getUrlFromPageData(urlObject?._type, slug || '')
+
+    let path = `/${language ? language : currentLanguage}`
+    if (path !== urlPath) {
+      path = `/${language ? language : currentLanguage}${urlPath}`
+    }
+
+    if (path.startsWith(`/${DEFAULT_LANGUAGE}`)) {
+      path = path.replace(`/${DEFAULT_LANGUAGE}`, '')
+      path = `${urlPath}`
+    }
+
+    if (path === `/${DEFAULT_LANGUAGE}`) {
+      path = '/'
+    }
+
+    return path
+  }
+
+  return null
+}
 
 export default Link
