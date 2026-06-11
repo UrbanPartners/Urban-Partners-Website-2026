@@ -62,6 +62,17 @@ export const blogPostFormatter = (data: SanityPage): SanityPage => {
         ]
       }
 
+      if (section?._type === 'bigMedia' && nextSection?._type === 'richTextSection') {
+        return [
+          section,
+          {
+            _type: 'spacer',
+            desktop: 'auto',
+            mobile: 'auto',
+          },
+        ]
+      }
+
       if (section._type === 'richTextSection' && isLastSection) {
         return [
           section,
@@ -81,6 +92,17 @@ export const blogPostFormatter = (data: SanityPage): SanityPage => {
               _type: 'spacer',
               desktop: '0',
               mobile: '0',
+            },
+          ]
+        }
+
+        if (section?._type === 'richTextSection' && nextSection?._type === 'bigMedia') {
+          return [
+            section,
+            {
+              _type: 'spacer',
+              desktop: 'auto',
+              mobile: 'auto',
             },
           ]
         }

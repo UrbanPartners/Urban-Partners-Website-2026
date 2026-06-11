@@ -453,6 +453,7 @@ const blogPost = getPageSchema({
         'imageBlocks',
         'introText',
         'expandingCarousel',
+        'bigMedia',
       ],
       group: 'content',
     }),

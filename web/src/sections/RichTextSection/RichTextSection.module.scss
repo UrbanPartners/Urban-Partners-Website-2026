@@ -24,7 +24,7 @@
 }
 
 .verticalLine {
-  @include bp(mobile, true) {
+  @include bp(tablet, true) {
     display: none;
   }
 }
