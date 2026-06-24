@@ -242,6 +242,15 @@ Timeline Year
   color: var(--dark-green-70);
   margin-top: calc(var(--page-gutter) * 0.5);
 
+  [data-link] {
+    font-weight: 600;
+    transition: 0.2s;
+
+    @include hover {
+      opacity: 0.7;
+    }
+  }
+
   @include bp(desktop) {
     margin-top: var(--page-gutter);
   }

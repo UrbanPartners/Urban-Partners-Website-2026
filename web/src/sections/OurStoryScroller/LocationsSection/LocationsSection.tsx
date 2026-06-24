@@ -49,6 +49,9 @@ const LocationsSection = ({ title, description, cta, locations }: SanityOurStory
   const { setLocationsOutroDistance } = useOurStoryScrollerContext()
 
   const setDefaultRefState = () => {
+    gsap.set(containerRef.current, {
+      clearProps: 'pointerEvents',
+    })
     gsap.set(
       [
         titleContainerRef.current,
@@ -172,6 +175,21 @@ const LocationsSection = ({ title, description, cta, locations }: SanityOurStory
               ease,
             },
             '<',
+          )
+        }
+
+        if (containerRef.current && index === 2) {
+          timelineRef.current?.fromTo(
+            containerRef.current,
+            {
+              pointerEvents: 'none',
+            },
+            {
+              pointerEvents: 'all',
+              duration: 0.0001,
+              ease,
+            },
+            `<+=${duration * 0.2}`,
           )
         }
 

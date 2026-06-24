@@ -336,8 +336,9 @@ Side Links
   align-items: center;
   justify-content: space-between;
   padding: px(27) var(--page-gutter);
-  width: px(235);
+  width: auto;
   position: relative;
+  gap: var(--page-gutter);
   transition: border-color var(--transition-short);
 
   .sideLinks__li:first-child & {

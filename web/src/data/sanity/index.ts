@@ -18,6 +18,7 @@ const SANITY_CONFIG: ClientConfig = {
   useCdn: false,
   token: process.env.SANITY_PREVIEW_TOKEN,
   perspective: perspective as 'raw' | 'published' | 'previewDrafts',
+  timeout: 80000,
 }
 
 export const client = createClient(SANITY_CONFIG)
