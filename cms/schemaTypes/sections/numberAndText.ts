@@ -59,6 +59,12 @@ export default {
         },
       },
     },
+    {
+      name: 'linkDropdownItems',
+      title: 'Link Dropdown Items',
+      type: 'array',
+      of: [{type: 'link'}],
+    },
   ],
   preview: {
     select: {

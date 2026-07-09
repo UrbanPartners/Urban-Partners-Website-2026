@@ -5,15 +5,15 @@ import styles from './OurStoryScroller.module.scss'
 import IntroSection from './IntroSection/IntroSection'
 import TimelineSection from './TimelineSection/TimelineSection'
 import LocationsSection from './LocationsSection/LocationsSection'
-import MediaSection from './MediaSection/MediaSection'
+import CaseStudyScroller from './IntroSection/CaseStudyScroller/CaseStudyScroller'
 import { OurStoryScrollerProvider } from './OurStoryScrollerContext'
 
 const OurStoryScroller = ({
   className,
   introSection,
+  caseStudySection,
   timelineSection,
   locationsSection,
-  mediaSection,
 }: SanityOurStoryScroller) => {
   return (
     <OurStoryScrollerProvider>
@@ -22,7 +22,7 @@ const OurStoryScroller = ({
           {introSection && <IntroSection {...introSection} />}
           {timelineSection && <TimelineSection {...timelineSection} />}
           {locationsSection && <LocationsSection {...locationsSection} />}
-          {mediaSection && <MediaSection {...mediaSection} />}
+          {caseStudySection && <CaseStudyScroller {...caseStudySection} />}
         </div>
       </div>
     </OurStoryScrollerProvider>

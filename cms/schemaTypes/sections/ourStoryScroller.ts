@@ -48,8 +48,21 @@ export default {
           ],
         },
         {
-          name: 'caseStudyListDescription',
-          title: 'Case Study List Description',
+          name: 'image',
+          title: 'Image',
+          type: 'imageAsset',
+          validation: (Rule: Rule) => Rule.required(),
+        },
+      ],
+    },
+    {
+      name: 'caseStudySection',
+      title: 'Case Study Section',
+      type: 'object',
+      fields: [
+        {
+          name: 'description',
+          title: 'Description',
           type: 'array',
           validation: (Rule: Rule) => Rule.required(),
           of: [
@@ -59,8 +72,8 @@ export default {
           ],
         },
         {
-          name: 'caseStudyItems',
-          title: 'Case Study Items',
+          name: 'items',
+          title: 'Items',
           type: 'array',
           validation: (Rule: Rule) => Rule.required().min(2).max(4),
           of: [

@@ -24,6 +24,7 @@ export interface TextAndIconButtonProps {
   disableOnHover?: boolean
   onMouseEnter?: () => void
   onMouseLeave?: () => void
+  onFocus?: (event: React.FocusEvent<HTMLButtonElement | HTMLSpanElement>) => void
 }
 
 export interface TextAndIconButtonRef {
@@ -47,6 +48,7 @@ const TextAndIconButton = React.forwardRef<TextAndIconButtonRef, TextAndIconButt
       disableOnHover = false,
       onMouseEnter,
       onMouseLeave,
+      onFocus,
     },
     ref,
   ) => {
@@ -144,6 +146,7 @@ const TextAndIconButton = React.forwardRef<TextAndIconButtonRef, TextAndIconButt
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseLeave}
         onClick={handleOnClick}
+        onFocus={onFocus}
         disabled={disabled}
         type={element === 'button' && !link ? type : undefined}
         aria-label={ariaLabel}

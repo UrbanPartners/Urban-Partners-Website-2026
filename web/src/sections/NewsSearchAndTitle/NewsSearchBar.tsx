@@ -10,6 +10,7 @@ import useI18n from '@/hooks/use-i18n'
 import FadeIn from '@/components/FadeIn/FadeIn'
 import { ScrollContext } from '@/context/Scroll'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import useCurrentPage from '@/hooks/use-current-page'
 
 interface NewsSearchBarProps {
   blogCategories?: SanityBlogCategory[]
@@ -31,6 +32,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
   const resultsRef = useRef<ResultsRef>(null)
   const { isMobile } = useBreakpoint()
   const { i18n } = useI18n()
+  const { currentLanguage } = useCurrentPage()
 
   const selectedBlogReferenceTitle = useMemo(() => {
     return blogReferences?.find(reference => reference._id === selectedBlogReference)?.title || ''
@@ -68,6 +70,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
         searchTerm: searchTerm || undefined,
         blogCategory: selectedBlogCategory || undefined,
         blogReference: selectedBlogReference || undefined,
+        language: currentLanguage,
       }
 
       fetch('/api/newsSearch', {
@@ -100,7 +103,7 @@ const NewsSearchBar = ({ className, blogCategories, blogReferences, hideDropdown
           setIsLoading(false)
         })
     },
-    [scroll, isMobile],
+    [scroll, isMobile, currentLanguage],
   )
 
   useEffect(() => {

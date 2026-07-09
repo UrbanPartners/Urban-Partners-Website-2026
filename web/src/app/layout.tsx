@@ -10,6 +10,7 @@ import PageTransition from '@/components/PageTransition/PageTransition'
 import Script from 'next/script'
 import { PRELOADER_COOKIE_NAME } from '@/data'
 import PreviewModeBadge from '@/components/PreviewModeBadge/PreviewModeBadge'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -33,6 +34,9 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning={true}>
       <body suppressHydrationWarning={true}>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
+        )}
         {process.env.NEXT_PUBLIC_MATOMO_CONTAINER && (
           <Script
             strategy="beforeInteractive"

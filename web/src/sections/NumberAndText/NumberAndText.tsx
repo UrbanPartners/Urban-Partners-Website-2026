@@ -1,5 +1,6 @@
 'use client'
 
+import { ChangeEvent, FocusEvent, forwardRef, useMemo, useRef } from 'react'
 import classnames from 'classnames'
 import styles from './NumberAndText.module.scss'
 import LineAnimation from '@/components/LineAnimation/LineAnimation'
@@ -7,7 +8,9 @@ import FadeIn from '@/components/FadeIn/FadeIn'
 import RichText from '@/components/RichText/RichText'
 import TextAndIconButton from '@/components/TextAndIconButton/TextAndIconButton'
 import RichTextSplitText from '@/components/RichTextSplitText/RichTextSplitText'
+import { resolveLinkHref } from '@/components/Link/Link'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import useCurrentPage from '@/hooks/use-current-page'
 
 const NumberAndText = ({
   className,
@@ -16,11 +19,20 @@ const NumberAndText = ({
   subheading,
   subheadingDescription,
   cta,
+  linkDropdownItems,
 }: SanityNumberAndText) => {
   const hasSubheadingContent = subheading?.length || !!subheadingDescription?.length
   const hasCta = !!cta && cta?.link?.linkType !== 'disabled'
+  const hasDropdown = !!linkDropdownItems?.length
   const hasBottomContent = hasSubheadingContent || hasCta
   const { isMobile } = useBreakpoint()
+  const selectLinkDropdownRef = useRef<HTMLSelectElement>(null)
+
+  const handleCtaFocus = (event: FocusEvent<HTMLButtonElement | HTMLSpanElement>) => {
+    if (!selectLinkDropdownRef.current) return
+    event.currentTarget.blur()
+    selectLinkDropdownRef.current.focus()
+  }
 
   if (!number) {
     return null
@@ -90,12 +102,23 @@ const NumberAndText = ({
                   animateInView
                   className={styles.ctaContainer}
                 >
-                  <TextAndIconButton
-                    link={cta.link}
-                    icon={cta.icon}
-                    className={styles.cta}
-                    style={isMobile ? 'full' : 'full-line-left'}
-                  />
+                  <div className={styles.ctaWrapper}>
+                    <TextAndIconButton
+                      link={!hasDropdown ? cta.link : undefined}
+                      icon={cta.icon}
+                      label={hasDropdown ? cta.link?.label : undefined}
+                      className={classnames(styles.cta)}
+                      style={isMobile ? 'full' : 'full-line-left'}
+                      onFocus={hasDropdown ? handleCtaFocus : undefined}
+                    />
+                    {hasDropdown && (
+                      <SelectLinkDropdown
+                        ref={selectLinkDropdownRef}
+                        items={linkDropdownItems}
+                        ariaLabel={cta.link?.label}
+                      />
+                    )}
+                  </div>
                 </FadeIn>
               )}
             </div>
@@ -107,5 +130,72 @@ const NumberAndText = ({
 }
 
 NumberAndText.displayName = 'NumberAndText'
+
+type SelectLinkDropdownProps = {
+  className?: string
+  items: SanityLink[]
+  ariaLabel?: string
+}
+
+const SelectLinkDropdown = forwardRef<HTMLSelectElement, SelectLinkDropdownProps>(
+  ({ className, items, ariaLabel }, ref) => {
+    const { currentLanguage } = useCurrentPage()
+    const { isMobile } = useBreakpoint()
+
+    const options = useMemo(() => {
+      return items
+        .map(item => {
+          const basePath = resolveLinkHref(item, currentLanguage as string)
+          const href = basePath ? `${basePath}${item.hash ? `#${item.hash}` : ''}` : ''
+          return {
+            label: item.label || '',
+            value: href,
+          }
+        })
+        .filter(option => option.value && option.label)
+    }, [items, currentLanguage])
+
+    if (!options.length) {
+      return null
+    }
+
+    const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+      const value = event.target.value
+      event.target.selectedIndex = 0
+      if (!value) return
+      if (isMobile) {
+        window.location.href = value
+      } else {
+        window.open(value, '_blank', 'noopener,noreferrer')
+      }
+    }
+
+    return (
+      <select
+        ref={ref}
+        className={classnames(styles.selectLinkDropdown, className)}
+        aria-label={ariaLabel || 'Select a link'}
+        onChange={handleChange}
+        defaultValue=""
+      >
+        <option
+          value=""
+          disabled
+          hidden
+        />
+        {options.map(option => (
+          <option
+            key={option.value}
+            value={option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+    )
+  },
+)
+
+SelectLinkDropdown.displayName = 'SelectLinkDropdown'
 
 export default NumberAndText

@@ -111,7 +111,7 @@ export default {
             name: 'sideLinks',
             title: 'Side Links',
             of: [{type: 'link'}],
-            validation: (Rule: Rule) => Rule.required().min(1).max(2),
+            validation: (Rule: Rule) => Rule.required().min(1).max(3),
           },
           {
             type: 'array',

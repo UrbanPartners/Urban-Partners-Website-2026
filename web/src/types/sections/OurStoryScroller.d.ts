@@ -1,4 +1,11 @@
-type SanityOurStoryScrollerIntroSectionCaseStudyItem = {
+type SanityOurStoryScrollerIntroSection = {
+  title: string
+  subtitle: string
+  description: SanityContentBlockProps[]
+  image: SanityImage
+}
+
+type SanityOurStoryScrollerCaseStudySectionItem = {
   _key: string
   title: string
   description: string
@@ -7,12 +14,9 @@ type SanityOurStoryScrollerIntroSectionCaseStudyItem = {
   cta: SanityLink
 }
 
-type SanityOurStoryScrollerIntroSection = {
-  title: string
-  subtitle: string
+type SanityOurStoryScrollerCaseStudySection = {
   description: SanityContentBlockProps[]
-  caseStudyListDescription: SanityContentBlockProps[]
-  caseStudyItems: SanityOurStoryScrollerIntroSectionCaseStudyItem[]
+  items: SanityOurStoryScrollerCaseStudySectionItem[]
 }
 
 type SanityOurStoryScrollerTimelineSectionItem = {
@@ -59,6 +63,7 @@ type SanityOurStoryScrollerMediaSection = {
 
 type SanityOurStoryScroller = SectionCMSInterface & {
   introSection?: SanityOurStoryScrollerIntroSection
+  caseStudySection?: SanityOurStoryScrollerCaseStudySection
   timelineSection?: SanityOurStoryScrollerTimelineSection
   locationsSection?: SanityOurStoryScrollerLocationsSection
   mediaSection?: SanityOurStoryScrollerMediaSection

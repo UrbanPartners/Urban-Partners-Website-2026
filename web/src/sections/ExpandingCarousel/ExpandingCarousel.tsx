@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, forwardRef, useImperativeHandl
 import Link from '@/components/Link/Link'
 import LineAnimation from '@/components/LineAnimation/LineAnimation'
 import ArrowButton, { ArrowButtonRef } from '@/components/ArrowButton/ArrowButton'
+import Icon from '@/components/Icon/Icon'
 import gsap from 'gsap'
 import useWindowResize from '@/hooks/use-window-resize'
 import useInView from '@/hooks/use-in-view'
@@ -114,6 +115,22 @@ const ExpandingCarousel = ({ className, items, numberPrefix }: SanityExpandingCa
       },
     })
   }, [isMobile, calculations, killDraggable])
+
+  const moveBy = useCallback(
+    (direction: number) => {
+      if (!calculations) return
+
+      const next = gsap.utils.clamp(
+        0,
+        calculations.maxX,
+        dragDistanceTarget.current + direction * calculations.bigWidth,
+      )
+
+      dragDistanceTarget.current = next
+      dragDistanceActiveTarget.current = 0
+    },
+    [calculations],
+  )
 
   const raf = useCallback(() =>
     // time: number
@@ -240,6 +257,38 @@ const ExpandingCarousel = ({ className, items, numberPrefix }: SanityExpandingCa
         animateInView
         longerDuration
       />
+      <div className={styles.controls}>
+        <LineAnimation
+          position="bottom"
+          animateFrom="left"
+          animateInView
+        />
+        <div className={styles.controls__arrows}>
+          <button
+            type="button"
+            className={styles.controls__arrow}
+            onClick={() => moveBy(-1)}
+            aria-label="Previous"
+          >
+            <Icon
+              name="arrowRight"
+              className={styles.controls__arrowIconReversed}
+            />
+          </button>
+          <button
+            type="button"
+            className={styles.controls__arrow}
+            onClick={() => moveBy(1)}
+            aria-label="Next"
+          >
+            <Icon
+              name="arrowRight"
+              className={styles.controls__arrowIcon}
+            />
+          </button>
+        </div>
+        <span className={styles.controls__label}>Click or Swipe for more</span>
+      </div>
       <div className={styles.calculations}>
         <div
           className={styles.calculations__big}

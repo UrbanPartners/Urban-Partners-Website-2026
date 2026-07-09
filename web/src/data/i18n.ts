@@ -57,7 +57,7 @@ const I18N_SE = {
   readingTime: '#{readingTimeMinutes} min lästid',
   caseStudy: 'Case',
   readArticle: 'Läs artikeln',
-  numberOfArticles: '#{räkna} artiklar',
+  numberOfArticles: '#{count} artiklar',
   resultsForTerm: 'Resultat för "#{term}"',
   resultsForCategory: 'Kategori: #{category}',
   resultsForReference: 'Omnämnd av #{reference}',

@@ -22,16 +22,19 @@ ScrollTrigger.config({
 
 gsap.registerPlugin(ScrollTrigger)
 
-type CaseStudyScrollerProps = SanityOurStoryScrollerIntroSection & {
+type CaseStudyScrollerProps = SanityOurStoryScrollerCaseStudySection & {
   className?: string
 }
 
 const TIMELINE_ITEM_DURATION = 1
 
 const SECTION_SCROLL_VH_MULTIPLIER = 3.5
-const FINAL_SCALE_OUT_DURATION = TIMELINE_ITEM_DURATION * 1.7
 
-const CaseStudyScroller = ({ className, caseStudyItems, caseStudyListDescription }: CaseStudyScrollerProps) => {
+const CaseStudyScroller = ({
+  className,
+  items: caseStudyItems,
+  description: caseStudyListDescription,
+}: CaseStudyScrollerProps) => {
   const height = caseStudyItems.length * SECTION_SCROLL_VH_MULTIPLIER * 100
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -44,7 +47,7 @@ const CaseStudyScroller = ({ className, caseStudyItems, caseStudyListDescription
   const caseStudyItemsContainerRef = useRef<HTMLDivElement | null>(null)
   const listDescriptionRef = useRef<HTMLDivElement | null>(null)
   const gridOverlayElRef = useRef<HTMLDivElement | null>(null)
-  const { setCaseStudyScaleoutDistance } = useOurStoryScrollerContext()
+  const { locationsOutroDistance } = useOurStoryScrollerContext()
   const { setStickyElement, setStickyElementParent } = useStickyTop()
 
   useEffect(() => {
@@ -87,12 +90,6 @@ const CaseStudyScroller = ({ className, caseStudyItems, caseStudyListDescription
       }
     })
 
-    const totalDuration = timelineRef.current.totalDuration()
-    const containerHeight = containerRef.current?.offsetHeight
-    const finalScaleoutDuration = FINAL_SCALE_OUT_DURATION
-    const finalScaleoutPixelDistance = (containerHeight * finalScaleoutDuration) / totalDuration
-    setCaseStudyScaleoutDistance(finalScaleoutPixelDistance)
-
     scrollTriggerRef.current = new ScrollTrigger({
       trigger: containerRef.current,
       start: 'top top',
@@ -100,75 +97,17 @@ const CaseStudyScroller = ({ className, caseStudyItems, caseStudyListDescription
       animation: timelineRef.current,
       scrub: true,
     })
-  }, [caseStudyRecalibrated, caseStudiesInitiallyCalculated, caseStudyItems.length, setCaseStudyScaleoutDistance])
-
-  const onFinalAnimateOut = (timeline: GSAPTimeline) => {
-    if (!timeline) return
-    // get the last child index
-    const lastChildIndex = caseStudyItemsRefs.current.length - 1
-    const lastChildContainer = caseStudyItemsRefs.current[lastChildIndex]?.getContainer()
-    if (lastChildContainer) {
-      timeline.fromTo(
-        lastChildContainer,
-        {
-          y: 0,
-        },
-        {
-          y: '-100%',
-          ease: 'none',
-          duration: FINAL_SCALE_OUT_DURATION,
-        },
-        '<',
-      )
-    }
-
-    if (listDescriptionRef.current) {
-      timeline.fromTo(
-        listDescriptionRef.current,
-        {
-          opacity: 1,
-        },
-        {
-          opacity: 0,
-          duration: TIMELINE_ITEM_DURATION * 0.5,
-        },
-        '<',
-      )
-    }
-
-    if (gridOverlayElRef.current) {
-      timeline.fromTo(
-        gridOverlayElRef.current,
-        {
-          opacity: 1,
-        },
-        {
-          opacity: 0,
-          duration: TIMELINE_ITEM_DURATION,
-        },
-        '<',
-      )
-    }
-
-    if (containerRef.current) {
-      timeline.fromTo(
-        containerRef.current,
-        {
-          pointerEvents: 'all',
-        },
-        {
-          pointerEvents: 'none',
-          duration: 0.001,
-        },
-        '<',
-      )
-    }
-  }
+  }, [caseStudyRecalibrated, caseStudiesInitiallyCalculated, caseStudyItems.length])
 
   return (
     <div
       className={classNames(styles.CaseStudyScroller, className)}
-      style={{ height: `${height}svh` } as CSSProperties}
+      style={
+        {
+          height: `${height}svh`,
+          '--locations-outro-distance': `${locationsOutroDistance}px`,
+        } as CSSProperties
+      }
       ref={ref => {
         containerRef.current = ref
         setStickyElementParent(ref)
@@ -218,7 +157,6 @@ const CaseStudyScroller = ({ className, caseStudyItems, caseStudyListDescription
               }
             }}
             isLast={index === caseStudyItems.length - 1}
-            onFinalAnimateOut={onFinalAnimateOut}
             gridOverlayElRef={gridOverlayElRef.current}
             listDescriptionRef={listDescriptionRef.current}
           />
@@ -233,7 +171,7 @@ export interface CaseStudyItemRef {
   getContainer: () => HTMLDivElement | null
 }
 
-type CaseStudyItemProps = SanityOurStoryScrollerIntroSectionCaseStudyItem & {
+type CaseStudyItemProps = SanityOurStoryScrollerCaseStudySectionItem & {
   index: number
   className?: string
   masterContainerRef: React.RefObject<HTMLDivElement | null>
@@ -241,7 +179,6 @@ type CaseStudyItemProps = SanityOurStoryScrollerIntroSectionCaseStudyItem & {
   activeIndex: number
   setCaseStudyRecalibrated: (index: number) => void
   isLast: boolean
-  onFinalAnimateOut?: (timeline: GSAPTimeline) => void
   gridOverlayElRef: HTMLDivElement | null
   listDescriptionRef: HTMLDivElement | null
 }
@@ -261,7 +198,6 @@ const CaseStudyItem = forwardRef<CaseStudyItemRef, CaseStudyItemProps>(
       masterContainerRef,
       setCaseStudyRecalibrated,
       isLast,
-      onFinalAnimateOut,
       gridOverlayElRef,
       listDescriptionRef,
     },
@@ -398,9 +334,16 @@ const CaseStudyItem = forwardRef<CaseStudyItemRef, CaseStudyItemProps>(
               {
                 ...SPLIT_TEXT_DEFAULT_IN_CONFIG,
                 duration: duration,
+                // Forward: this item's description is animating in → it becomes active.
                 onStart: () => {
                   if (bgIndex === 1) {
                     setActiveIndex(index)
+                  }
+                },
+                // Backward: scrubbing back past this item's start → revert to the previous item.
+                onReverseComplete: () => {
+                  if (bgIndex === 1 && index > 0) {
+                    setActiveIndex(index - 1)
                   }
                 },
               },
@@ -434,11 +377,25 @@ const CaseStudyItem = forwardRef<CaseStudyItemRef, CaseStudyItemProps>(
 
     */
 
-      // Add a duration * 3 pause to the animation timeline
+      // Add a pause to the animation timeline. The last item has no animate-out, so this
+      // pause is its trailing hold — a bit of extra scrolling once it has animated in.
+      let holdDuration = duration * 3
+      if (isLast) {
+        holdDuration = duration
+      }
+
+      // On mobile, give the first item a genuine pause: hold it fully visible for
+      // a longer beat after it animates in, and (crucially) start its animate-out
+      // only once that hold has fully elapsed. See the offset override below.
+      const isFirstMobileItem = isMobile && index === 0
+      if (isFirstMobileItem) {
+        holdDuration = duration * 2.5
+      }
+
       timelineAnimationRef.current?.to(
         {},
         {
-          duration: duration * 3,
+          duration: holdDuration,
         },
       )
 
@@ -502,7 +459,11 @@ const CaseStudyItem = forwardRef<CaseStudyItemRef, CaseStudyItemProps>(
         bgContainerRefs.current.forEach((bgContainer, bgIndex) => {
           if (!bgContainer) return
 
-          const offset = `<+=${duration * 0.2 * bgIndex}`
+          // Normally the out overlaps the hold (`<` = start of the hold tween).
+          // For the mobile first item we want the out to begin only after the
+          // hold fully elapses (`>` = end of the hold tween), so the item stays
+          // held/visible through the whole pause before fading out.
+          const offset = bgIndex === 0 && isFirstMobileItem ? '>' : `<+=${duration * 0.2 * bgIndex}`
 
           timelineAnimationRef.current?.fromTo(
             bgContainer,
@@ -548,32 +509,8 @@ const CaseStudyItem = forwardRef<CaseStudyItemRef, CaseStudyItemProps>(
         )
       }
 
-      const lastItemAnimateOut = () => {
-        if (onFinalAnimateOut) {
-          onFinalAnimateOut(timelineAnimationRef.current as GSAPTimeline)
-        }
-
-        bgContainerRefs.current.forEach((_, bgIndex) => {
-          animateOutText(bgIndex)
-        })
-
-        timelineAnimationRef.current?.fromTo(
-          containerRef.current,
-          {
-            scale: 1,
-          },
-          {
-            scale: 0.7,
-            ease: 'none',
-            duration: FINAL_SCALE_OUT_DURATION,
-          },
-          '<',
-        )
-      }
-
-      if (isLast) {
-        lastItemAnimateOut()
-      } else {
+      // The last item holds once it has animated in — no animate-out.
+      if (!isLast) {
         defaultAnimateOut()
       }
 
@@ -619,9 +556,9 @@ const CaseStudyItem = forwardRef<CaseStudyItemRef, CaseStudyItemProps>(
       scrollTriggerInitialized,
       isLast,
       gridOverlayElRef,
-      onFinalAnimateOut,
       setActiveIndex,
       listDescriptionRef,
+      isMobile,
     ])
 
     useEffect(() => {

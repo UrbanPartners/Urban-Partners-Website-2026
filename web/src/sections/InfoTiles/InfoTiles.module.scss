@@ -97,7 +97,7 @@
   padding: 0 var(--page-gutter);
 
   @include bp(tablet) {
-    height: 100%;
+    // height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

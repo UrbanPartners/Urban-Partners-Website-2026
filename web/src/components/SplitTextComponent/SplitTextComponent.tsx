@@ -74,6 +74,7 @@ const SplitTextComponent = forwardRef<SplitTextRef, SplitTextComponentProps>(
     const wordRefs = useRef<Element[]>([])
     const charRefs = useRef<Element[]>([])
     const revertedOnAnimateIn = useRef(false)
+    const hasAnimatedIn = useRef(false)
     const fontsLoaded = useStore(state => state.fontsLoaded)
     const [queuedAnimation, setQueuedAnimation] = useState<'animateIn' | 'animateOut' | null>(null)
     const animateInTweenRef = useRef<GSAPAnimation | null>(null)
@@ -158,10 +159,13 @@ const SplitTextComponent = forwardRef<SplitTextRef, SplitTextComponentProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type])
 
-    const animateIn = useCallback(() => {
+    const animateIn = useCallback((options?: { instant?: boolean }) => {
+      const instant = options?.instant === true
+
       if (debug) {
         console.warn('Animate In', {
           fontsLoaded,
+          instant,
         })
       }
       if (!fontsLoaded) {
@@ -170,12 +174,21 @@ const SplitTextComponent = forwardRef<SplitTextRef, SplitTextComponentProps>(
       }
 
       if (!splitTextRef.current) return
+      hasAnimatedIn.current = true
       const elements = getElementsToAnimate()
 
       const config =
         typeof inConfig === 'function'
           ? { ...DEFAULT_IN_CONFIG, ...inConfig(DEFAULT_IN_CONFIG) }
           : { ...DEFAULT_IN_CONFIG, ...inConfig }
+
+      // On resize the text is re-split back to its hidden state; snap it
+      // straight to the end state instead of replaying the intro animation.
+      if (instant) {
+        config.duration = 0
+        config.stagger = 0
+        config.delay = 0
+      }
 
       killTweens()
 
@@ -249,10 +262,21 @@ const SplitTextComponent = forwardRef<SplitTextRef, SplitTextComponentProps>(
       getElementsToAnimate,
     }))
 
+    // Keep the latest animateIn accessible to the resize effect without
+    // adding it (and its unstable config deps) to the effect's dependencies.
+    const animateInRef = useRef(animateIn)
+    animateInRef.current = animateIn
+
     useEffect(() => {
       if (!fontsLoaded) return
       if (revertedOnAnimateIn.current) return
       initialize()
+      // SplitText.create runs onSplit synchronously, so the fresh elements are
+      // ready here. If we'd already animated in before this re-split, snap them
+      // back to the visible end state so the resize doesn't revert them.
+      if (hasAnimatedIn.current) {
+        animateInRef.current({ instant: true })
+      }
     }, [resizeKey, fontsLoaded, initialize])
 
     useEffect(() => {

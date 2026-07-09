@@ -8,15 +8,25 @@ interface NewsSearchBody {
   searchTerm?: string
   blogCategory?: string
   blogReference?: string
+  language: string
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body: NewsSearchBody = await req.json()
-    const { searchTerm, blogCategory: blogCategoryId, blogReference: blogReferenceId } = body
+    const { searchTerm, blogCategory: blogCategoryId, blogReference: blogReferenceId, language } = body
 
+    if (!language) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'language is required',
+        },
+        { status: 400 },
+      )
+    }
     // Build the GROQ query with conditional filters
-    const filters: string[] = [`_type == "${DOC_TYPES.BLOG_POST}"`]
+    const filters: string[] = [`_type == "${DOC_TYPES.BLOG_POST}" && $language in isEnabled`]
 
     // Add search term filter if provided
     if (searchTerm && searchTerm.trim()) {
@@ -48,7 +58,7 @@ export async function POST(req: NextRequest) {
       }[0..7]
     `
 
-    const results = await client.fetch(query, { language: DEFAULT_LANGUAGE })
+    const results = await client.fetch(query, { language })
 
     return NextResponse.json({
       success: true,

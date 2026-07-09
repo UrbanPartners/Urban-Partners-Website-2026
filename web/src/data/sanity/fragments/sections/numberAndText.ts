@@ -2,6 +2,7 @@ import { groq } from 'next-sanity'
 import cmsSettings from '../cmsSettings'
 import { getRichTextFields } from '@/data/sanity/utils'
 import button from '../button'
+import link from '../link'
 
 export const fields = groq`
   _type,
@@ -12,6 +13,7 @@ export const fields = groq`
   subheading,
   subheadingDescription[] {${getRichTextFields({})}},
   ${button.fragment('cta')},
+  linkDropdownItems[] {${link.fields}},
 `
 
 export const fragment = (name = 'numberAndText') => `${name}{ ${fields} }`
