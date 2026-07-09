@@ -10,22 +10,17 @@ import LineAnimation, {
   LineAnimationRef,
 } from '@/components/LineAnimation/LineAnimation'
 import FadeIn, { FadeInRef } from '@/components/FadeIn/FadeIn'
-import CaseStudyScroller from '@/sections/OurStoryScroller/IntroSection/CaseStudyScroller/CaseStudyScroller'
+import IntroImageScroller from '@/sections/OurStoryScroller/IntroSection/IntroImageScroller/IntroImageScroller'
 import DownArrowAnimation, { DownArrowAnimationRef } from '@/components/DownArrowAnimation/DownArrowAnimation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import useWindowResize from '@/hooks/use-window-resize'
 import useBreakpoint from '@/hooks/use-breakpoint'
+import { useOurStoryScrollerContext } from '@/sections/OurStoryScroller/OurStoryScrollerContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const IntroSection = ({
-  title,
-  subtitle,
-  description,
-  caseStudyListDescription,
-  caseStudyItems,
-}: SanityOurStoryScrollerIntroSection) => {
+const IntroSection = ({ title, subtitle, description, image }: SanityOurStoryScrollerIntroSection) => {
   const introSectionRef = useRef<HTMLDivElement | null>(null)
   const introRef = useRef<HTMLDivElement | null>(null)
   const timelineRef = useRef<gsap.core.Timeline | null>(null)
@@ -41,6 +36,7 @@ const IntroSection = ({
   const downArrowRef = useRef<DownArrowAnimationRef>(null)
   const resizeKey = useWindowResize()
   const { isMobile } = useBreakpoint()
+  const { introImageFull } = useOurStoryScrollerContext()
 
   useEffect(() => {
     setTimeout(() => {
@@ -71,6 +67,8 @@ const IntroSection = ({
 
     timelineRef.current = gsap.timeline()
 
+    const duration = 1
+
     timelineRef.current.fromTo(
       introRef.current,
       {
@@ -79,19 +77,8 @@ const IntroSection = ({
       {
         y: window.innerHeight * 1.5,
         ease: 'none',
+        duration,
       },
-    )
-
-    timelineRef.current.fromTo(
-      introRef.current,
-      {
-        opacity: 1,
-      },
-      {
-        opacity: 0,
-        duration: 0.001,
-      },
-      '>',
     )
 
     scrollTriggerRef.current = new ScrollTrigger({
@@ -113,6 +100,7 @@ const IntroSection = ({
         <div
           className={styles.intro}
           ref={introRef}
+          style={{ opacity: introImageFull ? 0 : 1 }}
         >
           <LineAnimation
             ref={lineAnimationBottomRef}
@@ -194,9 +182,9 @@ const IntroSection = ({
           />
         </div>
       </div>
-      <CaseStudyScroller
+      <IntroImageScroller
         className={styles.caseStudyScroller}
-        {...{ title, subtitle, description, caseStudyListDescription, caseStudyItems }}
+        image={image}
       />
     </>
   )

@@ -8,7 +8,6 @@ import SanityImage from '@/components/SanityImage/SanityImage'
 import FadeIn from '@/components/FadeIn/FadeIn'
 import RichText from '@/components/RichText/RichText'
 import GridOverlay from '@/sections/OurStoryScroller/GridOverlay/GridOverlay'
-import { useOurStoryScrollerContext } from '@/sections/OurStoryScroller/OurStoryScrollerContext'
 import useInView from '@/hooks/use-in-view'
 import gsap from 'gsap'
 import MaskReveal from '@/components/MaskReveal/MaskReveal'
@@ -18,7 +17,6 @@ const DEBUG = false
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TimelineSection = ({ yearPrefix, subtitle, itemsByYear }: SanityOurStoryScrollerTimelineSection) => {
-  const { caseStudyScaleoutDistance } = useOurStoryScrollerContext()
   const { isInView, setElementToObserve } = useInView()
   const timelineYearRef = useRef<TimelineYearRef | null>(null)
   const { isMobile } = useBreakpoint()
@@ -58,12 +56,7 @@ const TimelineSection = ({ yearPrefix, subtitle, itemsByYear }: SanityOurStorySc
   }
 
   return (
-    <div
-      className={classnames(styles.TimelineSection)}
-      style={{
-        marginTop: `calc(-${caseStudyScaleoutDistance}px - 100svh)`,
-      }}
-    >
+    <div className={classnames(styles.TimelineSection)}>
       <GridOverlay
         className={styles.gridOverlay}
         hasLeftLine
@@ -87,7 +80,6 @@ const TimelineSection = ({ yearPrefix, subtitle, itemsByYear }: SanityOurStorySc
               <TimelineYearItem
                 key={`${item._key}-${index}`}
                 {...item}
-                firstSuffix={allItems?.left?.[0]?.yearSuffix}
                 mastContainerInView={isInView}
                 timelineYearRef={timelineYearRef.current}
               />
@@ -99,7 +91,6 @@ const TimelineSection = ({ yearPrefix, subtitle, itemsByYear }: SanityOurStorySc
               <TimelineYearItem
                 key={`${item._key}-${index}`}
                 {...item}
-                firstSuffix={allItems?.left?.[0]?.yearSuffix}
                 mastContainerInView={isInView}
                 timelineYearRef={timelineYearRef.current}
               />
@@ -121,6 +112,7 @@ type TimelineYearProps = SanityOurStoryScrollerTimelineSection & {
 type TimelineYearRef = {
   getElement: () => HTMLDivElement | null
   animateByYear: (yearSuffix: string) => void
+  reset: () => void
 }
 
 const TimelineYear = forwardRef<TimelineYearRef, TimelineYearProps>(
@@ -212,9 +204,32 @@ const TimelineYear = forwardRef<TimelineYearRef, TimelineYearProps>(
       [suffixes],
     )
 
+    const reset = useCallback(() => {
+      animateByMapRef.current = {}
+
+      Object.keys(charRefsByYear.current).forEach(yearSuffix => {
+        const chars = charRefsByYear.current[yearSuffix]
+        if (!chars?.length) return
+
+        chars.forEach((char, index) => {
+          if (!char) return
+
+          gsap.killTweensOf(char)
+
+          gsap.to(char, {
+            delay: index * 0.04,
+            duration: 0.2,
+            ease: 'Power3.easeOut',
+            y: '110%',
+          })
+        })
+      })
+    }, [])
+
     useImperativeHandle(ref, () => ({
       getElement: () => containerRef.current,
       animateByYear: (yearSuffix: string) => animateByYear(yearSuffix),
+      reset: () => reset(),
     }))
 
     return (
@@ -274,7 +289,6 @@ type TimelineYearItemProps = SanityOurStoryScrollerTimelineSectionItem & {
   className?: string
   yearSuffix?: string | null
   setActiveYearSuffix?: (yearSuffix: string) => void
-  firstSuffix?: string | null
   previousYearSuffix?: string | null
   mastContainerInView?: boolean
   timelineYearRef?: TimelineYearRef | null
@@ -287,7 +301,6 @@ const TimelineYearItem = ({
   imageLayout,
   className,
   yearSuffix,
-  firstSuffix,
   previousYearSuffix,
   mastContainerInView,
   timelineYearRef,
@@ -309,10 +322,16 @@ const TimelineYearItem = ({
     if (!onLeaveBackKey) return
     if (!mastContainerInView) return
     if (!timelineYearRef) return
-    if (!previousYearSuffix) return
-    if (firstSuffix === yearSuffix) return
+    if (!yearSuffix) return
+    // The very first item has a year suffix but no preceding year. Scrolling back
+    // past it should return the year display to its initial (empty) state rather
+    // than leaving the first suffix stuck on screen.
+    if (!previousYearSuffix) {
+      timelineYearRef.reset()
+      return
+    }
     timelineYearRef.animateByYear(previousYearSuffix)
-  }, [onLeaveBackKey, yearSuffix, timelineYearRef, mastContainerInView, firstSuffix, previousYearSuffix])
+  }, [onLeaveBackKey, yearSuffix, timelineYearRef, mastContainerInView, previousYearSuffix])
 
   return (
     <div

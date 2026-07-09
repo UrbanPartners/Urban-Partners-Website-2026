@@ -4,6 +4,7 @@ Section
 
 .TimelineSection {
   position: relative;
+  margin-top: -200svh;
 
   --timeline-item-height: #{px(600)};
 

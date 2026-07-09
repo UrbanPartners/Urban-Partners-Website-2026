@@ -1,0 +1,81 @@
+.IntroImageScroller {
+  margin-top: -100svh;
+  color: var(--white);
+  position: relative;
+  z-index: 2;
+}
+
+.item {
+  @include gpu;
+  position: sticky;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  height: 100vh; // vh for mobile chrome
+  width: 100%;
+
+  [data-browser='safari'] & {
+    height: 100svh;
+  }
+}
+
+.bgContainerNonMasked {
+  @include gpu;
+  @include position-100(absolute);
+  background-color: var(--green-dark);
+  z-index: 2;
+  pointer-events: none;
+
+  --reveal: 0%;
+
+  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+
+.bgContainer {
+  @include gpu;
+  @include position-100(absolute);
+  background-color: var(--green-dark);
+  z-index: 1;
+
+  --top-left-y: 100%;
+  --top-right-y: 100%;
+  --bottom-left-y: 100%;
+  --bottom-right-y: 100%;
+
+  &[data-bg-index='0'] {
+    clip-path: polygon(
+      0% var(--top-left-y),
+      33.33333333% var(--top-right-y),
+      33.33333333% var(--bottom-right-y),
+      0% var(--bottom-left-y)
+    );
+  }
+
+  &[data-bg-index='1'] {
+    clip-path: polygon(
+      33.33333333% var(--top-left-y),
+      66.66666666% var(--top-right-y),
+      66.66666666% var(--bottom-right-y),
+      33.33333333% var(--bottom-left-y)
+    );
+  }
+
+  &[data-bg-index='2'] {
+    clip-path: polygon(
+      66.66666666% var(--top-left-y),
+      100% var(--top-right-y),
+      100% var(--bottom-right-y),
+      66.66666666% var(--bottom-left-y)
+    );
+  }
+}
+
+.imageContainer {
+  @include position-100(absolute);
+}
+
+.image {
+  @include position-100(absolute);
+  object-fit: cover;
+}

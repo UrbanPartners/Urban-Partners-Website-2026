@@ -12,8 +12,11 @@ export const fields = groq`
     title,
     subtitle,
     description[] {${getRichTextFields({})}},
-    caseStudyListDescription[] {${getRichTextFields({})}},
-    caseStudyItems[] {
+    image {${imageAsset.fields}},
+  },
+  caseStudySection {
+    description[] {${getRichTextFields({})}},
+    items[] {
       _key,
       title,
       description,
