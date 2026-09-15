@@ -32,7 +32,7 @@ export const getMergedLanguageQueryString = (
         }},`
         localizedQueryString += `
         defined(${item.name}) => {
-          ${item?.dereference ? `'${item.alias || item.name}': ${item.name} ${arrString}->` : `'${item.name}${arrString}': `} {
+          '${item.alias || item.name}': ${item.name}${arrString}${item?.dereference ? '->' : ''} {
             ${item.fields}
           }
         },
