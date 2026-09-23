@@ -30,6 +30,9 @@ const I18N_ENGLISH = {
   playVideo: 'Play Video',
   pauseVideo: 'Pause Video',
 
+  // Carousel
+  clickOrSwipeForMore: 'Click or swipe for more',
+
 }
 
 const I18N_DK = {
@@ -50,6 +53,7 @@ const I18N_DK = {
   size: 'Størrelse',
   playVideo: 'Afspil video',
   pauseVideo: 'Sæt videon på pause',
+  clickOrSwipeForMore: 'Klik eller swipe for at se mere',
 }
 
 const I18N_SE = {
@@ -70,6 +74,7 @@ const I18N_SE = {
   size: 'Storlek',
   playVideo: 'Spela upp video',
   pauseVideo: 'Pausa video',
+  clickOrSwipeForMore: 'Klicka eller svep för mer',
 }
 
 const I18N_DE = {
@@ -90,6 +95,7 @@ const I18N_DE = {
   size: 'Größe',
   playVideo: 'Video abspielen',
   pauseVideo: 'Video pausieren',
+  clickOrSwipeForMore: 'Klicken oder wischen für mehr',
 }
 
 const I18N_FI = {
@@ -110,6 +116,7 @@ const I18N_FI = {
   size: 'Koko',
   playVideo: 'Toista video',
   pauseVideo: 'Pysäytä video',
+  clickOrSwipeForMore: 'Klikkaa tai pyyhkäise nähdäksesi lisää',
 }
 
 const I18N_PL = {
@@ -130,6 +137,7 @@ const I18N_PL = {
   size: 'Powierzchnia',
   playVideo: 'Odtwórz video',
   pauseVideo: 'Wstrzymaj video',
+  clickOrSwipeForMore: 'Kliknij lub przesuń, aby zobaczyć więcej',
 }
 
 const I18N_NO = {
@@ -150,6 +158,7 @@ const I18N_NO = {
   size: 'Størrelse',
   playVideo: 'Spill film',
   pauseVideo: 'Pause film',
+  clickOrSwipeForMore: 'Klikk eller swipe for mer',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

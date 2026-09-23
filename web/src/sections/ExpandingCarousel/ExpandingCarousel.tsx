@@ -18,6 +18,7 @@ import FadeIn from '@/components/FadeIn/FadeIn'
 import ColorBar, { ColorBarRef } from '@/components/ColorBar/ColorBar'
 import MaskReveal, { MaskRevealRef } from '@/components/MaskReveal/MaskReveal'
 import { SanityCustomCard } from '@/types/sanity/SanityCustomCard'
+import useI18n from '@/hooks/use-i18n'
 
 gsap.registerPlugin(Draggable)
 
@@ -44,6 +45,7 @@ const ExpandingCarousel = ({ className, items, numberPrefix }: SanityExpandingCa
   const dragDistanceCurrent = useRef(0)
   const dragDistanceActiveCurrent = useRef(0)
   const { isMobile, breakpoint } = useBreakpoint()
+  const { i18n } = useI18n()
   const [allowRaf, setAllowRaf] = useState(false)
   const lerpLevel = useMemo(() => {
     if (isMobile) return 0.11
@@ -287,7 +289,7 @@ const ExpandingCarousel = ({ className, items, numberPrefix }: SanityExpandingCa
             />
           </button>
         </div>
-        <span className={styles.controls__label}>Click or Swipe for more</span>
+        <span className={styles.controls__label}>{i18n('clickOrSwipeForMore')}</span>
       </div>
       <div className={styles.calculations}>
         <div
