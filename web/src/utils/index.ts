@@ -599,9 +599,12 @@ export const sendEvent = (event: string, value: string) => {
 export const formatDateToDDMMYYYY = (isoString: string): string => {
   const date = new Date(isoString)
 
-  const day = date.getDate().toString().padStart(2, '0')
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const year = date.getFullYear().toString().slice(-2)
+  // Use UTC getters so server (UTC) and client (any timezone) render the same date.
+  // Date-only strings like "2020-05-05" parse as UTC midnight; local getters would
+  // shift them a day back west of UTC and cause a hydration mismatch.
+  const day = date.getUTCDate().toString().padStart(2, '0')
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0')
+  const year = date.getUTCFullYear().toString().slice(-2)
 
   return `${day}.${month}.${year}`
 }
